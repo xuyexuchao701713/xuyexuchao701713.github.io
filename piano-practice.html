@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="钢琴打卡">
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi6ZKi55Oe57uD5LmgIiwic2hvcnRfbmFtZSI6IumSoueTniIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y4ZjZmZiIsInRoZW1lX2NvbG9yIjoiIzdjM2FlZCIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUIzYVdSMGFEMHhNREFnSUc5bUlDMHhNREFnSUR4aGJtTnNaV1FnWkQwaU1UQXdKU0lnWkQwaU1UQXdKU0lnWlhod2FYSmxQU0l3SURBZ01UQXdJREV3TUNJZ2FHVnBaMmgwUFNJeE1EQWxJaUJvWldsbmFIUTlJakV3TUNVaVBqeDBaWGgwWlhKdWFXNXZiaUE4TDNOMlp6ND0iLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9LHsic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDB4TkRZd0lEQnZaaUF0TVRRMk1DQThZVzVqYkdWa0lHUTlJakUwTmpBbEl5QmtQU0kwT0Rnd0pTSWdlWGh3YVhKbFBTSXdJREFnTVRRMk1DQTBPRGdsSWlCb1pXbG5hSFE5SWpFME5qQWxJaUJvWldsbmFIUTlJalE0T0RBbElnNDhMM04yWno0PSIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI4MCIgZmlsbD0iIzdjM2FlZCIvPjx0ZXh0IHg9IjI1NiIgeT0iMzQwIiBmb250LXNpemU9IjMwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPueQijwvdGV4dD48L3N2Zz4=">
+    <title>钢琴练习打卡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{--safe:env(safe-area-inset-bottom,16px)}
+        *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none;background:#f8f6ff}
+        .tab-bar{padding-bottom:var(--safe)}
+        .tab-item{color:#999;transition:all .2s}
+        .tab-item.active{color:#7c3aed}
+        .page{display:none}
+        .page.active{display:block}
+        @keyframes pulse-ring{0%{transform:scale(.95);opacity:.8}100%{transform:scale(1.3);opacity:0}}
+        .timer-ring{animation:pulse-ring 2s ease-out infinite}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .fade-in{animation:fadeIn .3s ease-out}
+        .piece-item:active{transform:scale(.98)}
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<main class="flex-1 overflow-y-auto pb-20" id="main-content">
+
+<!-- ====== 打卡页 ====== -->
+<div id="page-checkin" class="page active p-4">
+    <!-- 日期 -->
+    <div class="text-center mb-6 mt-2">
+        <p class="text-xs text-purple-400 mb-1" id="weekday-display"></p>
+        <p class="text-3xl font-bold text-gray-800" id="date-display"></p>
+        <div class="flex justify-center gap-6 mt-3">
+            <div class="text-center"><p class="text-2xl font-bold text-purple-600" id="streak-count">0</p><p class="text-xs text-gray-400">连续天数</p></div>
+            <div class="text-center"><p class="text-2xl font-bold text-purple-600" id="today-total">0</p><p class="text-xs text-gray-400">今日分钟</p></div>
+            <div class="text-center"><p class="text-2xl font-bold text-purple-600" id="pieces-count">0</p><p class="text-xs text-gray-400">练习曲目</p></div>
+        </div>
+    </div>
+
+    <!-- 计时器区域 -->
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-purple-100 mb-4 text-center">
+        <p class="text-sm text-gray-500 mb-3">🎹 练习计时器</p>
+        <div class="text-5xl font-bold text-purple-600 mb-2 font-mono" id="timer-display">00:00</div>
+        <p class="text-xs text-gray-400 mb-4" id="timer-status">点击开始记录练琴时间</p>
+        <div class="flex gap-3 justify-center">
+            <button id="timer-start-btn" onclick="startTimer()" class="px-8 py-3 rounded-full text-white font-medium text-sm active:opacity-80 transition-all" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">▶ 开始计时</button>
+            <button id="timer-pause-btn" onclick="pauseTimer()" class="px-8 py-3 rounded-full bg-gray-100 text-gray-600 font-medium text-sm active:bg-gray-200 hidden">⏸ 暂停</button>
+            <button id="timer-stop-btn" onclick="stopTimer()" class="px-8 py-3 rounded-full bg-red-50 text-red-500 font-medium text-sm active:bg-red-100 hidden">⏹ 结束</button>
+        </div>
+    </div>
+
+    <!-- 添加曲目 -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 mb-3">
+        <div class="flex gap-2">
+            <input id="new-piece-input" placeholder="输入练习曲目名称" class="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:border-purple-400 focus:outline-none">
+            <button onclick="addPiece()" class="px-5 py-2.5 rounded-xl text-white text-sm font-medium active:opacity-80" style="background:#7c3aed">添加</button>
+        </div>
+    </div>
+
+    <!-- 曲目列表 -->
+    <div id="pieces-list" class="space-y-2"></div>
+
+    <!-- 拍照 -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 mb-3">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-gray-700 text-sm">📸 练习记录</h3>
+            <button onclick="document.getElementById('photo-input-v2').click()" class="text-xs text-purple-500 font-medium">+ 添加照片</button>
+        </div>
+        <input type="file" accept="image/*" capture="environment" id="photo-input-v2" onchange="addPracticePhoto(event)" class="hidden">
+        <div id="practice-photos" class="flex gap-2 overflow-x-auto"></div>
+    </div>
+</div>
+
+<!-- ====== 记录页 ====== -->
+<div id="page-records" class="page p-4">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-gray-800">📋 练习记录</h2>
+        <select id="record-filter" onchange="renderRecords()" class="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-500">
+            <option value="all">全部</option>
+            <option value="week">本周</option>
+            <option value="month">本月</option>
+        </select>
+    </div>
+    <div id="records-list" class="space-y-2"></div>
+</div>
+
+<!-- ====== 统计页 ====== -->
+<div id="page-stats" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-4">📊 练习统计</h2>
+    
+    <!-- 总览 -->
+    <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 text-center">
+            <p class="text-3xl font-bold text-purple-600" id="stat-total-min">0</p>
+            <p class="text-xs text-gray-400 mt-1">总练习分钟</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 text-center">
+            <p class="text-3xl font-bold text-purple-600" id="stat-total-days">0</p>
+            <p class="text-xs text-gray-400 mt-1">练习天数</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 text-center">
+            <p class="text-3xl font-bold text-purple-600" id="stat-best-streak">0</p>
+            <p class="text-xs text-gray-400 mt-1">最长连续</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 text-center">
+            <p class="text-3xl font-bold text-purple-600" id="stat-avg-min">0</p>
+            <p class="text-xs text-gray-400 mt-1">日均分钟</p>
+        </div>
+    </div>
+
+    <!-- 周视图 -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 mb-3">
+        <h3 class="font-bold text-gray-700 text-sm mb-3">📅 本周练习</h3>
+        <div id="week-chart" class="flex justify-between items-end gap-1" style="height:120px"></div>
+        <div class="flex justify-between mt-2" id="week-labels"></div>
+    </div>
+</div>
+
+<!-- ====== 分享页 ====== -->
+<div id="page-share" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-4">🔗 分享给老师</h2>
+    
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-purple-100 mb-4">
+        <h3 class="font-bold text-gray-700 text-sm mb-3">选择分享范围</h3>
+        <div class="space-y-2">
+            <label class="flex items-center gap-3 p-3 border border-purple-100 rounded-xl active:bg-purple-50">
+                <input type="radio" name="share-range-v2" value="today" checked class="accent-purple-600"><span class="text-sm">今日练习</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 border border-purple-100 rounded-xl active:bg-purple-50">
+                <input type="radio" name="share-range-v2" value="week"><span class="text-sm">本周练习汇总</span>
+            </label>
+        </div>
+    </div>
+    
+    <button onclick="generateShareV2()" class="w-full py-3 rounded-xl text-white font-medium text-sm active:opacity-80 mb-3" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">📤 生成分享</button>
+    <div id="share-preview-v2" class="hidden"></div>
+    <button id="share-copy-btn" onclick="copyShareLinkV2()" class="w-full py-3 rounded-xl text-white font-medium text-sm active:opacity-80 hidden mb-2" style="background:#2563eb">🔗 复制链接发给老师</button>
+    <button id="share-wx-btn" onclick="shareToWechatV2()" class="w-full py-3 rounded-xl text-white font-medium text-sm active:opacity-80 hidden" style="background:#07c160">💬 微信分享</button>
+</div>
+
+</main>
+
+<!-- 底部Tab -->
+<nav class="tab-bar bg-white border-t border-gray-100 fixed bottom-0 left-0 right-0 z-20">
+    <div class="flex justify-around items-center h-16 max-w-lg mx-auto">
+        <button class="tab-item-v2 active flex flex-col items-center gap-0.5" data-page="checkin">
+            <span class="text-xl">🎹</span><span class="text-[10px] font-medium">打卡</span>
+        </button>
+        <button class="tab-item-v2 flex flex-col items-center gap-0.5" data-page="records">
+            <span class="text-xl">📋</span><span class="text-[10px] font-medium">记录</span>
+        </button>
+        <button class="tab-item-v2 flex flex-col items-center gap-0.5" data-page="stats">
+            <span class="text-xl">📊</span><span class="text-[10px] font-medium">统计</span>
+        </button>
+        <button class="tab-item-v2 flex flex-col items-center gap-0.5" data-page="share">
+            <span class="text-xl">🔗</span><span class="text-[10px] font-medium">分享</span>
+        </button>
+    </div>
+</nav>
+
+<script>
+// ===== Storage =====
+const S = {
+    pieces: 'pp_pieces_v2',
+    sessions: 'pp_sessions_v2',
+    photos: 'pp_photos_v2',
+    streak: 'pp_streak_v2',
+    lastDate: 'pp_lastdate_v2'
+};
+function get(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){alert('存储空间不足');return false}}
+
+// ===== Timer =====
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+let timerStartTime = null;
+
+function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds / 60);
+    const s = timerSeconds % 60;
+    document.getElementById('timer-display').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function startTimer() {
+    if(timerRunning) return;
+    timerRunning = true;
+    timerStartTime = new Date();
+    document.getElementById('timer-start-btn').classList.add('hidden');
+    document.getElementById('timer-pause-btn').classList.remove('hidden');
+    document.getElementById('timer-stop-btn').classList.remove('hidden');
+    document.getElementById('timer-status').textContent = '正在记录练习时间...';
+    timerInterval = setInterval(() => {
+        timerSeconds++;
+        updateTimerDisplay();
+    }, 1000);
+}
+
+function pauseTimer() {
+    if(!timerRunning) return;
+    timerRunning = false;
+    clearInterval(timerInterval);
+    document.getElementById('timer-start-btn').classList.remove('hidden');
+    document.getElementById('timer-start-btn').textContent = '▶ 继续计时';
+    document.getElementById('timer-pause-btn').classList.add('hidden');
+    document.getElementById('timer-status').textContent = '已暂停';
+}
+
+function stopTimer() {
+    if(timerSeconds < 60) {
+        if(!confirm('练习时间不足1分钟，确定结束吗？')) return;
+    }
+    timerRunning = false;
+    clearInterval(timerInterval);
+    
+    const minutes = Math.max(1, Math.round(timerSeconds / 60));
+    const sessions = get(S.sessions) || [];
+    sessions.push({
+        date: new Date().toISOString().split('T')[0],
+        time: new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}),
+        minutes: minutes,
+        pieces: (get(S.pieces)||[]).filter(p=>!p.done).map(p=>p.name)
+    });
+    set(S.sessions, sessions);
+    
+    // Mark all pieces as done
+    const pieces = get(S.pieces) || [];
+    pieces.forEach(p => p.done = true);
+    set(S.pieces, pieces);
+    
+    // Save photos with session
+    const photos = get(S.photos) || [];
+    if(photos.length > 0) {
+        const lastSession = sessions[sessions.length-1];
+        lastSession.photos = [...photos];
+        set(S.photos, []);
+        set(S.sessions, sessions);
+    }
+    
+    // Reset timer
+    timerSeconds = 0;
+    updateTimerDisplay();
+    document.getElementById('timer-start-btn').classList.remove('hidden');
+    document.getElementById('timer-start-btn').textContent = '▶ 开始计时';
+    document.getElementById('timer-pause-btn').classList.add('hidden');
+    document.getElementById('timer-stop-btn').classList.add('hidden');
+    document.getElementById('timer-status').textContent = '点击开始记录练琴时间';
+    
+    updateAll();
+    alert('✅ 练习记录已保存！共 '+minutes+' 分钟');
+}
+
+// ===== Pieces =====
+function addPiece() {
+    const input = document.getElementById('new-piece-input');
+    const name = input.value.trim();
+    if(!name) return;
+    const pieces = get(S.pieces) || [];
+    pieces.push({name, done: false, addedAt: new Date().toISOString()});
+    set(S.pieces, pieces);
+    input.value = '';
+    renderPieces();
+}
+
+function togglePiece(index) {
+    const pieces = get(S.pieces) || [];
+    pieces[index].done = !pieces[index].done;
+    set(S.pieces, pieces);
+    renderPieces();
+}
+
+function removePiece(index) {
+    const pieces = get(S.pieces) || [];
+    pieces.splice(index, 1);
+    set(S.pieces, pieces);
+    renderPieces();
+}
+
+function renderPieces() {
+    const pieces = get(S.pieces) || [];
+    const container = document.getElementById('pieces-list');
+    if(pieces.length === 0) {
+        container.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">还没有添加曲目，添加后开始练琴吧 🎵</p>';
+    } else {
+        container.innerHTML = pieces.map((p,i) => 
+            '<div class="piece-item bg-white rounded-xl p-3 border border-purple-100 shadow-sm flex items-center gap-3 fade-in">'+
+                '<button onclick="togglePiece('+i+')" class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(p.done?'bg-purple-500 border-purple-500':'border-gray-300')+'">'+
+                    (p.done?'<span class="text-white text-xs">✓</span>':'')+
+                '</button>'+
+                '<span class="flex-1 text-sm '+(p.done?'line-through text-gray-400':'text-gray-700')+'">'+p.name+'</span>'+
+                '<button onclick="removePiece('+i+')" class="text-gray-300 text-xs">✕</button>'+
+            '</div>'
+        ).join('');
+    }
+    document.getElementById('pieces-count').textContent = pieces.length;
+}
+
+// ===== Photos =====
+function addPracticePhoto(event) {
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Compress
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ratio = Math.min(1, 600/img.width);
+            canvas.width = img.width*ratio;
+            canvas.height = img.height*ratio;
+            canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+            const compressed = canvas.toDataURL('image/jpeg',0.5);
+            
+            const photos = get(S.photos) || [];
+            photos.push(compressed);
+            set(S.photos, photos);
+            renderPhotos();
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+}
+
+function removePhoto(index) {
+    const photos = get(S.photos) || [];
+    photos.splice(index,1);
+    set(S.photos, photos);
+    renderPhotos();
+}
+
+function renderPhotos() {
+    const photos = get(S.photos) || [];
+    const container = document.getElementById('practice-photos');
+    container.innerHTML = photos.map((p,i) =>
+        '<div class="relative shrink-0">'+
+            '<img src="'+p+'" class="w-20 h-20 rounded-xl object-cover" onclick="viewPhoto(\''+i+'\')">'+
+            '<button onclick="removePhoto('+i+')" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">✕</button>'+
+        '</div>'
+    ).join('');
+}
+
+function viewPhoto(index) {
+    const photos = get(S.photos) || [];
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer';
+    overlay.innerHTML = '<img src="'+photos[index]+'" style="max-width:95vw;max-height:95vh;object-fit:contain;border-radius:8px">';
+    overlay.addEventListener('click',()=>overlay.remove());
+    document.body.appendChild(overlay);
+}
+
+// ===== Records =====
+function renderRecords() {
+    const sessions = get(S.sessions) || [];
+    const filter = document.getElementById('record-filter')?.value || 'all';
+    
+    let filtered = [...sessions].reverse();
+    const now = new Date();
+    
+    if(filter === 'week') {
+        const weekStart = new Date(now); weekStart.setDate(now.getDate()-now.getDay());
+        filtered = filtered.filter(s => new Date(s.date) >= weekStart);
+    } else if(filter === 'month') {
+        filtered = filtered.filter(s => s.date.startsWith(now.toISOString().slice(0,7)));
+    }
+    
+    const container = document.getElementById('records-list');
+    if(filtered.length === 0) {
+        container.innerHTML = '<p class="text-sm text-gray-400 text-center py-8">暂无练习记录</p>';
+        return;
+    }
+    
+    // Group by date
+    const grouped = {};
+    filtered.forEach(s => {
+        if(!grouped[s.date]) grouped[s.date] = [];
+        grouped[s.date].push(s);
+    });
+    
+    container.innerHTML = Object.entries(grouped).map(([date, recs]) => {
+        const d = new Date(date);
+        const total = recs.reduce((sum,r)=>sum+r.minutes,0);
+        const label = d.toLocaleDateString('zh-CN',{month:'numeric',day:'numeric',weekday:'short'});
+        return '<div class="mb-3">'+
+            '<div class="flex justify-between items-center mb-2 px-1">'+
+                '<span class="text-sm font-bold text-gray-700">📅 '+label+'</span>'+
+                '<span class="text-xs text-purple-500 font-medium">共 '+total+' 分钟</span>'+
+            '</div>'+
+            recs.map(r => {
+                let photoHtml = '';
+                if(r.photos && r.photos.length>0) {
+                    photoHtml = '<div class="flex gap-1 mt-2 overflow-x-auto">'+r.photos.map((p,i)=>'<img src="'+p+'" class="w-16 h-16 rounded-lg object-cover shrink-0" onclick="viewSessionPhoto(\''+date+'\','+i+')">').join('')+'</div>';
+                }
+                return '<div class="bg-white rounded-xl p-3 border border-purple-50 shadow-sm mb-1.5">'+
+                    '<div class="flex justify-between items-start">'+
+                        '<div>'+
+                            '<span class="font-medium text-gray-800 text-sm">⏱ '+r.minutes+'分钟</span>'+
+                            '<span class="text-xs text-gray-400 ml-2">'+r.time+'</span>'+
+                        '</div>'+
+                    '</div>'+
+                    (r.pieces && r.pieces.length>0 ? '<div class="flex flex-wrap gap-1 mt-1">'+r.pieces.map(p=>'<span class="text-xs bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">🎵 '+p+'</span>').join('')+'</div>' : '')+
+                    photoHtml+
+                '</div>';
+            }).join('')+
+        '</div>';
+    }).join('');
+}
+
+function viewSessionPhoto(date, index) {
+    const sessions = get(S.sessions) || [];
+    const session = sessions.find(s => s.date === date);
+    if(!session || !session.photos) return;
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer';
+    overlay.innerHTML = '<img src="'+session.photos[index]+'" style="max-width:95vw;max-height:95vh;object-fit:contain;border-radius:8px">';
+    overlay.addEventListener('click',()=>overlay.remove());
+    document.body.appendChild(overlay);
+}
+
+// ===== Stats =====
+function renderStats() {
+    const sessions = get(S.sessions) || [];
+    const now = new Date();
+    
+    // Total
+    const totalMin = sessions.reduce((s,r)=>s+r.minutes,0);
+    document.getElementById('stat-total-min').textContent = totalMin;
+    
+    // Days
+    const days = new Set(sessions.map(s=>s.date)).size;
+    document.getElementById('stat-total-days').textContent = days;
+    
+    // Best streak
+    let bestStreak = 0, currentStreak = 0;
+    const sortedDates = [...new Set(sessions.map(s=>s.date))].sort();
+    for(let i=0; i<sortedDates.length; i++) {
+        if(i===0) { currentStreak=1; continue; }
+        const prev = new Date(sortedDates[i-1]);
+        const curr = new Date(sortedDates[i]);
+        const diff = (curr-prev)/(1000*60*60*24);
+        if(diff === 1) currentStreak++;
+        else { bestStreak = Math.max(bestStreak, currentStreak); currentStreak = 1; }
+    }
+    bestStreak = Math.max(bestStreak, currentStreak);
+    document.getElementById('stat-best-streak').textContent = bestStreak;
+    
+    // Avg
+    const avg = days > 0 ? Math.round(totalMin/days) : 0;
+    document.getElementById('stat-avg-min').textContent = avg;
+    
+    // Week chart
+    const weekDays = ['日','一','二','三','四','五','六'];
+    const today = now.getDay();
+    const weekData = [];
+    for(let i=6; i>=0; i--) {
+        const d = new Date(now);
+        d.setDate(now.getDate()-i);
+        const ds = d.toISOString().split('T')[0];
+        const min = sessions.filter(s=>s.date===ds).reduce((s,r)=>s+r.minutes,0);
+        weekData.push({label: weekDays[d.getDay()], min, isToday: i===0});
+    }
+    
+    const maxMin = Math.max(...weekData.map(d=>d.min), 1);
+    const chartEl = document.getElementById('week-chart');
+    chartEl.innerHTML = weekData.map(d => {
+        const h = Math.max(4, (d.min/maxMin)*100);
+        return '<div class="flex-1 flex flex-col items-center gap-1">'+
+            '<span class="text-xs '+(d.isToday?'text-purple-600 font-bold':'text-gray-400')+'">'+d.min+'</span>'+
+            '<div class="w-full rounded-t-lg '+(d.isToday?'bg-purple-500':'bg-purple-200')+'" style="height:'+h+'px"></div>'+
+        '</div>';
+    }).join('');
+    
+    const labelsEl = document.getElementById('week-labels');
+    labelsEl.innerHTML = weekData.map(d => 
+        '<span class="text-xs '+(d.isToday?'text-purple-600 font-bold':'text-gray-400')+'">'+d.label+'</span>'
+    ).join('');
+}
+
+// ===== Share V2 =====
+let shareLinkV2 = null;
+
+function generateShareV2() {
+    const sessions = get(S.sessions) || [];
+    const range = document.querySelector('input[name="share-range-v2"]:checked').value;
+    const todayStr = new Date().toISOString().split('T')[0];
+    
+    let records, title;
+    if(range === 'today') {
+        records = sessions.filter(s => s.date === todayStr);
+        title = '今日钢琴练习';
+    } else {
+        const weekStart = new Date(); weekStart.setDate(new Date().getDate()-new Date().getDay());
+        records = sessions.filter(s => new Date(s.date) >= weekStart);
+        title = '本周钢琴练习汇总';
+    }
+    
+    if(records.length === 0) { alert('该范围内暂无练习记录'); return; }
+    
+    const totalMin = records.reduce((s,r)=>s+r.minutes,0);
+    const dateStr = new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});
+    
+    // Build link data
+    const linkData = {title, date:dateStr, totalMin, sessions: records.map(r=>({
+        date: r.date, time: r.time, minutes: r.minutes,
+        pieces: r.pieces||[], photos: r.photos||[]
+    }))};
+    
+    const json = JSON.stringify(linkData);
+    const encoded = btoa(unescape(encodeURIComponent(json)));
+    shareLinkV2 = 'https://xuyexuchao701713.github.io/piano-practice.html#r='+encoded;
+    
+    const preview = document.getElementById('share-preview-v2');
+    preview.classList.remove('hidden');
+    preview.innerHTML = 
+        '<div class="bg-green-50 border border-green-200 rounded-xl p-3 mb-3">'+
+            '<p class="text-sm font-bold text-green-700 mb-1">🔗 老师查看链接已生成</p>'+
+            '<p class="text-xs text-green-600">老师点击链接即可看到练琴记录和照片</p>'+
+        '</div>'+
+        '<div class="bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-2xl p-5 text-center mb-3">'+
+            '<p class="text-2xl mb-1">🎹</p>'+
+            '<p class="text-lg font-bold">'+title+'</p>'+
+            '<p class="text-xs opacity-70 mb-3">'+dateStr+'</p>'+
+            '<div class="bg-white/20 rounded-xl py-3 px-4 mb-3">'+
+                '<p class="text-3xl font-bold">'+totalMin+'<span class="text-sm font-normal"> 分钟</span></p>'+
+            '</div>'+
+            '<div class="text-left text-sm space-y-1">'+
+                records.map(r=>'<p>🎵 '+r.minutes+'分钟 '+(r.pieces||[]).join('、')+'</p>').join('')+
+            '</div>'+
+            '<p class="text-xs opacity-60 mt-3">坚持就是胜利，每一天都在进步！💪</p>'+
+        '</div>'+
+        '<div class="bg-gray-50 rounded-xl p-3 text-xs text-gray-500 break-all">'+(shareLinkV2.length>60?shareLinkV2.substring(0,60)+'...':shareLinkV2)+'</div>';
+    
+    document.getElementById('share-copy-btn').classList.remove('hidden');
+    document.getElementById('share-wx-btn').classList.remove('hidden');
+}
+
+function copyShareLinkV2() {
+    if(!shareLinkV2) return;
+    const ta = document.createElement('textarea');
+    ta.value = shareLinkV2;
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    alert('✅ 链接已复制！\n\n打开微信 → 粘贴发送给老师');
+}
+
+function shareToWechatV2() {
+    if(!shareLinkV2) return;
+    if(navigator.share) {
+        navigator.share({title:'钢琴练习打卡',text:'钢琴练习报告 👉 '+shareLinkV2}).catch(()=>copyShareLinkV2());
+    } else {
+        copyShareLinkV2();
+    }
+}
+
+// ===== Teacher Report =====
+function checkTeacherReport() {
+    const hash = window.location.hash;
+    if(!hash || !hash.startsWith('#r=')) return false;
+    try {
+        const json = decodeURIComponent(escape(atob(hash.replace('#r=',''))));
+        const data = JSON.parse(json);
+        
+        document.querySelector('nav.tab-bar').style.display = 'none';
+        document.querySelector('main').classList.remove('pb-20');
+        
+        let sessionsHtml = data.sessions.map(s => {
+            let photoHtml = '';
+            if(s.photos && s.photos.length>0) {
+                photoHtml = '<div class="flex gap-1 mt-2 overflow-x-auto">'+s.photos.map(p=>'<img src="'+p+'" class="w-20 h-20 rounded-xl object-cover shrink-0">').join('')+'</div>';
+            }
+            return '<div class="bg-white rounded-xl p-4 border border-purple-100 shadow-sm mb-2">'+
+                '<div class="flex justify-between items-center mb-2">'+
+                    '<span class="font-bold text-gray-800">⏱ '+s.minutes+'分钟</span>'+
+                    '<span class="text-xs text-gray-400">'+s.time+'</span>'+
+                '</div>'+
+                (s.pieces && s.pieces.length>0 ? '<div class="flex flex-wrap gap-1">'+s.pieces.map(p=>'<span class="text-xs bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">🎵 '+p+'</span>').join('')+'</div>' : '')+
+                photoHtml+
+            '</div>';
+        }).join('');
+        
+        document.getElementById('main-content').innerHTML = 
+            '<div class="max-w-lg mx-auto p-4">'+
+                '<div class="text-center mb-5">'+
+                    '<div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-xl font-bold mx-auto mb-3" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">琴</div>'+
+                    '<h2 class="text-xl font-bold text-gray-800">'+data.title+'</h2>'+
+                    '<p class="text-sm text-gray-400">'+data.date+'</p>'+
+                '</div>'+
+                '<div class="rounded-2xl p-5 text-center text-white mb-4" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">'+
+                    '<p class="text-sm opacity-80 mb-1">练习总时长</p>'+
+                    '<p class="text-4xl font-bold">'+data.totalMin+'<span class="text-base font-normal"> 分钟</span></p>'+
+                    '<p class="text-xs opacity-70 mt-1">共 '+data.sessions.length+' 次练习</p>'+
+                '</div>'+
+                '<h3 class="font-bold text-gray-700 mb-3">📋 练习详情</h3>'+
+                sessionsHtml+
+                '<p class="text-center text-xs text-gray-400 mt-5 pb-10">坚持就是胜利，每一天都在进步！💪</p>'+
+            '</div>';
+        return true;
+    } catch(e) { return false; }
+}
+
+// ===== Tab Switching =====
+function switchTab(id) {
+    document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+    const pageEl = document.getElementById('page-'+id);
+    if(pageEl) pageEl.classList.add('active');
+    document.querySelectorAll('.tab-item-v2').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('.tab-item-v2[data-page="'+id+'"]').forEach(el=>el.classList.add('active'));
+    if(id==='records') renderRecords();
+    if(id==='stats') renderStats();
+    document.getElementById('main-content').scrollTop = 0;
+}
+
+document.querySelectorAll('.tab-item-v2').forEach(btn=>{
+    btn.addEventListener('click',()=>switchTab(btn.dataset.page));
+});
+
+// ===== Update all =====
+function updateAll() {
+    const sessions = get(S.sessions) || [];
+    const todayStr = new Date().toISOString().split('T')[0];
+    const todayMin = sessions.filter(s=>s.date===todayStr).reduce((s,r)=>s+r.minutes,0);
+    document.getElementById('today-total').textContent = todayMin;
+    
+    // Streak
+    let streak = get(S.streak)||0;
+    const lastDate = get(S.lastDate);
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+    const yStr = yesterday.toISOString().split('T')[0];
+    if(todayMin>0) {
+        if(lastDate===yStr) streak++;
+        else if(lastDate!==todayStr) streak=1;
+        set(S.lastDate, todayStr);
+        set(S.streak, streak);
+    } else if(lastDate!==yStr && lastDate!==todayStr) {
+        streak=0; set(S.streak,0);
+    }
+    document.getElementById('streak-count').textContent = streak;
+    
+    renderPieces();
+    renderPhotos();
+}
+
+// ===== Init =====
+if(!checkTeacherReport()) {
+    const now = new Date();
+    document.getElementById('weekday-display').textContent = now.toLocaleDateString('zh-CN',{weekday:'long'});
+    document.getElementById('date-display').textContent = now.toLocaleDateString('zh-CN',{month:'long',day:'numeric'});
+    
+    // Reset undone pieces
+    const pieces = get(S.pieces) || [];
+    const todayStr = now.toISOString().split('T')[0];
+    const lastPieceDate = localStorage.getItem('pp_piece_date');
+    if(lastPieceDate !== todayStr) {
+        pieces.forEach(p => p.done = false);
+        set(S.pieces, pieces);
+        localStorage.setItem('pp_piece_date', todayStr);
+    }
+    
+    updateAll();
+}
+</script>
+</body>
+</html>
