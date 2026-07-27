@@ -234,9 +234,9 @@
     </div>
 </div>
 
-<!-- ====== 英语短视频页面 ====== -->
+<!-- ====== 英语对话页面 ====== -->
 <div id="page-english-video" class="page p-4">
-    <h2 class="text-lg font-bold text-gray-800 mb-3">🎬 今日英语短视频</h2>
+    <h2 class="text-lg font-bold text-gray-800 mb-3">💬 今日英语对话</h2>
     <div id="video-content" class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm"></div>
     <p class="text-xs text-gray-400 mt-3 text-center">内容每天自动更新 · 共30天</p>
 </div>
@@ -272,7 +272,7 @@
             <span class="text-lg">🃏</span><span class="text-[9px] font-medium">字卡复习</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
         </button>
         <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="english-video">
-            <span class="text-lg">🎬</span><span class="text-[9px] font-medium">英语视频</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
+            <span class="text-lg">💬</span><span class="text-[9px] font-medium">英语对话</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
         </button>
         <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="rewards">
             <span class="text-lg">🏆</span><span class="text-[9px] font-medium">勋章</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
@@ -302,38 +302,38 @@ function set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
 
 let currentKid = get(STORAGE.currentKid) || 'girl';
 
-// English video data
-const englishVideos = [
-{"id":1,"title":"早上好","sentences":["Good morning! (早上好！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
-{"id":2,"title":"再见","sentences":["Goodbye! (再见！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"},
-{"id":3,"title":"谢谢你","sentences":["Thank you! (谢谢你！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
-{"id":4,"title":"对不起","sentences":["Sorry! (对不起！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"},
-{"id":5,"title":"我饿了","sentences":["I'm hungry. (我饿了。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":6,"title":"我渴了","sentences":["I'm thirsty. (我渴了。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":7,"title":"我要上厕所","sentences":["I need to go to the bathroom. (我要上厕所。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":8,"title":"我喜欢这个","sentences":["I like it! (我喜欢这个！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":9,"title":"我爱你","sentences":["I love you! (我爱你！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":10,"title":"快点","sentences":["Hurry up! (快点！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":11,"title":"等一下","sentences":["Wait a minute. (等一下。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":12,"title":"小心","sentences":["Be careful! (小心！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":13,"title":"好棒","sentences":["Good job! (好棒！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":14,"title":"再来一次","sentences":["One more time! (再来一次！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":15,"title":"晚安","sentences":["Good night! (晚安！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"},
-{"id":16,"title":"你叫什么名字","sentences":["What's your name? (你叫什么名字？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
-{"id":17,"title":"我七岁了","sentences":["I am seven years old. (我七岁了。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
-{"id":18,"title":"今天天气很好","sentences":["It's a nice day today. (今天天气很好。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
-{"id":19,"title":"我可以帮你吗","sentences":["Can I help you? (我可以帮你吗？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":20,"title":"这个多少钱","sentences":["How much is it? (这个多少钱？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":21,"title":"我做完作业了","sentences":["I finished my homework. (我做完作业了。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":22,"title":"我们去公园吧","sentences":["Let's go to the park! (我们去公园吧！)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
-{"id":23,"title":"你能帮我吗","sentences":["Can you help me? (你能帮我吗？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":24,"title":"我想要喝水","sentences":["I want to drink some water. (我想要喝水。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
-{"id":25,"title":"这是我的铅笔","sentences":["This is my pencil. (这是我的铅笔。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
-{"id":26,"title":"你几岁了","sentences":["How old are you? (你几岁了？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
-{"id":27,"title":"我会唱歌","sentences":["I can sing a song. (我会唱歌。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
-{"id":28,"title":"别担心","sentences":["Don't worry. (别担心。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":29,"title":"太棒了","sentences":["That's great! (太棒了！)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
-{"id":30,"title":"明天见","sentences":["See you tomorrow! (明天见！)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"}
+// English daily dialogue - 30 days
+const englishDialogues = [
+{"id":1,"title":"早上好","level":"通用","dialogue":[{"role":"妈妈","en":"Good morning!","cn":"早上好！"},{"role":"孩子","en":"Good morning, Mom!","cn":"早上好，妈妈！"},{"role":"妈妈","en":"Did you sleep well?","cn":"睡得好吗？"},{"role":"孩子","en":"Yes, very well!","cn":"嗯，很好！"}]},
+{"id":2,"title":"吃早饭","level":"通用","dialogue":[{"role":"妈妈","en":"Time for breakfast!","cn":"吃早饭啦！"},{"role":"孩子","en":"What's for breakfast?","cn":"早饭吃什么？"},{"role":"妈妈","en":"Eggs and milk.","cn":"鸡蛋和牛奶。"}]},
+{"id":3,"title":"上学去","level":"通用","dialogue":[{"role":"妈妈","en":"Let's go to school!","cn":"我们上学去吧！"},{"role":"孩子","en":"I'm ready!","cn":"我准备好了！"},{"role":"妈妈","en":"Don't forget your bag.","cn":"别忘了书包。"}]},
+{"id":4,"title":"放学回家","level":"通用","dialogue":[{"role":"妈妈","en":"Welcome home!","cn":"欢迎回家！"},{"role":"孩子","en":"I'm back!","cn":"我回来啦！"},{"role":"妈妈","en":"How was school today?","cn":"今天学校怎么样？"},{"role":"孩子","en":"It was fun!","cn":"很好玩！"}]},
+{"id":5,"title":"做作业","level":"通用","dialogue":[{"role":"妈妈","en":"Let's do your homework.","cn":"来做作业吧。"},{"role":"孩子","en":"Okay, Mom.","cn":"好的，妈妈。"},{"role":"妈妈","en":"Take your time.","cn":"慢慢来，不着急。"}]},
+{"id":6,"title":"洗手吃饭","level":"通用","dialogue":[{"role":"妈妈","en":"Wash your hands.","cn":"去洗手。"},{"role":"孩子","en":"Okay!","cn":"好！"},{"role":"妈妈","en":"Dinner is ready!","cn":"晚饭好了！"},{"role":"孩子","en":"It smells good!","cn":"好香啊！"}]},
+{"id":7,"title":"看电视","level":"通用","dialogue":[{"role":"孩子","en":"Can I watch TV?","cn":"我能看电视吗？"},{"role":"妈妈","en":"Only for 20 minutes.","cn":"只能看20分钟。"},{"role":"孩子","en":"Thank you, Mom!","cn":"谢谢妈妈！"}]},
+{"id":8,"title":"洗澡时间","level":"通用","dialogue":[{"role":"妈妈","en":"Time to take a bath!","cn":"该洗澡啦！"},{"role":"孩子","en":"Can I play with my toys?","cn":"我能玩玩具吗？"},{"role":"妈妈","en":"Okay, but not too long.","cn":"可以，但别太久。"}]},
+{"id":9,"title":"晚安","level":"通用","dialogue":[{"role":"妈妈","en":"Time for bed.","cn":"该睡觉了。"},{"role":"孩子","en":"Can you read me a story?","cn":"能给我读个故事吗？"},{"role":"妈妈","en":"Of course. Good night!","cn":"当然。晚安！"},{"role":"孩子","en":"Good night, Mom!","cn":"晚安，妈妈！"}]},
+{"id":10,"title":"周末计划","level":"通用","dialogue":[{"role":"妈妈","en":"What do you want to do today?","cn":"今天想做什么？"},{"role":"孩子","en":"Let's go to the park!","cn":"我们去公园吧！"},{"role":"妈妈","en":"Great idea!","cn":"好主意！"}]},
+{"id":11,"title":"帮忙做家务","level":"通用","dialogue":[{"role":"妈妈","en":"Can you help me?","cn":"能帮我一下吗？"},{"role":"孩子","en":"What can I do?","cn":"我能做什么？"},{"role":"妈妈","en":"Please put away your toys.","cn":"请把你的玩具收好。"},{"role":"孩子","en":"Okay, I'll do it!","cn":"好的，我来！"}]},
+{"id":12,"title":"天气","level":"通用","dialogue":[{"role":"妈妈","en":"Look outside!","cn":"看外面！"},{"role":"孩子","en":"It's sunny!","cn":"是晴天！"},{"role":"妈妈","en":"Let's go out and play.","cn":"我们出去玩吧。"}]},
+{"id":13,"title":"购物","level":"通用","dialogue":[{"role":"妈妈","en":"Let's go shopping.","cn":"我们去买东西。"},{"role":"孩子","en":"What do we need?","cn":"我们需要什么？"},{"role":"妈妈","en":"Some fruits and vegetables.","cn":"一些水果和蔬菜。"}]},
+{"id":14,"title":"生病了","level":"通用","dialogue":[{"role":"妈妈","en":"Are you feeling okay?","cn":"你感觉还好吗？"},{"role":"孩子","en":"My head hurts.","cn":"我头疼。"},{"role":"妈妈","en":"Let me take your temperature.","cn":"我量一下体温。"},{"role":"孩子","en":"Okay, Mom.","cn":"好的，妈妈。"}]},
+{"id":15,"title":"打电话","level":"通用","dialogue":[{"role":"孩子","en":"Mom, the phone is ringing!","cn":"妈妈，电话响了！"},{"role":"妈妈","en":"Who is it?","cn":"是谁？"},{"role":"孩子","en":"It's Grandma!","cn":"是奶奶！"},{"role":"妈妈","en":"Say hello to Grandma.","cn":"跟奶奶问好。"}]},
+{"id":16,"title":"自我介绍","level":"通用","dialogue":[{"role":"妈妈","en":"What's your name?","cn":"你叫什么名字？"},{"role":"孩子","en":"My name is Duoduo.","cn":"我叫多多。"},{"role":"妈妈","en":"How old are you?","cn":"你几岁了？"},{"role":"孩子","en":"I am seven years old.","cn":"我七岁了。"}]},
+{"id":17,"title":"喜欢的颜色","level":"通用","dialogue":[{"role":"妈妈","en":"What color do you like?","cn":"你喜欢什么颜色？"},{"role":"孩子","en":"I like blue.","cn":"我喜欢蓝色。"},{"role":"妈妈","en":"Me too! Blue is beautiful.","cn":"我也是！蓝色很美。"}]},
+{"id":18,"title":"喜欢的动物","level":"通用","dialogue":[{"role":"妈妈","en":"What's your favorite animal?","cn":"你最喜欢什么动物？"},{"role":"孩子","en":"I like dogs!","cn":"我喜欢狗！"},{"role":"妈妈","en":"Dogs are very friendly.","cn":"狗很友好。"}]},
+{"id":19,"title":"数数","level":"通用","dialogue":[{"role":"妈妈","en":"Can you count to ten?","cn":"你能数到十吗？"},{"role":"孩子","en":"One, two, three... ten!","cn":"一、二、三……十！"},{"role":"妈妈","en":"Good job!","cn":"好棒！"}]},
+{"id":20,"title":"问时间","level":"通用","dialogue":[{"role":"孩子","en":"What time is it?","cn":"几点了？"},{"role":"妈妈","en":"It's 7 o'clock.","cn":"七点了。"},{"role":"孩子","en":"Time to get up!","cn":"该起床了！"}]},
+{"id":21,"title":"生日","level":"通用","dialogue":[{"role":"妈妈","en":"Happy birthday!","cn":"生日快乐！"},{"role":"孩子","en":"Thank you! Is there a cake?","cn":"谢谢！有蛋糕吗？"},{"role":"妈妈","en":"Yes, here you go!","cn":"有，给你！"},{"role":"孩子","en":"I'm so happy!","cn":"我太开心了！"}]},
+{"id":22,"title":"画画","level":"通用","dialogue":[{"role":"孩子","en":"Look at my drawing!","cn":"看我的画！"},{"role":"妈妈","en":"What is it?","cn":"这是什么？"},{"role":"孩子","en":"It's our family!","cn":"是我们一家人！"},{"role":"妈妈","en":"It's beautiful!","cn":"真漂亮！"}]},
+{"id":23,"title":"道歉","level":"通用","dialogue":[{"role":"孩子","en":"Mom, I'm sorry.","cn":"妈妈，对不起。"},{"role":"妈妈","en":"What happened?","cn":"怎么了？"},{"role":"孩子","en":"I broke the cup.","cn":"我把杯子打碎了。"},{"role":"妈妈","en":"It's okay. Be careful next time.","cn":"没关系，下次小心。"}]},
+{"id":24,"title":"借东西","level":"通用","dialogue":[{"role":"孩子","en":"Can I use your pen?","cn":"我能用你的笔吗？"},{"role":"妈妈","en":"Sure, here you are.","cn":"当然，给你。"},{"role":"孩子","en":"Thank you! I'll return it.","cn":"谢谢！我会还的。"}]},
+{"id":25,"title":"问路","level":"通用","dialogue":[{"role":"孩子","en":"Where is the bathroom?","cn":"洗手间在哪？"},{"role":"妈妈","en":"It's over there.","cn":"在那边。"},{"role":"孩子","en":"Thank you!","cn":"谢谢！"}]},
+{"id":26,"title":"穿衣服","level":"通用","dialogue":[{"role":"妈妈","en":"Put on your coat. It's cold.","cn":"穿上外套，天冷。"},{"role":"孩子","en":"But I'm not cold.","cn":"但我不冷。"},{"role":"妈妈","en":"Please, just in case.","cn":"以防万一，穿上吧。"},{"role":"孩子","en":"Okay, Mom.","cn":"好吧，妈妈。"}]},
+{"id":27,"title":"夸赞","level":"通用","dialogue":[{"role":"妈妈","en":"You did a great job!","cn":"你做得真棒！"},{"role":"孩子","en":"Really?","cn":"真的吗？"},{"role":"妈妈","en":"Yes, I'm so proud of you.","cn":"是的，我为你骄傲。"},{"role":"孩子","en":"I love you, Mom!","cn":"我爱你，妈妈！"}]},
+{"id":28,"title":"下雨天","level":"通用","dialogue":[{"role":"孩子","en":"It's raining outside!","cn":"外面下雨了！"},{"role":"妈妈","en":"Don't forget your umbrella.","cn":"别忘了带伞。"},{"role":"孩子","en":"Can we jump in puddles?","cn":"能踩水坑吗？"},{"role":"妈妈","en":"Okay, but wear your rain boots.","cn":"可以，但要穿雨靴。"}]},
+{"id":29,"title":"好朋友","level":"通用","dialogue":[{"role":"妈妈","en":"Who is your best friend?","cn":"你最好的朋友是谁？"},{"role":"孩子","en":"Xiao Ming is my best friend.","cn":"小明是我最好的朋友。"},{"role":"妈妈","en":"What do you like about him?","cn":"你喜欢他什么？"},{"role":"孩子","en":"He is very funny!","cn":"他很有趣！"}]},
+{"id":30,"title":"感恩","level":"通用","dialogue":[{"role":"孩子","en":"Thank you for everything, Mom.","cn":"妈妈，谢谢你做的一切。"},{"role":"妈妈","en":"You're welcome, sweetheart.","cn":"不客气，宝贝。"},{"role":"孩子","en":"You are the best mom!","cn":"你是最好的妈妈！"},{"role":"妈妈","en":"And you are the best child!","cn":"你是最好的孩子！"}]}
 ];
 
 // ===== 孩子切换 =====
@@ -655,36 +655,32 @@ function prevBoyCard() {
     showBoyCard();
 }
 
-// ===== 英语短视频 =====
+// ===== 英语对话 =====
 function updateVideo() {
     const dayOfYear = Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000);
-    const idx = dayOfYear % englishVideos.length;
-    const video = englishVideos[idx];
+    const idx = dayOfYear % englishDialogues.length;
+    const dialogue = englishDialogues[idx];
     const container = document.getElementById('video-content');
-    const levelLabel = video.level==='幼儿园' ? '👧 幼儿园' : '👦 二年级';
+    
     container.innerHTML = `
-        <div class="flex items-center gap-2 mb-3">
-            <span class="px-2 py-1 rounded-lg text-xs font-medium" style="background:#fef3c7;color:#92400e">${levelLabel}</span>
-            <span class="text-sm text-gray-400">第${idx+1}/${englishVideos.length}天</span>
+        <div class="flex items-center gap-2 mb-4">
+            <span class="px-2 py-1 rounded-lg text-xs font-medium" style="background:#fef3c7;color:#92400e">📅 第${idx+1}/${englishDialogues.length}天</span>
         </div>
-        <h3 class="text-lg font-bold text-gray-800 mb-4">${video.title}</h3>
+        <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">${dialogue.title}</h3>
         <div class="space-y-3">
-            ${video.sentences.map((s,i) => `
-                <div class="p-3 rounded-xl" style="background:#f0fdf4">
-                    <p class="text-sm font-medium" style="color:#5b8c5a">${s}</p>
+            ${dialogue.dialogue.map((line,i) => `
+                <div class="flex gap-3 items-start">
+                    <span class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${line.role==='妈妈'?'bg-pink-400':'bg-blue-400'}">${line.role==='妈妈'?'妈':'宝'}</span>
+                    <div class="flex-1 p-3 rounded-xl ${line.role==='妈妈'?'bg-pink-50 border border-pink-100':'bg-blue-50 border border-blue-100'}">
+                        <p class="text-xs text-gray-400 mb-1">${line.role}</p>
+                        <p class="text-base font-bold" style="color:#5b8c5a">${line.en}</p>
+                        <p class="text-sm text-gray-500 mt-1">${line.cn}</p>
+                    </div>
                 </div>
             `).join('')}
         </div>
-        ${video.video ? `
-        <div class="mt-4">
-            <a href="${video.video}" target="_blank" class="block w-full py-3 rounded-xl text-center text-white font-medium text-sm active:opacity-80" style="background:#fb7299">
-                🎬 点击观看教学视频
-            </a>
-            <p class="text-xs text-gray-400 text-center mt-2">将跳转到B站观看</p>
-        </div>
-        ` : ''}
-        <div class="mt-4 p-3 rounded-xl bg-gray-50 text-center">
-            <p class="text-xs text-gray-500">💡 让孩子跟着读2-3遍，模仿发音和语调</p>
+        <div class="mt-5 p-3 rounded-xl bg-gray-50 text-center">
+            <p class="text-xs text-gray-500">💡 妈妈和孩子各读自己的角色，交换角色再练一遍！</p>
         </div>
     `;
 }
