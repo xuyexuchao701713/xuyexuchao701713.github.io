@@ -74,12 +74,6 @@
         <div id="girl-en-words-today" class="flex flex-wrap gap-2 min-h-[40px]"></div>
     </div>
 
-    <!-- 每日句子 -->
-    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
-        <h3 class="font-bold text-gray-800 text-sm mb-2">💬 每日一句</h3>
-        <textarea id="girl-sentence" placeholder="输入今天教的英语句子..." class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm resize-none h-16"></textarea>
-    </div>
-
     <!-- 绘本打卡 -->
     <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3 cursor-pointer" onclick="girlReadingCheck()" id="girl-reading-card">
         <div class="flex items-center gap-3">
@@ -285,7 +279,6 @@
 const STORAGE = {
     girlWords: 'kid_girl_words',
     girlEnWords: 'kid_girl_en',
-    girlSentence: 'kid_girl_sentence',
     girlReading: 'kid_girl_reading',
     girlSleep: 'kid_girl_sleep',
     girlPhoto: 'kid_girl_photo',
@@ -416,14 +409,7 @@ function removeGirlEnWord(i) {
     renderGirlEnWords();
 }
 
-// 妹妹：句子
-const girlSentenceInput = document.getElementById('girl-sentence');
-girlSentenceInput.value = get(STORAGE.girlSentence) || '';
-girlSentenceInput.addEventListener('input', function() {
-    set(STORAGE.girlSentence, this.value);
-});
-
-// 妹妹：绘本打卡
+// 妹妹：绘本打卡// 妹妹：绘本打卡
 let girlReadingDone = !!get(STORAGE.girlReading);
 function girlReadingCheck() {
     girlReadingDone = !girlReadingDone;
@@ -776,7 +762,6 @@ document.querySelectorAll('.tab-item').forEach(btn => {
 function refreshAll() {
     renderGirlWords();
     renderGirlEnWords();
-    girlSentenceInput.value = get(STORAGE.girlSentence) || '';
     updateGirlReadingUI();
     updateGirlSleepUI();
     updateGirlReview();
