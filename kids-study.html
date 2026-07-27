@@ -293,7 +293,9 @@ const STORAGE = {
     streaks: 'kid_streaks',
     lastDate: 'kid_last_date',
     dailyReset: 'kid_daily_reset',
-    history: 'kid_history'
+    history: 'kid_history',
+    girlAllWords: 'kid_girl_all_words',
+    boyAllWords: 'kid_boy_all_words'
 };
 
 function get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){return null;} }
@@ -359,6 +361,12 @@ function addGirlWord() {
     if(words.includes(word)) { input.value=''; return; }
     words.push(word);
     set(STORAGE.girlWords, words);
+    // 同时加入积累字库（用于字卡复习，不会被每日重置清空）
+    const allWords = get(STORAGE.girlAllWords) || [];
+    if(!allWords.includes(word)) {
+        allWords.push(word);
+        set(STORAGE.girlAllWords, allWords);
+    }
     input.value = '';
     renderGirlWords();
 }
@@ -381,7 +389,8 @@ function removeGirlWord(i) {
 }
 
 function resetGirlWords() {
-    if(confirm('确定清空所有认字记录��')) {
+    if(confirm('确定清空所有积累的字卡？这将删除全部复习字！')) {
+        set(STORAGE.girlAllWords, []);
         set(STORAGE.girlWords, []);
         renderGirlWords();
         updateGirlReview();
@@ -478,14 +487,14 @@ function updateGirlSleepUI() {
 // ===== 妹妹：字卡复习 =====
 let girlCardIndex = 0;
 function updateGirlReview() {
-    const words = get(STORAGE.girlWords) || [];
-    document.getElementById('girl-review-count').textContent = '本周累计：' + words.length + ' 个字';
+    const words = get(STORAGE.girlAllWords) || [];
+    document.getElementById('girl-review-count').textContent = '累计积累：' + words.length + ' 个字';
     girlCardIndex = 0;
     showGirlCard();
 }
 
 function showGirlCard() {
-    const words = get(STORAGE.girlWords) || [];
+    const words = get(STORAGE.girlAllWords) || [];
     const flashcard = document.getElementById('girl-flashcard');
     flashcard.classList.remove('flipped');
     if(words.length === 0) {
@@ -499,20 +508,20 @@ function showGirlCard() {
 }
 
 function flipGirlCard() {
-    const words = get(STORAGE.girlWords)||[];
+    const words = get(STORAGE.girlAllWords)||[];
     if(!words.length) return;
     document.getElementById('girl-flashcard').classList.toggle('flipped');
 }
 
 function nextGirlCard() {
-    const words = get(STORAGE.girlWords)||[];
+    const words = get(STORAGE.girlAllWords)||[];
     if(!words.length) return;
     girlCardIndex = (girlCardIndex+1) % words.length;
     showGirlCard();
 }
 
 function prevGirlCard() {
-    const words = get(STORAGE.girlWords)||[];
+    const words = get(STORAGE.girlAllWords)||[];
     if(!words.length) return;
     girlCardIndex = (girlCardIndex-1+words.length) % words.length;
     showGirlCard();
@@ -527,6 +536,12 @@ function addBoyWord() {
     if(words.includes(word)) { input.value=''; return; }
     words.push(word);
     set(STORAGE.boyWords, words);
+    // 同时加入积累词库
+    const allWords = get(STORAGE.boyAllWords) || [];
+    if(!allWords.includes(word)) {
+        allWords.push(word);
+        set(STORAGE.boyAllWords, allWords);
+    }
     input.value = '';
     renderBoyWords();
 }
@@ -547,7 +562,8 @@ function removeBoyWord(i) {
 }
 
 function resetBoyWords() {
-    if(confirm('确定清空所有词语记录？')) {
+    if(confirm('确定清空所有积累的词卡？这将删除全部复习词语！')) {
+        set(STORAGE.boyAllWords, []);
         set(STORAGE.boyWords, []);
         renderBoyWords();
         updateBoyReview();
@@ -608,14 +624,14 @@ function updateBoySleepUI() {
 // 哥哥：词语复习
 let boyCardIndex = 0;
 function updateBoyReview() {
-    const words = get(STORAGE.boyWords) || [];
-    document.getElementById('boy-review-count').textContent = '本周累计：' + words.length + ' 个词语';
+    const words = get(STORAGE.boyAllWords) || [];
+    document.getElementById('boy-review-count').textContent = '累计积累：' + words.length + ' 个词语';
     boyCardIndex = 0;
     showBoyCard();
 }
 
 function showBoyCard() {
-    const words = get(STORAGE.boyWords) || [];
+    const words = get(STORAGE.boyAllWords) || [];
     document.getElementById('boy-flashcard').classList.remove('flipped');
     if(words.length===0) {
         document.getElementById('boy-card-front').textContent = '无';
@@ -628,20 +644,20 @@ function showBoyCard() {
 }
 
 function flipBoyCard() {
-    const words = get(STORAGE.boyWords)||[];
+    const words = get(STORAGE.boyAllWords)||[];
     if(!words.length) return;
     document.getElementById('boy-flashcard').classList.toggle('flipped');
 }
 
 function nextBoyCard() {
-    const words = get(STORAGE.boyWords)||[];
+    const words = get(STORAGE.boyAllWords)||[];
     if(!words.length) return;
     boyCardIndex = (boyCardIndex+1)%words.length;
     showBoyCard();
 }
 
 function prevBoyCard() {
-    const words = get(STORAGE.boyWords)||[];
+    const words = get(STORAGE.boyAllWords)||[];
     if(!words.length) return;
     boyCardIndex = (boyCardIndex-1+words.length)%words.length;
     showBoyCard();
