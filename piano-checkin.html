@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="钢琴打卡">
+    <meta name="theme-color" content="#8b5e3c">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiXHU5NGEyXHU3NDM0XHU3ZWMzXHU0ZTYwXHU2MjUzXHU1MzYxIiwic2hvcnRfbmFtZSI6Ilx1OTRhMlx1NzQzNFx1NjI1M1x1NTM2MSIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y5ZmFmYiIsInRoZW1lX2NvbG9yIjoiIzhiNWUzYyIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQUlBQUFEZHZ2dFFBQUFNVFVsRVFWUjRuTzJkZlZBVTV4M0g5K0E0UUY0TzhZQVRyZ2dpZ3BFcmpNcUxWRFNJdEZGTU5MRk5mRUdwWThhcHFhMUpoazcvcU0zTE9HMG0xWm5VVENmVjJEcDFJdFZxTEkwYXRDQmlRVkZBQlpXZ1JQRXRSc1JEenVONHVlTzR1LzV4NXJMQzNjbmRzN3ZQOCt6K1B1TWY3TXZ0UHZkN1BuNmYzYjI5UGRuV05YTVlBUEFWUDl3TkFPZ0dCQUtRQUlFQUpFQWdBQWtRQ0VBQ0JBS1FBSUVBSkVBZ0FBa1FDRUFDQkFLUUFJRUFKRUFnQUFrUUNFQUNCQUtRQUlFQUpPUzRHMEFLcFh2cXZIM0p0cEk4UGxwQ0Z6SUozbERtZ3l0alIycFdTVVVnWHFWeGh4UmtFck5BV0tSeGgxaGxFcUZBUkhrekdwR1pKQjZCQ1BkbU5PSXdTUXdDVWFjT0c5bzFvbHNncXRWaFE2OUd0QW9rR25YWTBLZ1JmUUtKVWgwMmRHbEVrMENpVjRjTkxSclJJWkNrMUdGRHZrWVVmSmdxV1hzWUd0NDcwUWxFZnZrRWc5Z29JamVCd0I0MnhGYUR4QVFpdGxna1FGb1VFWmRBWUk5blNLc1BXUUtSVmgweUlhcEtwQXhoUkJXRkZrZ1l6b2hJSUxESE4waW9HMzZCU0tnQ3ZXQ3ZIbWFCc0w5L0VZQzNoamdGQW51NEFtTWxzUWtFOW5BTHJucmlFUWpzNFFNc1ZjVWdFTmpESDhMWFZtaUJ3QjYrRWJqQ2dnb0U5Z2lEa0hVV1RpQ3dSMGdFcTdaQUFvRTl3aU5NemZGZmlRYW9SZ2lCSUg1d0lVRGxlUmNJN01FTDMvWG5WeUN3aHdSNDdRVTRCZ0tRNEZFZ2lCOXk0Szh2K0JJSTdDRU5ubm9FaGpBQUNWNEVndmdoRXo3NmhYdUJ3QjZTNGJ4M1lBZ0RrT0JZSUlnZjh1RzJqeUNCQUNTNEZBamloeFk0N0NsSUlBQUp6Z1NDK0tFTHJ2b0xFZ2hBZ2h1QklINW9oSk5lZ3dRQ2tPQkFJSWdmZWtIdk8wZ2dBQW5VQjB3UkZUK0h0cFhldXRMQXlhYWk0NVBYYk5uTk1JekZiTnErdnBDVGJUcDVmZXYraU9nNGJyZUpBc3FEcWlDQkFDUkFJQUFKcEY5dEptcjhZaGdtTW5hU2FhRFA3V0s3cmZQbVZlZFU2UGlvc01ob2QrdU9WMnNjZjhoa3NvbEowejNzMURvODlQRE9kZWRrV0dSVTZIaTNtM1hnTDFkNFhrRmdTdmZVK1R5S2llcG52L05YL3NyRFV1dXc1YU4xODUyVGFYbUw1aXg3L1puYmxDc0NWNzJ6dzhNS2ZYcmRqamRmY1U1cTU3Mll1M1R0R0JvckVtQUlBNUR3WFNEU3hpOEFCWjk3RXhJSVFBSUVBcER3L1VJaW1VUFlWNmVQSGR2MVIvVHRiUHEwS2lBd3lEbjVqOStWZE4rN2liNVpkV0pxOFh1NzBMZkRCNzZkaVBtWVFHVGFBNkRnVzUvQ0VBWWdJYXJyUUF6REtLTmlVM01LWEM2eTIyenRqVFhPeVFseENWRS9TSEszSFQ5L2YvWmtvalpicFVsMHVhYkZiTzVvUHUyY1ZHa211MXZUMFR4M2l5aEZiQUpwVXRJMUtla3VGMW1ITFd5QmttZk9HOHVGUkFmemxyL2hibEdmWHNjV2FHcm04M0FoOFJuQUFaQlk4YUZuNFJnSVFBSUVjb0Y1c0wrbjh5N3VWdENCMkk2QnZNSmlHalE4ZW1EUWRmWjJkeHE2di90RDEybnFONGFPai9yRm4vK051NEVVSUFHQjdQYUJYcjFScnpQb090bXpteXIrZWU3d0huY3ZzZzRQT2YrdU83aXo0ZWplTWU2dHZueDNmZm51WjY2Mll2TW5jY25hTVc2VFpNUWprRUhYMmFmWEdmVzZ2aDZkVWE5NzhyZSt1MC9mYmJNT2oxN2ZPbXp4c0xWQm80R0VYeVFsSC9FSTlObTc2MHo5UnNTTitNc0RiRmFyM1c3anBFbFN3R3VCaUQySEQxZXB2UkpJRVJ3U0VSMGJFUjNuL0tlTVVsK3NPblRodndjOHZDb3NNaW9nY0J4eVl4bDVRQ0Q2UnZqQTI3c1R4Wk5BNFNvMSs5YlM3NUhKUXBTUjMxbnl2VEhCWVVyMldxYiszaU9mdkhlbnRlbVpPNXEzL0kya2pGeXVtazA3NGhGSXFacm81eThQVjZtZnpwVllaWFJzZ0NMSTgydHZ0elllMy9WQjMrTnU5a3k1SXJDZytNMUxOVjg4dUhYTk9kUFlveXYvNkxlcE9Rdm1GMjhhRnhiQnh4dWhDNjl2NXlCMkNMT1lUZklBaGN6UHV5dGJGck9wN3VET2l5Y09NWFk3ZTM1UVNOakxiMzBZbDZ3ZEhqSWYvOXNIMXhxcVI3d3dPRlNadityWHorWCtHTFhkNUNIUklZeDkrODZZc052YjZpdHJEK3dZRVR3TXc2ZzBrMS9hdUNWeVlqekRNSEpGNE9JTjc2b1RVK3MrLzVSOTRqYllaNmpZdWVYcTJhcjhsUnNqSjA1Q2JqNnRpRWNncitqc2FEdFp0cjJ6bzIzMG9yUzhoUVZyM241cTFKUEpaaTFjSGo5OTVwZC9mZi9SL1R2c2xXOWRQbmY3U21OcXpvTFpTMG9jd2trTnlRblVwOWZWSHR6WlZsODVZc3hpR0NZb0pMeGc5YVpwczEyUFN0SHh5YXZmLy92Wnczdk9IOXZQamlLNzNYYjFiT1cxY3lla3FaR0VCREwyNkM1V0hXeXBMcmVZVGFPWFRwbVpWMWhTR3FLTTlMQUZ1U0l3NzZmcnRYbUxUcFo5ZlBQU1dmYWlKeG8xbkppV3N5QnJjYkVxenUwdFFTSkRFZ0oxM1c0L2YveEFlMk8xeldvZHZUUmNwYzVmc1RGNTFyd3hiaTBpUnZQSzIzL3FhS212S2Z2NDhjTnYyWXZzTmx0YmZXVmJmV1hzbERUdDNLS1U3UG1LSUE0dUdwR01xQVd5Mnp0YTZzOGYvOWMzMTVwZExwY0hLREtMVm1ZWEZjc1ZYbC9XUzhySVRVakxiS3JZMTNEa004dlF5RWk3ZjZQMS9vM1drMlhiVTdMeXRYTVh4MDM5b1MvdHB3SHhuTWF6TWVqdXR6ZWV1bEo3VlAvZ0c1Y3J5R1IrSEg1ZUVUZ3UxR29aR3JZTXVWdGhmSXhtYXViekNkcXN1R1N0bnovcC8ya2xlaHJQUFBHbXByMnhwdXQydTd0MUZNRWgycmxGTXdxWDdTcDlqYXY5eGlaTkw5cndUbXR0UlV2TkY0Kzc3bzFlUWQ5MXIrSG8zb2FqZXdPQ2d1T256VWpVWmlkb3M0aDZSSkRQaUVFZ1UzL3Y1Vk5IUEh2RE1FeEVqR1pHNGJLMHZFVjhISmNFaFlUUFdyaDgxZ3V2M2ZucWZNdkovOXhvUG0yM3VVZzRpMm13by9sTVIvTVpQMy8vbGIvZm9VNU01YndsQWlNR2dRSUNnNzl1T3VYQm52am5aczc4eWF0SjZiTVptY3c1azhPcmY2R1JVVS8ra3NrbXBXVk9Tc3ZzMCtzdW5UcmNXbHRoN0hubzhpVnpYOTBnQW5zWTBSd0RHYm9mN05uODg2SEJmdlpNbFdaeWF2YjgxT3lDaUJnTm5tYlo3UTl1WDd0K3Z1NzZoZit4NzVGTjFHWXZLOTJHcDBsalFJckhRRXFWT25mcDJsUDcvc0l3VEVTTUpqVzdJRFduQVAvRkdKbE1uVGhOblRndDcyZnJIOTIvYytOQzdmVUx0VDJkZHd2WC9nWnp3N2hESkFJeERET2pjSm5GTkRnNVkzWk1RZ3J1dHJoZ1F1eWtDYkdyczE5Y2JUR2J2UDdZam1COGViZ0NtYU1ZQ1ZpSExjWkhYZGhHVEM3dzlrWmU4U1NRUy9iOTRaZmZmbjFaNEoyR1Q0aVpuSkU3WmNhY2hMUXNnWGN0UENJWENBdTlqN3BhcXN0Ti9iMVNFQWkrV01nWHMxNVlqcnNKUWdBQzhZSW1KVjBjbDNtZWljaUhzRVhyTjQvK3BKTnpCZ3o2ZzF2ZllsOTZ6bHdvaWZoaFJDK1FNbXFpQUh1cHE2OWkyek1oTGlFcDQwY0M3SmNFZkJuQzRDdWJiTXlEL2MzVlQzMkxQcnVvbVAyWkNVWDQwTE53RElSS2M5VWg5a2NvU3BVNk5XY0J4dllJREFpRWhNVnNHdkZOMXN4RkswYzhIay9jZ0VCSXRKd3NIK3d6T0NkRGxKRnBjNHN3dGtkNGZCUUlEb01ZaGhrZU1qY2QyOCtlazFXMFNoNUExaS94akIxQm54TU5NQXpUVWwwK1lPaHhUbzVUUnFibkw4SFlIaXlBUUQ1aU1ac2F2eXhqejhsYXVNS0htL05wQndUeWtlWVRod2FNajUyVDQ4SWkwZ3VXWW1zTlBud1hTTXFIUVVPbWdhYUtmZXc1V1l1TG4va01FSkx4dVRjaGdYemhZdVhuN0pPdjBBaFZSc0hMR051REVSRElhK3gyVzN0VERYdk83Q1VsOUo1OElTS3EzNDBYRXQzZEd4MHRaenFhend3WURlcytMQ1AvNjRJZVFEa2FvZmh0NHlVcWZrcFUvSlNjbDBwczFtR3E3VUVFaGpCVXBHd1BneTZRbE0vRnhBRmlEMElDQVVod0lCQ0VFTDJnOXgwa0VJQUVOd0pCQ05FSUo3MEdDUVFnd1psQUVFSjB3VlYvUVFJQlNIQXBFSVFRTFhEWVU1QkFBQkljQ3dRaFJEN2M5aEVrRUlBRTl3SkJDSkVNNTczRFN3S0JRMlRDUjcvQUVBWWd3WmRBRUVLa3dWT1A4SmhBNEJBNThOY1hNSVFCU1BBckVJUVFDZkRhQzd3bkVEaUVGNzdyTDhRUUJnN2hRb0RLd3pFUWdJUkFBa0VJQ1k4d05SY3VnY0FoSVJHczJvSU9ZZUNRTUFoWlo2R1BnY0FodmhHNHdoZ09vc0VoL2hDK3Ruak93c0FoUHNCU1ZXeW44ZUFRdCtDcUo4N3JRT0FRVjJDc0pPWUxpZUFRT25ocmlQOUtORGlFQXZicTRSZUlJYUFLbEVKQzNWQ2ZrY2d0a24zaW9yZVFvSTRESWhMSUNUbDFJUm1pcWtTV1FBeGgxU0VRMHVwRDFoREdCb2F6RVpDbWpnUGlFc2dKbWZYQ0JiSFZJRGVCbkVnOGlvaFZ4d0c1Q2VTRThBcnlDdm52bllJRWNpS3BLQ0pmSFFjMENlUkE5QnJSb280RCtnUnlJRXFONkZMSEFhMENPUkNOUmpTcTQ0QnVnUnhRclJHOTZqZ1FnMEFPcU5PSWRuVWNpRWNnSjRTYkpBNXZuSWhRSUNkRW1TUXliNXlJV1NBMldHUVNxelJzcENJUUcxNWxrb0kwYktRb2tFdDhzRXBxcnJnRUJBS1FvT0REVklCa1FDQUFDUkFJUUFJRUFwQUFnUUFrUUNBQUNSQUlRQUlFQXBBQWdRQWtRQ0FBQ1JBSVFBSUVBcEFBZ1FBa1FDQUFpZjhEMzZNUzFscHNXTElBQUFBQVNVVk9SSzVDWUlJPSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9wbmcifSx7InNyYyI6ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBSUFBQUI3R2tPdEFBQWhQRWxFUVZSNG5PM2RlWGhWNVozQThYdHpzNUZBRWtJU1FvSmhDUUdDSUNIc0VGWUJVZmFsV2xFUnE4elQxazc3VE1lWlZzZlJUcWQycG1PZHp0aHBxOWEyVDZSVmk0SUxhMlVSQ0ZzQUNSQTJqUkJFa0dBMnNxODNtVDlDTVlYazV0eDd6N25uWGI2ZlAvcTA5dWJjMXlmbi9YMXo3dXA4Zm1XV0F3Q2dueUM3RndBQXNBY0JBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBCUUJBQUJORVFBQTBGU3czUXNBelBkRWRvNFZoLzM1dzFPc09DeGdGK2Z6SzdQc1hnUGdIWXZtdS84b0JPUkNBQ0EwWVdlOWNWUUJ3aUlBRUlnQzQ5NElrZ0JCRUFEWVNaT0o3eGs5Z0YwSUFBS0tpZDhsZW9DQUlRQ3dIRVBmWjhRQWxpSUFzQVJEMzNURUFLWWpBREFUY3o4QUtBSE1RZ0RnTDRhK2pZZ0IvRUVBNENQbXZsQW9BWHhBQU9BZDVyN2dLQUdNSXdBd2hMa3ZIVXFBTGhFQWRJSFJMelV5QUE4SUFEckczRmNNSmNDdENBQnV4dWhYR0JsQWV3UUExekgzdFVJSjRDQUFjREQ2TlVZR05FY0E5TVhjeHcyVVFFOEVRRWVNZm5TSURPaUdBT2lGMFk4dWtRRjlFQUJkTVByaEZUS2dBd0tnUGtZL2ZFWUcxRVlBVk1ib2h5bklnS29JZ0pvWS9UQWRHVkFQQVZBTm94K1dJZ01xSVFEcVlQUWpZTWlBR29Mc1hnRE13ZlJISUhHK3FZRXJBT214RldFakxnV2tSZ0FreHVpSElNaUFwQWlBbEJqOUVCQVprQTdQQWNpSDZROHhjV1pLaHlzQW1iREJJQVV1QldUQkZZQTBtUDZRQmVlcUxMZ0NrQURiQ1pMaVVrQndCRUJvakg0b2dBd0lpNGVBeE1YMGh4bzRrNFhGRllDSTJEQlFFcGNDb3VFS1FEaE1mNmlLYzFzMEJFQXM3QkNvalROY0tEd0VKQW8yQnJUQ3cwRWk0QXBBQ0V4LzZJWnpYZ1FFd0g3c0JPaUpNOTkyUEFSa0p6WUE0T0RoSVB0d0JXQWJwai9RaHIxZ0Z3SmdEODU0b0QxMmhDMTRDQ2pRT05FQkQzZzRLSkM0QWdnb3BqL2dHWHNra0FoQTRIQm1BMGF3VXdLR0FBUUk1elJnSFBzbE1IZ093SEtjeW9EUGVFckFVbHdCV0l2cEQvaURIV1FwQW1BaHpsM0FmK3dqNnhBQXEzRFdBbVpoTjFtRUFGaUM4eFV3RjN2S0NnVEFmSnlwZ0JYWVdhWWpBQ2JqSEFXc3cvNHlGd0V3RTJjbllEVjJtWWw0SDRBNU9DbUJBT010QXY3akNzQUVUSDhnOE5oMy9pTUEvdUlzQk96Qzd2TVRBZkFMNXg5Z0wvYWdQd2lBN3pqekFCR3dFMzFHQUh6RU9RZUlnLzNvR3dMZ0M4NDJRRFRzU2g4UUFLOXhuZ0ZpWW05Nml3QjRoek1NRUJrNzFDc0V3QXVjVzRENDJLZkdFUUFBMEJRQk1Jby9Ld0Jac0ZzTklnQ0djRDRCY21IUEdrRUF1c2FaQk1pSW5kc2xBdEFGemlGQVh1eGZ6d2lBSjV3OWdPell4UjRRZ0U1eDNnQnFZQzkzaGdCMGpETUdVQWs3dWtNRW9BT2NLNEI2Mk5lM0lnQUFvQ2tDY0RQK1RBQlV4ZTYrQ1FINEc1d2ZnTnJZNCswUmdLOXdaZ0E2WUtmZlFBQ3U0NXdBOU1GK2IwTUFBRUJUQk1EaDRNOEJRRC9zZWdjQmNIQWVBTHBpNytzZUFNNEFRR2VhVHdEZEF3QUEydEk2QUpySEg0QkQ3em1nYndCMC9xMERhRS9iYWFCcEFMVDlmUVBva0o0elFkTUFBQUIwRElDZXFRZmdtWWFUUWJzQWFQZzdCbUNRYnZOQnJ3RG85dHNGNEMydHBvUmVBUUFBM0tCUkFMUUtPd0NmNlRNcmRBbUFQcjlSQVA3VFpHTG9FZ0FBd0UyMENJQW1NUWRnSWgzbWhoWUJBQURjU3YwQTZKQnhBRlpRZm5vb0hnRGxmMzhBTEtYMkRGRThBQUNBenFnY0FMWFREU0F3Rko0a3lnWkE0ZDhaZ0FCVGRaNG9Hd0FBZ0dkcUJrRFZYQU93aTVKVFJjMEFBQUM2cEdBQWxBdzFBTnVwTjFzVURBQUF3QWpWQXFCZW9nR0lRN0VKbzFRQUZQdmRBQkNRU25OR3FRQUFBSXhUSndBcVpSbUF5SlNaTnVvRUFBRGdGVVVDb0V5UUFVaEJqWm1qU0FBQUFONVNJUUJxcEJpQVhCU1lQQ29FQUFEZ0Era0RvRUNFQVVoSzl2a2pmUUFBQUw2Uk93Q3k1eGVBN0tTZVFuSUhBQURnTTRrRElIVjRBU2hEM2xra2NRQUFBUDZRTlFEeUpoZUFlaVNkU0xJR0FBRGdKeWtESUdsc0FTaE14cmtrWlFBQUFQNGpBQUNnS2ZrQ0lPTjFGZ0FkU0RlZDVBc0FBTUFVa2dWQXVzQUMwSXBjTTBxeUFBQUF6RUlBQUVCVE1nVkFybXNyQUhxU2FGTEpGQUFBZ0lta0NZQkVVUVdnT1ZubVZiRGRDNERvdHI3NjA1TTVXK3hlaFRrZWVPYmxQcW5EYnYzblI3YTh1ZXZOWHdWK1BWWkxIREQwd1IvOTF1NVZRRnpTWEFFQUFNd2xSd0JrdVo0Q2dEWlNUQzA1QWdBQU1KMEVBWkFpcEFCd0UvRm5sd1FCQUFCWWdRQUFnS1pFRDRENDExQUEwQm5CSjVqb0FRQUFXSVFBQUlDbW5NK3Z6TEo3RFowUy9PcEpFeTF1ZDJ0cmk3bkh2UHhKL3RxZmZjL3piWG9tM3JicXVXeHo3OWZsQ25ZNG5iZis4OWFXbHBZV3Q3bjM1WEE0VHU3WnRDMzdCYyszc2VKZnN6MVhjSWgxQjRkQlAzOTRpdDFMNkJnZkJZRXVCTGxjRG9mTDNHTzZRcnFlU2s1blVNQ0dsek1veUJWay90VndrS3ZyL1JYSWYwM2dKandFQkFDYUVqY0FQUDREUUEzQ1RqTnhBd0FBc0JRQkFBQk5FUUFBMEpTZ0FSRDJJVE1BOElHWU0wM1FBQUFBckVZQUFFQlRJZ1pBekdzbEFQQ0hnSk5OeEFBQUFBS0FBQUNBcHZnc0lCalYzTlM0OFRjL011VlE5ZFdWWGQ2bXF2ekxkMTk4eXBTN2N6Z2NNeC80WGxTdjNsM2U3SEpCL2hzLytiWlpkMnBFMlpYUFRQK2tzQWVlZWJsUDZqQnpqd2tsQ1JjQUFSOG1RNXZXbHBaUFB3cmNiNmVwdnM3RXU4dGF0dHFzUXdFK2V5STdSNmhQQnVVaElBRFFGQUVBQUUwUkFBRFFsRmdCNEFrQUFHb1Rhc3FKRlFBQVFNQVFBQURRRkFFQUFFMEo5ejRBd0ViaEVUMVNNeWFaZGJUSzBxdkZuNS96Zkp1UXNQQ1U5RXl6N3JGTldFUjNjdzhJVlRtZlg1bGw5eHF1RStxNUVWakt5QnR1WS92MCs4Wi8vakV3NjdGSS91Nk5mL245enp6ZlJvRi9UZmhBa0xlRDhSQVFBR2lLQUFDQXBnZ0FBR2lLQUFDQXBrUUpBTThBQTlDSElCTlBsQUFBQUFLTUFBQ0FwZ2dBQUdpS0FBQ0FwdmdvQ0tqUDNkeFVWWHExb3FRb0ppRXBPajdKN3VVQW9oQWlBSUk4SVE3Wk5kWFhWWlplclNpNVVsbDZ0YktrcUxLMHFLSzRxTEswcUthaXpOSGE2bkE0NWp6eXozZE1Kd0FRZ2dqZkR5eEVBQUN2MU5kVVZaWVVYUi94SlVXVnBWY3JTNjVVbGx5dHE2N3cvSVB1NXNiQXJCQ1FBZ0dBc0Zwcks4b3FTb29xUzRzcVM2NVdsaFpWRkYvLzA3Nnh2dGEzSTdxYm1qcjd2MXJjN3RMTGhiNHV0V09WWlZlN3ZJMjdxYUg0NHFmbTN1K3RRaU82UjhjbFduMHZrQTRCZ0tES3Jsejg5WGNYbVh0TWQzT25BYWl2cnNqKzEwZk12VHNqS2txS0FuQy9nMFpQV2Z6ZG4xcDlMNUFPQVVDQU5EYzExbHdycVNvcnJpNHYrZUxUZkh2V3dFTkFRRHNFQUdhcXI2bXFMaSt1TGkrcEtpK3VMaXV1S2krdUxyLytuM1ZWWFR4QUh3QzFsZGNxUzRvNi9yK3FyZ1YyTFlEOUNBQzgwOXJTVWxOUldsVmVVbDFlWEZWV1hOMDI0cS8vbDVLbXhucTdGK2pKOFozdkh0LzVydDJyQUVSaGZ3QjREYWlZeXE5ZStwc1JYMTVTWGZabFZYbEpUVVZwYTB1TDNhc0RWR0Q3SzBIdER3REV0T2JaeHhycmF1eGVCUUFMOFZFUTZCaXZHZ1NVeHhVQU9oWVZsMWo4K1RtN1YrR2RrTER3NlBpa21JU2swUENJczdrN1d0eHV1MWNFQ0kwQW9HTkNYd0U0blpIUnNURUp5VEh4U1RFSnlkRUpTVEVKU1RIeFNSSFJzUTZIbzZqdzdQdS9mSnJwRDNTSkFLQmpVYjJFQ0lBck9LVHRqL3EyejNHN1B1N2prNEpEd3pxOC9jbWN6ZHV6WDJodTR2WCtRTmNJQURvV0ZkOG53UGZZclVkMFRFSnkyNVMvTWU1NzlJeHpPSjFHZnJ6RjNienpUeThlMi9HT0ZXc0xjcmttTEh4NHdvS1ZRUzZYRmNjSGJFRUEwREhySGdJS2NybWllaVZHSnlUOTlUR2NwTGIvSGhvZTRmTXhhNjZWdnZkL1QzOVJjTkxFZGJiWDRuYnZmK2YzNS9MMjNmTjNUL2RLN20vUnZRQUJSZ0RRTVZNZUFncnJGaG5UTy9tdmorRmMvK3MrcWxkdlo1Q1pMeis3ZVBxalRTLzl1S2Fpek1SamR1anFoWTlmZStZYldjdFhqNWw3bjlQSksrZ2dQUUtBam5YckVSMFNGdDdVWU9pZHZVNW5VSS9ZK09qNHBKamV5VEh4U2RlZmxVMUlEbytNc25TUnpZME5lOWErZEhUN3VyYVArL2RLVkZ4aVhQS0E4OGNQZVBWVDd1YW0zVy8rK3RPamUrOWUvVlJNUXJLM2R3b0loUUNnVTFGeGlhV1hMOXowRDBOQ3c2UGJQU1hiTnVpajRoSmR3U0VCWHQ2VmM2YzN2L0tUOHFMUGZmalp1T1FCeS8vNXZ5T2pZL2Y4K2FYRFc5N3c5c2N2ZjNJaSsrbFYwNzcrZU1hTVJRYWZvZ0FFNUh4K1paYU5kOC9uUUloc3l5dlBYZnZ5OGw5ZlozbjlUL3ZJNkZpNzErVm9jVGZ2Zi9jUHVSdi82TnVIVWlRTkdyNzArLzhWSHRtajdYL203OTY0TGZ1RkZuZXpENGZxTzJUa3JKWGZqK3M3MEllZkJkclkrR2tRQkFDU0tibDBmdlBMUC9ueVlvRnZQejVrM0l5N1YvL0xUYThpdmZUeDhRMi9lc2EzWnhHQ1hLNVJzNVpOV3ZLTnNHNlJ2aTBKbXJNeEFEeVJCV200bTVzT3ZwKzk1dG5IZko3K0V4ZXRXdkR0Zjd2MVBRUjloNHhjK2VQZkp3Kyt3NGRqdHJqZEgvMWw3ZTkrc09MVXZxMCtQQlVCMklnQVFBNkYrYmwvZUdybDNuV3ZldmhXTHc5Q1FzUG5mK3ZaeVVzZjdld2grOGlZWHZmOThNVXhjKy96N1RIOTJvcXlMYTg4OThaemp3ZmcreDBCcy9Ba01FUlhXWHIxdzlkL1dYQmt0ODlIaU9zN2NNSGpQKzZWMU0venpZSmNydW4zZjZmL2lIRmJmL3NmMWRkS2ZMaWp5d1g1cnozN2FNYk1KWk9YUG5yak9RWkFXRndCUUZ6dTVxYmNEV3YrOE1NSC9abitJNmJOZi9EWlY3cWMvamYwSHo1dTFVOWZHenIrVHQvdXJyV2xKVy83dXQ4K2NXL3V4aldDZnowT3dCVUFCSFVoLzlDT05iOG92M3JKNXlPRWhIZWJzK3FKOUlsenZQM0I4TWdlODcvOW8wR1pXZHV5WDJpb3JmYmhyaHRxcTNQZWV1WG9CMjlQV1Bqd3lCa0xnMXhzTklpSTh4TENLYmwwUHVldGw4OGQyKy9QUWVKVEJpMTgvTWM5RTIveitRaERKOHhLSGp4eTY2cy8vZXpVRWQrT1VGTlJ0bVBOTDQ1c2ZYUHlra2ZUSjgzbXpjTVFEUzhEaFVBcVNvcjJyLy9kNmYwZnRMYjY5YTJUR1RNWFQxL3g5OEVob1Nhc3FiWDE2UFoxZTlhKzFOelk0TTloNHZvT25MSjhkZW9vTzdjYnhHVGp5MEM1QW9BUWFxdXVIWHd2Ky9pSDcvbjJJcDhib3VNUzUzempCLzF1SDJQV3doeE9aK2JzNVFOSFR0engyaThLODNOOVBrekpwZlB2L00rVGZRYW1qNS8vMEtETUxONC9EQkVRQU5pc3NiNzJ5SlkzRDI5OXM2bSt6cC9qT0oxQm8yWXRtZksxYjRhRWhadTF0aHRpRXBLWFBmSHpUdzd2MnZtbkY2dkxpMzArenBYelo5NTk4YW5ZUHYzR3pWdVJQbkYyNEQ4L0EyaVBoNEJnbStiR2h1TWZ2bmR3dzJ0MVZSVitIaXEyVDhyY1I1OU1TaHR1eXNJOGFLcXYyL2ZPNzQ1dWU5di9ieHpyM2pOK3pGMzMzakZqb1QrZmd3MEY4RkVRMEV0RFhjMng3ZXMvK3N2YTJxcHJmaDRxeU9VYWUvZUtTVXNlQ2VSZjA4V2ZuOXVXL1hOVHZuNGdQTEpIeHAxTE1tY3ZqNGpxNmYvUklDTUNBRjNVVnBSOTlNRmJlVHZlYWF5cjhmOW9DU2xwY3g5N01xRmZtditIOGxwcmEvNmVUWHZXdmxSWDdlL2xpOFBoQ0E0TlM1ODRPMlBtNHQ3OWgvaC9OTWlGSjRHaHZvcVNvaU5iM3NqZnZkR1VMK3p0MWoxNjh0SkhSODVZWk81M3kzakI2Und4Ylg3YW1Ha0gzOC9PMjc3ZXorZXVteHNiOG5kdnpOKzlzVS9xc0l5Wmk0ZU12OU9jbHpBQkhuRUZBTXVWWHI1d2FOT2Z6aHpjNXYvajVnNkhJOGpseXBpNWVOSVNnVDVyb2FMNFNzN2JMNS9OM1duV2g4R0ZSMGFObURwdjVJeUZNYjM3bW5KQWlJeUhnS0NnMXRhVzg4Y081RzFmZitIVVliTW1ZNy9ieDh4NDRMdHh5UU5NT1pxNWlnclA3bjd6VjUrZlBXYmFFWjNPL3NQSFpzeGNNbkRrUkw2TVhtRThCQVNsMUZWWDVPL2VkR3puTzVVbFJXWWRNeVloZWZyOTN4bVVLZTRicVJJSERMM3Z5VitleTl1M1orMXZTci80eklRanRyWmV5RDkwSWY5UVJJK1lvUlB1VEo5MFY1K0I2U1ljRnZncnJnQmdwcXNYUHM3YnZ2N3N3ZTJtUE5CL3c5RHhkNDYrNjE1WkhoWnZhWEhuNzk1NFl2Y0dVeDd5YXE5bjc3N0RKdDgxYk5LYzZQZ2tjNDhNRy9FUUVPVG1ibTc2NVBDSGVkdmYrZUpURTE0WmlTNGxwNDBZTm1uT2tQRXp3eU9qN0Y0TC9NVkRRSkRWbFhPblQrM2RjalozUjMxTmxkMXJFWlF6S01pMzd5NzI0SEpCL3VXQy9CMS8vTi9iMGtlbFpVNUpIWlhWSXpiZTNMdUFEZ2dBZkZGVjl1WHAvWDg1dFhkcjJaV0w1aDQ1ckZ2azZMdnVyYXV1ek51K3p0d2oyNlZYVXYrN1YvOUw3c1kxQlVmMitQa2hkemRwY1RkL2R2THdaeWNQYjEvemk4VCtROU5HVHhrMGVxcnhiejRBQ0FDODBOUllYM0JrejZtOVd5NmVQbXJ1TEhNNEhLSGhFWmx6bG8rWisvWHd5QjU3MTcxcTdzSHQxYnYvNElYZitmZXlLeGNQYmZyVDZmMGZ0TGliVGI2RDF0YWl3ak5GaFdkeTNuNmxaKysrYVdPbXBtWk03cE42TzY4ZGdtY0VBRjF6TnpkZFBIUDA0OXdkSHgvZTVlZEh0blVvSkN4ODFLeGxZKys1djF2M2FOTVBMbzdZUGlsekgzdHk4dEpIRDI5K0kzLzNSb3UrTDZ6ODZxVkRtMTQvdE9uMWtQQnVLVU5IcFF3YjNlLzJNWEY5QjFweFg1QWRBVUNubWhyckwrUWZLaml5KzF6ZXZnWXpQcm5oVnNHaFlSbDNMaGszNzRHSUhqRldIRjlBUFdJVFpqNzR2UW1MSGo3NndWdDUyOWY3OW8xalJqVFYxNTA3dHIvdGUzVWlvbVA3RFJ2ZDcvWXhLY05HUi9YcWJkRTlRam9FQURkcnJLczVkMngvd1pIZGhTZHlyZnRXMitEUXNEdW1MeHcvLzhISTZGaUw3a0prRVQxaXNwYXRIbmZQaW1NNzM4M2J2cTZxelBlUG1EYWl0cUxzeklGdFp3NXNHemh5NHRKLytCbmZSb0EyQkFCZnVYTHUxSUgzc2o4N2RjVFBUN2J4ckZ2MzZJeFpTMGJOV3FiUFgvMmRDZTBXT1c3ZUEyUHZ2ci9nYUU3ZXRuV2ZuODJ6OU81aUVwTG5mZk1acGo5dUlBRDRTa3p2dnNXZmYycmQ5SStPN3pObTduM0RwODRMQ1RYL08xdms1UXdLR2p4bTJ1QXgwMG91bmMvYjhjN3BmVnViR3N5LzhBb09DVjMwOXo4SmkraHUrcEVoTHdLQXIzVHJIajN2bTgvKytUKy9hL3JyMW52M0h6ejJuaFZEeHM2dzdjTTdaUkRYZCtEc2gvOXg2cjNmUEpXek9XLzcrdktybDB3OCtPU2xqOFduRERMeGdGQ0F6ZThFZHZCbVlQSGt2UDFLN29ZMVpoMnQvNGh4NCs1NUlHVllwbGtIMUVWcmErSEpRM25iMWhYbTUvcmY0ejZwdDY5NCt0ZlVWMEEydmczWXdSVUFialZwOFNNRlIvYVVYZkhyNDh4Q3dyc05temduNDg0bDhiZWxtclV3dlRpZEEwYU1IekJpZlBXMWt0UDdQamkxYjB2cDVRdStIY2tWSEhMMzZxZVkvcmdWQWNETlhNRWhjeC85NFJ2UFBlN2JXNzNpYjBzZE9YUHhzRWx6K0twYlUzU1BpUnMzYjhXNGVTdUtDcytlMnJ2MTdNSHQzbjRIMmZnRkQ4WDJTYkZvZVpBYUFVQUhrdEtHajVnMi84U3U5NDMvaUNzNFpNaTRHUmt6bHdUZ205bjFsRGhnYU9LQW9kUHZmL3o4OFFPbjltNDVmL3lna1hjVTkremRkL3o4QndPd1BNaUlBS0JqV2NzZU81dTd3OGczOS9iczNYZmtqRVczVDdsYjdmZnhDc0lWSEpJMmVtcmE2S2wxVlJWbkRtNy8rTkRPTHdwT2VyaFdtN1h5KzY3Z2tFQ3VFQkloQU9oWVJGVFBDUXRXN2xuN204NXVFQm9la1RaNjZ1MVpjMVBTTTNscGVlQjE2eEdkT1h0WjV1eGx0Wlhsbng3ZFcvRFJub3VuUDdycEpieUR4MDd2TjN5c1hTdUUrQWdBT2pYNnJxOGQvZUN0Nm1zbDdmK2hLemhrd0IzajB5Zk9UczJZSEJ3YVp0ZmFjRU5FVk04N3BpKzRZL3FDeHJxYTg4Y1BGSHkwNS95SmcwMzFkY0doWWRQdi80N2RxNFBRQ0FBNjVRb09HVFAzdmwxdi9zcmhjRGlkUVgySGpFeWZPSHZ3Mk9uaWZCczcyZ3Z0RmpsMHdxeWhFMmE1bTVzdW5EemMzTmpBeC83QU13SUFUMGJPV0hUdTJQNkJHUlBUSjh6cTNwT3ZISkdES3pna05XT1MzYXVBQkFnQVBBa0o3M2Jma3kvYXZRb0FsdUM5SVFDZ0tmc0RZTzg3b1FIQUxyWlBQeDRDZ3NtYUd4dGFXMXZ0WG9VRWFxdXVuY3ZiZCtualk4bHBJMUpIVFk1SlNMWjdSZEFPQVlESlh2LzNiMzE1c2NEdVZjamtrOE83UG56OWwzSEpBMUpIWlEzS3pPb3pNSjMzVlNBd0NBQWdoSkxMaFNXWEMzTTNyb21NamswZE5YbFE1cFNVWWFPRFEwTHRYaGRVUmdBQXNkUlVsSjNZdGVIRXJnMXhmUWV1ZWk3Yjd1VkFaZlkvQ1F5Z1F5Tm5MTFI3Q1ZBY0FRQkVGQjRaTlh6S1BMdFhBY1VKRVFEYlh3c0ZpQ2JqenNVaFlYeHpzc3BFbUh0Q0JBQkFlNjdna0ZHemx0bTlDcWlQQUFEQ0dUYjVyc2pvV0x0WEFmVVJBRUFzVG1mUXVIdFcyTDBLYUlFQUFHSVpQSFphejhUYjdGNEZ0RUFBQUxHTW0vZUEzVXVBTHB6UHI4eXlldzNYUFpHZFkvY1NBRXNjMy9udXR1d1hqTnl5My9DeFgvdW4vN1o2UGJDZENDOEJjbkFGQUZqTjNkeVV1L0dQQm04OGZ0NkRsaTRHYUk4QUFOWTZtYk81c3ZTcWtWc21EUnFlTWl6VDZ2VUFOeEFBd0VJdDdtYmpmLzVQV3Z5SXBZc0Jia0lBQUF1ZHpObGNXVkprNUphSkE5TDdqeGhuOVhxQTlnUUtnQ0RQaWdCbWFYRTNIOXl3eHVDTkp5NWVaZVZhSUJCeFpwMUFBUUFVY3pKbmk4RS8veFA2cGFWbVRMSjZQY0JOQ0FCZ2lSWjNjKzZHMXd6ZWVOSWlIdjJIRFFnQVlJbVRPWnNyalAzNUg5ZDM0S0JNVWQ2T0E2MFFBTUI4N3VhbUErOFovVEt2aVl0VzhTWEFzSVZZQVJEbnVSSEFIeWQyYmFncSs5TElMWHNsOXg4OGRwclY2NEU0aEpweVlnVUFVRUJ6VTJPdThSZi9MSHpZNldRYndoNmNlWURKVG56NFh2VzFFaU8zN0psNDI1RHhNNjFlRDlBWkFnQ1lxYm14d2ZoYmZ5Y3VXc1dmLzdDUmNDZWZVQStRQWQ3SzI3RytwcUxNeUMxN0pmZFBuempMNnZWQUtLTE5OK0VDQU1pcnFhSCs4S2JYRGQ1NDh0TEgrUE1mOXVMOEEweHo5SU8zYXF1dUdibGxRciswd2FPbldyd2NvQXNFQURCSGZVM1ZvYzFHLy96UFdyYWExLzdEZGlJR1FMU0h5UUFqRG05K282RzIyc2d0a3dZTkh6aHlvdFhyZ1dnRW5Hd2lCZ0NRVG0xRjJkRnRieG04Y2RieTFaWXVCakNJQUFBbU9Mamh0YWFHZWlPM1RFblBURW5uYTc4Z0JFRURJT0MxRXRDWnl0S3J4ejk4MytDTnM1Yng1NytPeEp4cGdnWUFrTWlCZC8vZ2JtNHljc3VCSXljbXBRMjNlajJBUVFRQThFdlpsWXNuOTI0eGRGT25jL0xTeHl4ZUR1QUZBZ0Q0WmUrNjM3YTJ0Qmk1NWVEUlUzdjNIMnoxZWdEanhBMkFtQStaQWUxZE9YL21rOE83ak56U0dSVEVpMyswSmV3MEV6Y0FnUGoyL1BuWEJtODVZdXE4MkQ3OUxGME00QzBDQVBqby9QRURuNTg5WnVTV3dhRmhreGJ6cmI4UWp0QUJFUGE2Q1dodGJkbXo5aVdETjg2Y3ZieDd6M2hMMXdOaGlUekhoQTRBSUt4VGU3ZVdYRHB2NUpiaGtUM0d6My9RNnZVQVBpQUFnTmVhbXhyM3JYL1Y0STNITDNnb0xLSzdwZXNCZkNONkFFUytlb0syOG5kdnFDb3JObkxMcUxqRXpObkxyVjRQaENYNEJBdTJld0dBZkViTldwWTgrSTdDNHdmUG56aDQ1ZHlwRnJlN3MxdE9XYjdhRlJ3U3lMVUJ4aEVBd0JjSktXa0pLV25qRnp6VVVGdDk0ZVRod2hNSEMvTnphNjZWL3MxdCtxV2xUNWh0MXdxQkxqbWZYNWxsOXhxNjlrUjJqdDFMQUxyMjVjV0N3aE1IQzAva2Z2SHB5UmEzKzk0Zi9FL0tzTkYyTHdxMkVmenhId2RYQUlDSnJsOFd6SCtvb2JiNnl2blRUSDhJVHZRbmdkdUlIMUtndmJDSTd2MkhqN043RmJDVEZGTkxqZ0FBQUV4SEFBQkFVOUlFUUlycktRQnd5RE92cEFrQUFNQmNNZ1ZBbHFnQzBKbEVrMHFtQUFBQVRFUUFBRUJUa2dWQW9tc3JBQnFTYTBaSkZnQUFnRm5rQzRCY2dRV2dEK21tazN3QkFBQ1lnZ0FBZ0tha0RJQjAxMWtBbENmalhKSXlBQUFBLzhrYUFCbGpDMEJWa2s0a1dRTUFBUENUeEFHUU5Ma0FGQ1B2TEpJNEFBQUFmOGdkQUhuREMwQU5VazhodVFNQUFQQ1o5QUdRT3I4QXBDYjcvSkUrQUFBQTM2Z1FBTmtqREVCR0Nrd2VGUUlBQVBDQklnRlFJTVVBSktMR3pGRWtBQUFBYjZrVEFEV0NERUI4eWt3YmRRSUFBUENLVWdGUUpzc0FoS1hTbkZFcUFBNjFmamNBUktQWWhGRXRBQUFBZ3hRTWdHS0pCaUFJOVdhTGdnRUFBQmloWmdEVUN6VUFleWs1VmRRTUFBQ2dTOG9HUU1sY0E3Q0Zxdk5FMlFBNDFQMmRBUWdraFNlSnlnRUFBSGlnZUFBVVRqZUFBRkI3aGlnZUFJZnF2ejhBMWxGK2VxZ2ZBQUJBaDdRSWdQSVpCMkE2SGVhR0ZnRUFBTnhLbHdEb0VITUFadEZrWXVnU0FJYzJ2MUVBZnRKblZtZ1VBQUJBZTNvRlFKK3dBL0NOVmxOQ3J3QTROUHZ0QXZDS2J2TkJ1d0E0OVBzZEF6QkN3OG1nWXdBQUFBNXRBNkJoNmdGNG9PZE0wRFFBRGwxLzN3QnVwZTAwMERjQURvMS82d0J1MEhrT2FCMEFBTkNaN2dIUU9mNEFOSjhBdWdmQW9mMFpBR2lMdlU4QUhBN09BMEEvN0hvSEFRQUFiUkdBNi9oekFOQUgrNzBOQWZnSzV3U2dBM2I2RFFUZ2IzQm1BR3BqajdkSEFHN0crUUdvaXQxOUV3SUFBSm9pQUIzZ3p3UkFQZXpyV3hHQWpuR3VBQ3BoUjNlSUFIU0tNd1pRQTN1NU13VEFFODRiUUhic1lnOElRQmM0ZXdCNXNYODlJd0JkNHh3Q1pNVE83UklCTUlRekNaQUxlOVlJQW1BVTV4TWdDM2FyUVFRQUFEUkZBTHpBbnhXQStOaW54aEVBNzNCdUFTSmpoM3FGQUhpTk13d1FFM3ZUV3dUQUY1eG5nR2pZbFQ0Z0FEN2liQVBFd1g3MERRSHdIZWNjSUFKMm9zOElnRjg0OHdCN3NRZjlRUUQ4eGZrSDJJWGQ1eWNDWUFMT1FpRHcySGYrY3o2L01zdnVOYWpqaWV3Y3U1Y0FxSS9SYnhhdUFNekVlUWxZalYxbUlnSmdNczVPd0Ryc0wzTVJBUE54amdKV1lHZVpqZ0JZZ2pNVk1CZDd5Z29Fd0NxY3I0QloyRTBXSVFBVzRxd0YvTWMrc2c0QnNCYm5MdUFQZHBDbGVCOUFnUEFXQWNBcmpQNEE0QW9nUURpYkFlUFlMNEZCQUFLSGN4b3dncDBTTUFRZ29EaXpBYy9ZSTRIRWN3RDI0Q2tCNENhTS9zRGpDc0Flbk90QWUrd0lXeEFBMjNER0EyM1lDM2JoSVNENzhYQVF0TVhvdHhkWEFQWmpEMEJQblBtMkl3QkNZQ2RBTjV6ekl1QWhJTEh3Y0JDVXgrZ1hCMWNBWW1GdlFHMmM0VUloQU1KaGgwQlZuTnVpNFNFZ2NmRndFSlRCNkJjVFZ3RGlZczlBRFp6Snd1SUtRQUpjQ2tCU2pIN0JFUUJwa0FGSWhORXZCUjRDa2dZN0NyTGdYSlVGVndEeTRWSUF3bUwweTRVckFQbXd4eUFtemt6cGNBVWdNUzRGSUFoR3Y2UUlnUFRJQUd6RTZKY2FBVkFFR1VDQU1mb1Z3SE1BaW1BM0lwQTQzOVRBRllCcXVCU0FwUmo5S2lFQWFpSURNQjJqWHowRVFHVmtBS1pnOUt1S0FLaVBETUJuakg2MUVRQmRrQUY0aGRHdkF3S2dGektBTGpINjlVRUFkRVFHMENGR3YyNElnTDdJQUc1ZzlPdUpBSUFTNkl1NXJ6a0NnT3ZJZ0ZZWS9YQVFBTnlLRWlpTXVZLzJDQUE2UmdZVXcrakhyUWdBdWtBSnBNYmNod2NFQUlhUUFla3crdEVsQWdEdlVBTEJNZmRoSEFHQWp5aUJVSmo3OEFFQmdMOG9nWTJZKy9BSEFZQ1ppRUVBTVBSaEZnSUFTMUFDMHpIM1lUb0NBTXNSQTU4eDlHRXBBb0NBSWdaZFl1Z2pZQWdBN0VRUEhFeDgySWNBUUNDYTlJQ0pEMEVRQUFoTmdTUXc3aUVzQWdENUNGc0ZaajNrUWdDZ0lJc0t3WHlIWWdnQUFHZ3F5TzRGQUFEc1FRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRk1FQUFBMFJRQUFRRlAvRHlRTjhxdHIzQ3RTQUFBQUFFbEZUa1N1UW1DQyIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9wbmcifV19">
+    <link rel="apple-touch-icon" href="data:image/png;base64,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">
+    <title>钢琴练习打卡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{--safe:env(safe-area-inset-bottom,16px)}
+        *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none}
+        .tab-bar{padding-bottom:var(--safe)}
+        .tab-item.active{color:#8b5e3c}
+        .tab-item.active .dot{opacity:1}
+        .dot{opacity:0}
+        .card{transition:all .2s}
+        .card:active{transform:scale(.98)}
+        .page{display:none}
+        .page.active{display:block}
+        .tag{background:#fef3c7;color:#92400e;font-size:11px;padding:2px 8px;border-radius:6px}
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<header class="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shrink-0 sticky top-0 z-10">
+    <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-bold" style="background:#8b5e3c">琴</div>
+        <div><h1 class="text-base font-bold text-gray-800">钢琴练习打卡</h1><p class="text-xs text-gray-400" id="today-date"></p></div>
+    </div>
+</header>
+
+<main class="flex-1 overflow-y-auto pb-24" id="main-content">
+
+<!-- ====== 打卡页 ====== -->
+<div id="page-checkin" class="page active p-4">
+
+    <!-- 今日统计 -->
+    <div class="grid grid-cols-3 gap-3 mb-4">
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <p class="text-xs text-gray-500">今日练习</p>
+            <p class="text-xl font-bold mt-1" style="color:#8b5e3c" id="today-minutes">0<span class="text-sm font-normal text-gray-400">分钟</span></p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <p class="text-xs text-gray-500">本周累计</p>
+            <p class="text-xl font-bold mt-1" style="color:#8b5e3c" id="week-minutes">0<span class="text-sm font-normal text-gray-400">分钟</span></p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <p class="text-xs text-gray-500">连续打卡</p>
+            <p class="text-xl font-bold mt-1" style="color:#8b5e3c" id="streak-days">0<span class="text-sm font-normal text-gray-400">天</span></p>
+        </div>
+    </div>
+
+    <!-- 练习记录输入 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">🎹 今日练习记录</h3>
+        <input id="piece-input" placeholder="弹了什么曲子？" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm mb-3">
+        <div class="flex gap-3 mb-3">
+            <input id="minutes-input" type="number" placeholder="练习时长(分钟)" class="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm" min="1" max="180">
+            <select id="quality-select" class="border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-600">
+                <option value="good">👍 很好</option>
+                <option value="normal">👌 一般</option>
+                <option value="needwork">💪 需加强</option>
+            </select>
+        </div>
+        <textarea id="note-input" placeholder="备注：弹得怎么样？遇到什么问题？" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm resize-none h-16 mb-3"></textarea>
+        <button onclick="submitPractice()" class="w-full py-3 rounded-xl text-white font-medium text-sm active:opacity-80" style="background:#8b5e3c">✅ 提交打卡</button>
+    </div>
+
+    <!-- 拍照/视频 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">📸 记录瞬间</h3>
+        <div class="flex gap-3">
+            <button onclick="document.getElementById('photo-input').click()" class="flex-1 py-3 rounded-xl border border-gray-200 text-sm text-gray-600 active:bg-gray-50 text-center">📷 拍照</button>
+            <button onclick="document.getElementById('video-input').click()" class="flex-1 py-3 rounded-xl border border-gray-200 text-sm text-gray-600 active:bg-gray-50 text-center">🎥 录视频</button>
+        </div>
+        <input type="file" accept="image/*" capture="environment" id="photo-input" onchange="previewMedia(event,'photo')" class="hidden">
+        <input type="file" accept="video/*" capture="environment" id="video-input" onchange="previewMedia(event,'video')" class="hidden">
+        <div id="media-preview" class="mt-3 hidden">
+            <img id="photo-preview" class="w-full rounded-xl max-h-48 object-cover hidden">
+            <video id="video-preview" class="w-full rounded-xl max-h-48 hidden" controls></video>
+            <button onclick="clearMedia()" class="mt-2 text-xs text-red-400">清除</button>
+        </div>
+    </div>
+
+    <!-- 今日已完成 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">✅ 今日已完成</h3>
+        <div id="today-list" class="space-y-2"></div>
+    </div>
+</div>
+
+<!-- ====== 历史记录 ====== -->
+<div id="page-history" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-3">📋 练习历史</h2>
+    <div id="history-list" class="space-y-2"></div>
+</div>
+
+<!-- ====== 分享给老师 ====== -->
+<div id="page-share" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-3">🔗 分享给老师</h2>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-4">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">选择分享范围</h3>
+        <div class="space-y-2">
+            <label class="flex items-center gap-3 p-3 border border-gray-100 rounded-xl active:bg-gray-50">
+                <input type="radio" name="share-range" value="today" checked class="accent-amber-600"><span class="text-sm">今日练习</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 border border-gray-100 rounded-xl active:bg-gray-50">
+                <input type="radio" name="share-range" value="week"><span class="text-sm">本周练习汇总</span>
+            </label>
+        </div>
+    </div>
+    <button onclick="generateShare()" class="w-full py-3 rounded-xl text-white font-medium text-sm active:opacity-80 mb-3" style="background:#8b5e3c">📤 生成分享卡片</button>
+    <div id="share-preview" class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hidden"></div>
+    <button id="share-btn" onclick="shareToWechat()" class="w-full py-3 rounded-xl text-white font-medium text-sm active:opacity-80 hidden" style="background:#07c160">💬 分享到微信</button>
+</div>
+
+</main>
+
+<!-- 底部Tab -->
+<nav class="tab-bar bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 z-20">
+    <div class="flex justify-around items-center h-16 max-w-lg mx-auto">
+        <button class="tab-item active flex flex-col items-center gap-0.5 px-1 py-1" data-page="checkin">
+            <span class="text-lg">🎹</span><span class="text-[9px] font-medium">打卡</span><span class="dot w-1 h-1 rounded-full" style="background:#8b5e3c"></span>
+        </button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="history">
+            <span class="text-lg">📋</span><span class="text-[9px] font-medium">历史</span><span class="dot w-1 h-1 rounded-full" style="background:#8b5e3c"></span>
+        </button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="share">
+            <span class="text-lg">🔗</span><span class="text-[9px] font-medium">分享</span><span class="dot w-1 h-1 rounded-full" style="background:#8b5e3c"></span>
+        </button>
+    </div>
+</nav>
+
+<script>
+const STORAGE = {
+    practices: 'piano_practices',
+    todayMedia: 'piano_today_media',
+    streak: 'piano_streak',
+    lastDate: 'piano_last_date'
+};
+
+function get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){return null;} }
+function set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+
+let todayMedia = get(STORAGE.todayMedia) || null;
+
+// ===== 日期 =====
+const today = new Date();
+document.getElementById('today-date').textContent = today.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric',weekday:'long'});
+
+// ===== 提交打卡 =====
+function submitPractice() {
+    const piece = document.getElementById('piece-input').value.trim();
+    const minutes = parseInt(document.getElementById('minutes-input').value) || 0;
+    const quality = document.getElementById('quality-select').value;
+    const note = document.getElementById('note-input').value.trim();
+
+    if(!piece) { alert('请输入曲目名称'); return; }
+    if(minutes <= 0) { alert('请输入练习时长'); return; }
+
+    const practices = get(STORAGE.practices) || [];
+    const todayStr = today.toISOString().split('T')[0];
+
+    // Check if already submitted today
+    const existing = practices.findIndex(p => p.date === todayStr);
+    
+    const record = {
+        date: todayStr,
+        time: today.toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'}),
+        piece: piece,
+        minutes: minutes,
+        quality: quality,
+        note: note,
+        media: todayMedia
+    };
+
+    if(existing >= 0) {
+        practices[existing] = record;
+    } else {
+        practices.push(record);
+    }
+
+    set(STORAGE.practices, practices);
+    todayMedia = null;
+    set(STORAGE.todayMedia, null);
+    
+    // Clear inputs
+    document.getElementById('piece-input').value = '';
+    document.getElementById('minutes-input').value = '';
+    document.getElementById('note-input').value = '';
+    clearMedia();
+    
+    updateStats();
+    renderToday();
+    alert('打卡成功！🎉');
+}
+
+// ===== 拍照/视频 =====
+function previewMedia(event, type) {
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        todayMedia = { type: type, data: e.target.result };
+        set(STORAGE.todayMedia, todayMedia);
+        document.getElementById('media-preview').classList.remove('hidden');
+        if(type === 'photo') {
+            document.getElementById('photo-preview').src = e.target.result;
+            document.getElementById('photo-preview').classList.remove('hidden');
+            document.getElementById('video-preview').classList.add('hidden');
+        } else {
+            document.getElementById('video-preview').src = e.target.result;
+            document.getElementById('video-preview').classList.remove('hidden');
+            document.getElementById('photo-preview').classList.add('hidden');
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearMedia() {
+    todayMedia = null;
+    set(STORAGE.todayMedia, null);
+    document.getElementById('media-preview').classList.add('hidden');
+    document.getElementById('photo-preview').classList.add('hidden');
+    document.getElementById('video-preview').classList.add('hidden');
+    document.getElementById('photo-input').value = '';
+    document.getElementById('video-input').value = '';
+}
+
+// ===== 渲染今日 =====
+function renderToday() {
+    const practices = get(STORAGE.practices) || [];
+    const todayStr = today.toISOString().split('T')[0];
+    const todayRecords = practices.filter(p => p.date === todayStr);
+    
+    const container = document.getElementById('today-list');
+    if(todayRecords.length === 0) {
+        container.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">今天还没打卡，快开始练琴吧 🎹</p>';
+        return;
+    }
+    
+    container.innerHTML = todayRecords.map(r => {
+        const qEmoji = r.quality === 'good' ? '👍' : r.quality === 'normal' ? '👌' : '💪';
+        const qLabel = r.quality === 'good' ? '很好' : r.quality === 'normal' ? '一般' : '需加强';
+        return '<div class="p-3 rounded-xl border border-gray-100">'+
+            '<div class="flex justify-between items-start mb-1">'+
+                '<span class="font-bold text-gray-800 text-sm">🎵 '+r.piece+'</span>'+
+                '<span class="tag">'+qEmoji+' '+qLabel+'</span>'+
+            '</div>'+
+            '<div class="flex gap-3 text-xs text-gray-500">'+
+                '<span>⏱ '+r.minutes+'分钟</span>'+
+                '<span>🕐 '+r.time+'</span>'+
+            '</div>'+
+            (r.note ? '<p class="text-xs text-gray-500 mt-1">💬 '+r.note+'</p>' : '')+
+            (r.media ? '<div class="mt-2">'+(r.media.type==='photo'?'<img src="'+r.media.data+'" class="w-full rounded-lg max-h-32 object-cover">':'<video src="'+r.media.data+'" class="w-full rounded-lg max-h-32" controls></video>')+'</div>' : '')+
+        '</div>';
+    }).join('');
+}
+
+// ===== 渲染历史 =====
+function renderHistory() {
+    const practices = get(STORAGE.practices) || [];
+    practices.sort((a,b) => new Date(b.date) - new Date(a.date));
+    
+    const container = document.getElementById('history-list');
+    if(practices.length === 0) {
+        container.innerHTML = '<p class="text-sm text-gray-400 text-center py-8">暂无记录</p>';
+        return;
+    }
+
+    // Group by date
+    const grouped = {};
+    practices.forEach(p => {
+        if(!grouped[p.date]) grouped[p.date] = [];
+        grouped[p.date].push(p);
+    });
+
+    container.innerHTML = Object.entries(grouped).map(([date, records]) => {
+        const totalMin = records.reduce((s,r) => s+r.minutes, 0);
+        const d = new Date(date);
+        const dayLabel = d.toLocaleDateString('zh-CN', {month:'numeric',day:'numeric',weekday:'short'});
+        return '<div class="mb-3">'+
+            '<div class="flex justify-between items-center mb-2 px-1">'+
+                '<span class="text-sm font-bold text-gray-700">📅 '+dayLabel+'</span>'+
+                '<span class="text-xs text-gray-500">共 '+totalMin+' 分钟</span>'+
+            '</div>'+
+            records.map(r => {
+                const qEmoji = r.quality === 'good' ? '👍' : r.quality === 'normal' ? '👌' : '💪';
+                return '<div class="p-3 rounded-xl border border-gray-100 bg-white mb-1.5">'+
+                    '<div class="flex justify-between items-start">'+
+                        '<span class="font-medium text-gray-800 text-sm">🎵 '+r.piece+'</span>'+
+                        '<span class="text-xs text-gray-500">'+r.minutes+'分钟 '+qEmoji+'</span>'+
+                    '</div>'+
+                    (r.note ? '<p class="text-xs text-gray-500 mt-1">'+r.note+'</p>' : '')+
+                '</div>';
+            }).join('')+
+        '</div>';
+    }).join('');
+}
+
+// ===== 统计 =====
+function updateStats() {
+    const practices = get(STORAGE.practices) || [];
+    const todayStr = today.toISOString().split('T')[0];
+    
+    // Today
+    const todayMin = practices.filter(p => p.date === todayStr).reduce((s,r) => s+r.minutes, 0);
+    document.getElementById('today-minutes').innerHTML = todayMin+'<span class="text-sm font-normal text-gray-400">分钟</span>';
+    
+    // This week
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - today.getDay());
+    const weekMin = practices.filter(p => new Date(p.date) >= weekStart).reduce((s,r) => s+r.minutes, 0);
+    document.getElementById('week-minutes').innerHTML = weekMin+'<span class="text-sm font-normal text-gray-400">分钟</span>';
+    
+    // Streak
+    let streak = get(STORAGE.streak) || 0;
+    const lastDate = get(STORAGE.lastDate);
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate()-1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    
+    if(todayMin > 0) {
+        if(lastDate === yesterdayStr) streak++;
+        else if(lastDate !== todayStr) streak = 1;
+        set(STORAGE.lastDate, todayStr);
+        set(STORAGE.streak, streak);
+    } else if(lastDate !== yesterdayStr && lastDate !== todayStr) {
+        streak = 0;
+        set(STORAGE.streak, 0);
+    }
+    
+    document.getElementById('streak-days').innerHTML = streak+'<span class="text-sm font-normal text-gray-400">天</span>';
+}
+
+// ===== 分享 =====
+function generateShare() {
+    const practices = get(STORAGE.practices) || [];
+    const range = document.querySelector('input[name="share-range"]:checked').value;
+    const todayStr = today.toISOString().split('T')[0];
+    
+    let records;
+    let title;
+    if(range === 'today') {
+        records = practices.filter(p => p.date === todayStr);
+        title = '今日钢琴练习';
+    } else {
+        const weekStart = new Date(today);
+        weekStart.setDate(today.getDate() - today.getDay());
+        records = practices.filter(p => new Date(p.date) >= weekStart);
+        title = '本周钢琴练习汇总';
+    }
+    
+    if(records.length === 0) {
+        alert('该范围内暂无练习记录');
+        return;
+    }
+    
+    const totalMin = records.reduce((s,r) => s+r.minutes, 0);
+    const pieces = records.map(r => '🎵 '+r.piece+' ('+r.minutes+'分钟)').join('\n');
+    const dateStr = today.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'});
+    
+    const preview = document.getElementById('share-preview');
+    preview.classList.remove('hidden');
+    preview.innerHTML = '<div style="background:linear-gradient(135deg,#8b5e3c,#6b3a1f);color:#fff;padding:20px;border-radius:16px;text-align:center">'+
+        '<p style="font-size:28px;margin-bottom:4px">🎹</p>'+
+        '<h3 style="font-size:18px;font-weight:bold;margin-bottom:4px">'+title+'</h3>'+
+        '<p style="font-size:12px;opacity:0.8;margin-bottom:12px">玛雅辛巴星艺术培训学校 · '+dateStr+'</p>'+
+        '<div style="background:rgba(255,255,255,0.15);border-radius:12px;padding:12px;margin-bottom:12px">'+
+            '<p style="font-size:32px;font-weight:bold">'+totalMin+'<span style="font-size:14px">分钟</span></p>'+
+            '<p style="font-size:12px;opacity:0.8">练习时长</p>'+
+        '</div>'+
+        '<div style="text-align:left;font-size:13px;line-height:1.8">'+
+            pieces.replace(/\n/g,'<br>')+
+        '</div>'+
+        '<p style="font-size:11px;opacity:0.6;margin-top:12px">坚持就是胜利，每一天都在进步！💪</p>'+
+    '</div>';
+    
+    document.getElementById('share-btn').classList.remove('hidden');
+    
+    // Save share data for WeChat
+    window._shareText = title+'\n练习时长：'+totalMin+'分钟\n'+pieces.replace(/\n/g,'\n')+'\n\n坚持就是胜利！💪';
+}
+
+function shareToWechat() {
+    if(!window._shareText) return;
+    if(navigator.share) {
+        navigator.share({ title: '钢琴练习打卡', text: window._shareText }).catch(() => {});
+    } else {
+        // Fallback: copy to clipboard
+        const ta = document.createElement('textarea');
+        ta.value = window._shareText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('已复制到剪贴板，打开微信粘贴发送给老师即可');
+    }
+}
+
+// ===== Tab切换 =====
+function switchPage(id) {
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.getElementById('page-'+id).classList.add('active');
+    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-item[data-page="'+id+'"]').forEach(el => el.classList.add('active'));
+    if(id === 'history') renderHistory();
+    if(id === 'share') generateShare();
+    document.getElementById('main-content').scrollTop = 0;
+}
+
+document.querySelectorAll('.tab-item').forEach(btn => {
+    btn.addEventListener('click', () => switchPage(btn.dataset.page));
+});
+
+// ===== 初始化 =====
+const savedMedia = get(STORAGE.todayMedia);
+if(savedMedia) {
+    todayMedia = savedMedia;
+    document.getElementById('media-preview').classList.remove('hidden');
+    if(savedMedia.type === 'photo') {
+        document.getElementById('photo-preview').src = savedMedia.data;
+        document.getElementById('photo-preview').classList.remove('hidden');
+    } else {
+        document.getElementById('video-preview').src = savedMedia.data;
+        document.getElementById('video-preview').classList.remove('hidden');
+    }
+}
+
+updateStats();
+renderToday();
+</script>
+</body>
+</html>
