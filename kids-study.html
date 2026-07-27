@@ -665,8 +665,14 @@ function prevBoyCard() {
 
 // ===== 英语对话 =====
 function updateVideo() {
-    const dayOfYear = Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000);
-    const idx = dayOfYear % englishDialogues.length;
+    // 从第一次打开开始算天数，循环30天
+    let firstOpen = get('kid_first_open');
+    if(!firstOpen) {
+        firstOpen = new Date().toISOString();
+        set('kid_first_open', firstOpen);
+    }
+    const daysSince = Math.floor((new Date() - new Date(firstOpen)) / 86400000);
+    const idx = daysSince % englishDialogues.length;
     const dialogue = englishDialogues[idx];
     const container = document.getElementById('video-content');
     
@@ -894,9 +900,40 @@ function checkDailyReset() {
     set(STORAGE.dailyReset, today);
 }
 
+// ===== 从历史记录恢复字到积累字库 =====
+function restoreAllWords() {
+    const history = get(STORAGE.history) || [];
+    const girlAll = get(STORAGE.girlAllWords) || [];
+    const boyAll = get(STORAGE.boyAllWords) || [];
+    let changed = false;
+    
+    history.forEach(r => {
+        (r.girlWords||[]).forEach(w => {
+            if(!girlAll.includes(w)) { girlAll.push(w); changed = true; }
+        });
+        (r.boyWords||[]).forEach(w => {
+            if(!boyAll.includes(w)) { boyAll.push(w); changed = true; }
+        });
+    });
+    
+    // 也把今天的加上
+    (get(STORAGE.girlWords)||[]).forEach(w => {
+        if(!girlAll.includes(w)) { girlAll.push(w); changed = true; }
+    });
+    (get(STORAGE.boyWords)||[]).forEach(w => {
+        if(!boyAll.includes(w)) { boyAll.push(w); changed = true; }
+    });
+    
+    if(changed) {
+        set(STORAGE.girlAllWords, girlAll);
+        set(STORAGE.boyAllWords, boyAll);
+    }
+}
+
 // ===== 初始化 =====
 function refreshAll() {
     checkDailyReset();
+    restoreAllWords();
     renderGirlWords();
     renderGirlEnWords();
     updateGirlReadingUI();
