@@ -45,25 +45,12 @@
 
         <section id="page-ideas" class="page p-4">
             <h2 class="text-xl font-bold text-gray-800 mb-4">选题每日灵感</h2>
-            <div class="space-y-3">
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="flex items-center gap-2 mb-2"><span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-lg font-medium">抖音</span><span class="text-sm font-medium text-gray-800">钢琴机构引流</span></div><p class="text-gray-600 text-sm leading-relaxed">"山东东营家长注意：学钢琴不加分，但这件事孩子受益一生"——把焦虑转化成长远价值。</p></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="flex items-center gap-2 mb-2"><span class="bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-lg font-medium">小红书</span><span class="text-sm font-medium text-gray-800">国企副业</span></div><p class="text-gray-600 text-sm leading-relaxed">"985硕士+高级经济师，在山东高速上班，下班做短视频：普通人做副业的3个真相"</p></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="flex items-center gap-2 mb-2"><span class="bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-lg font-medium">小红书</span><span class="text-sm font-medium text-gray-800">造价师备考</span></div><p class="text-gray-600 text-sm leading-relaxed">"30岁+在职备考一级造价师：每天1小时，我这样挤时间"</p></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="flex items-center gap-2 mb-2"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-lg font-medium">视频号</span><span class="text-sm font-medium text-gray-800">家长共鸣</span></div><p class="text-gray-600 text-sm leading-relaxed">"孩子学琴三年想放弃，我只问了他一句话"——用故事化冲突做开场。</p></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="flex items-center gap-2 mb-2"><span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-lg font-medium">抖音</span><span class="text-sm font-medium text-gray-800">带货选题</span></div><p class="text-gray-600 text-sm leading-relaxed">"下班做短视频带货，1688一件代发怎么找货源？"实操类内容更易收藏。</p></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="flex items-center gap-2 mb-2"><span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-lg font-medium">通用</span><span class="text-sm font-medium text-gray-800">学习成长</span></div><p class="text-gray-600 text-sm leading-relaxed">"用AI做每日工作台，我的效率提升了一倍"——分享工具和方法论。</p></div>
-            </div>
+            <div class="space-y-3" id="ideas-list"></div>
         </section>
 
         <section id="page-hot" class="page p-4">
             <h2 class="text-xl font-bold text-gray-800 mb-4">爆款热点视频/二创</h2>
-            <div class="space-y-3">
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3"><input type="checkbox" class="w-5 h-5 mt-0.5 accent-green-600 rounded"><div class="flex-1"><h3 class="font-medium text-gray-800 text-sm">"30岁重启人生"系列</h3><p class="text-xs text-gray-500 mt-1">小红书/视频号 → 30岁+985硕士+造价师备考+副业</p></div></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3"><input type="checkbox" class="w-5 h-5 mt-0.5 accent-green-600 rounded"><div class="flex-1"><h3 class="font-medium text-gray-800 text-sm">"体制内下班做副业"</h3><p class="text-xs text-gray-500 mt-1">抖音/小红书 → 山东高速员工+短视频创作者双身份</p></div></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3"><input type="checkbox" class="w-5 h-5 mt-0.5 accent-green-600 rounded"><div class="flex-1"><h3 class="font-medium text-gray-800 text-sm">"董宇辉式知识带货"</h3><p class="text-xs text-gray-500 mt-1">视频号 → 结合国学/职场/教育产品讲价值观</p></div></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3"><input type="checkbox" class="w-5 h-5 mt-0.5 accent-green-600 rounded"><div class="flex-1"><h3 class="font-medium text-gray-800 text-sm">"钢琴机构招生难"共鸣</h3><p class="text-xs text-gray-500 mt-1">抖音 → 教培人真实日常，引发同行/家长评论</p></div></div>
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-3"><input type="checkbox" class="w-5 h-5 mt-0.5 accent-green-600 rounded"><div class="flex-1"><h3 class="font-medium text-gray-800 text-sm">"高考志愿/工科211"</h3><p class="text-xs text-gray-500 mt-1">小红书 → 孩子606分志愿填报经验分享</p></div></div>
-            </div>
+            <div class="space-y-3" id="hot-list"></div>
         </section>
 
         <section id="page-review" class="page p-4">
@@ -173,6 +160,94 @@
     const diff = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
     document.getElementById('exam-countdown').innerHTML = diff + '<span class="text-sm font-normal text-gray-400"> 天</span>';
     renderTasks();
+
+    // ===== 灵感数据 =====
+    const ideasData = [
+        {platform:'抖音',tag:'red',title:'钢琴机构引流',teaser:'"山东东营家长注意：学钢琴不加分，但这件事孩子受益一生"',detail:{hook:'把焦虑转化成长远价值。',angles:['开头：站在教室门口拍钢琴，配文"很多人问我，孩子学钢琴又不加分，为什么要学？"','中间：讲一个学生案例——学了3年的孩子，专注力明显比其他孩子好','结尾：回到钢琴边，说出答案——学琴不是为了加分，是给孩子一个可以陪伴一生的东西'],shoot:'手机竖屏，教室自然光，不需要补光，真实感最重要。时长控制在60秒以内。',hashtags:'#钢琴 #东营 #育儿 #素质教育'}},
+        {platform:'小红书',tag:'pink',title:'国企副业',teaser:'"985硕士+高级经济师，在山东高速上班，下班做短视频：普通人做副业的3个真相"',detail:{hook:'身份反差是最大的流量密码。',angles:['真相1：不是有才华才做副业，是做了副业才发现自己能干什么','真相2：起步不需要完美，一个手机+每天1小时就够了','真相3：真正赚钱的副业都不是靠才华，是靠坚持'],shoot:'图文形式：一张工作证照片+一张手机剪辑截图+一张收益截图（如有），配长文。封面用工作证做钩子。',hashtags:'#副业 #国企 #短视频 #个人成长'}},
+        {platform:'小红书',tag:'pink',title:'造价师备考',teaser:'"30岁+在职备考一级造价师：每天1小时，我这样挤时间"',detail:{hook:'在职备考的核心不是努力，是时间管理。',angles:['时间拆分：早上6:00-6:30刷题，午休12:30-13:00看视频，晚上22:00-22:30整理错题','工具推荐：用Anki做错题卡、用番茄钟保持专注','心态篇：30岁+备考最大的敌人不是难度，是自我怀疑'],shoot:'图文：手写时间表照片+备考资料堆叠照片。视频：拍一段早起学习的延时。',hashtags:'#一级造价师 #在职备考 #30岁 #学习打卡'}},
+        {platform:'视频号',tag:'blue',title:'家长共鸣',teaser:'"孩子学琴三年想放弃，我只问了他一句话"',detail:{hook:'用故事化冲突做开场，情绪共鸣是视频号最强的流量密码。',angles:['开头：孩子说"妈妈我不想学琴了"，停顿3秒','中间：讲当初为什么让他学琴——不是为了考级，是想让他知道坚持一件事的感觉','结尾：我问他的那句话——"如果你今天放弃了钢琴，以后遇到困难，你会不会也选择放弃？"'],shoot:'坐姿正面拍摄，背景可以是家里客厅或钢琴旁。语气要真诚，不要表演。',hashtags:'#育儿 #钢琴 #坚持 #家长'}},
+        {platform:'抖音',tag:'red',title:'带货选题',teaser:'"下班做短视频带货，1688一件代发怎么找货源？"',detail:{hook:'实操类内容天然高收藏，收藏=算法推荐。',angles:['第一步：在1688搜"一件代发"+品类关键词','第二步：筛选"实力商家"标签，看回头率>30%','第三步：先买样品自己拍，别直接用商家图','选品思路：不要选你喜欢的，选数据好的——看1688销量排行'],shoot:'屏幕录制+口播配音，展示1688操作过程。封面大字"1688一件代发"。',hashtags:'#短视频带货 #1688 #一件代发 #副业'}},
+        {platform:'通用',tag:'green',title:'学习成长',teaser:'"用AI做每日工作台，我的效率提升了一倍"',detail:{hook:'分享工具和方法论，建立专业人设。',angles:['展示你用的工具：AI对话+工作台模板','讲一个具体案例：以前写总结要2小时，现在AI辅助30分钟','不要只讲工具，要讲方法论——不是工具让你高效，是结构化思维'],shoot:'手机录屏展示使用过程+旁白。或者拍一段你在电脑前工作的画面。',hashtags:'#AI工具 #效率提升 #个人成长 #工作方法'}}
+    ];
+
+    function renderIdeas() {
+        const container = document.getElementById('ideas-list');
+        container.innerHTML = ideasData.map((idea, i) => {
+            const tagColor = idea.tag==='red'?'bg-red-100 text-red-700':idea.tag==='pink'?'bg-pink-100 text-pink-700':idea.tag==='blue'?'bg-blue-100 text-blue-700':'bg-green-100 text-green-700';
+            return '<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden cursor-pointer idea-card" data-idx="'+i+'">'+
+                '<div class="p-4" onclick="toggleIdea('+i+')">'+
+                    '<div class="flex items-center gap-2 mb-2"><span class="'+tagColor+' text-xs px-2 py-1 rounded-lg font-medium">'+idea.platform+'</span><span class="text-sm font-medium text-gray-800">'+idea.title+'</span><span class="text-xs text-gray-400 ml-auto">点击展开 ▼</span></div>'+
+                    '<p class="text-gray-600 text-sm leading-relaxed">'+idea.teaser+'</p>'+
+                '</div>'+
+                '<div class="idea-detail hidden border-t border-gray-100 bg-gray-50 p-4" id="idea-detail-'+i+'">'+
+                    '<p class="text-sm font-bold text-green-700 mb-2">🎯 核心钩子</p>'+
+                    '<p class="text-sm text-gray-700 mb-3">'+idea.detail.hook+'</p>'+
+                    '<p class="text-sm font-bold text-green-700 mb-2">📝 内容结构</p>'+
+                    '<div class="space-y-1 mb-3">'+idea.detail.angles.map(a=>'<p class="text-sm text-gray-600">• '+a+'</p>').join('')+'</div>'+
+                    '<p class="text-sm font-bold text-green-700 mb-2">📷 拍摄建议</p>'+
+                    '<p class="text-sm text-gray-600 mb-3">'+idea.detail.shoot+'</p>'+
+                    '<p class="text-sm font-bold text-green-700 mb-2">🏷 推荐标签</p>'+
+                    '<p class="text-xs text-gray-500">'+idea.detail.hashtags+'</p>'+
+                '</div>'+
+            '</div>';
+        }).join('');
+    }
+
+    window.toggleIdea = function(i) {
+        const detail = document.getElementById('idea-detail-'+i);
+        if(detail.classList.contains('hidden')) {
+            document.querySelectorAll('.idea-detail').forEach(d=>d.classList.add('hidden'));
+            detail.classList.remove('hidden');
+        } else {
+            detail.classList.add('hidden');
+        }
+    };
+
+    // ===== 热点数据 =====
+    const hotData = [
+        {title:'"30岁重启人生"系列',platform:'小红书/视频号',desc:'30岁+985硕士+造价师备考+副业',detail:{analysis:'近期"重启人生"话题在小红书和视频号持续火爆，核心是"普通人也能逆袭"的叙事。你的985学历+国企工作+副业经历，是绝佳的内容素材。',how:'拍一段Vlog：早上6点起床→学习造价师→上班路上听播客→下班做短视频。展现"普通人也在努力"的真实感。',ref:'参考账号：@董太太 @乔桑 的风格——真实、温暖、有力量感。'}},
+        {title:'"体制内下班做副业"',platform:'抖音/小红书',desc:'山东高速员工+短视频创作者双身份',detail:{analysis:'体制内+副业这个组合自带话题度。观众好奇：国企员工怎么有时间做短视频？工资不够花吗？会不会被单位发现？这些疑问都是流量。',how:'第一视角拍摄：下班打卡→换衣服→打开电脑剪视频。配文"我在国企上班，下班做博主，月入XXX"。',ref:'不要强调具体收入数字（容易引发争议），重点是"用下班时间创造第二份价值"。'}},
+        {title:'"董宇辉式知识带货"',platform:'视频号',desc:'结合国学/职场/教育产品讲价值观',detail:{analysis:'纯卖货视频没流量（你已经验证过了），但"知识+带货"模式在视频号很吃香。你的优势：985学历+国学积累+教育行业经验。',how:'不卖产品，卖认知。比如推荐一本育儿书→先讲一个育儿故事→再引出这本书的观点→最后挂链接。',ref:'视频号适合30-50岁用户，你的目标家长群体正好在这个年龄段。内容调性：温和、有深度、不说教。'}},
+        {title:'"钢琴机构招生难"共鸣',platform:'抖音',desc:'教培人真实日常，引发同行/家长评论',detail:{analysis:'教培行业的内容天然有圈层传播力。一个老师吐槽"现在招生太难了"，能引发全国教培人共鸣。家长看了也会留言"我们这边也是"。',how:'口播形式：坐钢琴前，聊今天遇到的事。比如"今天有个家长来咨询，问我学钢琴到底有什么用，我想了想说……"。',ref:'不要太负面，结尾要给希望。比如"虽然难，但看到孩子弹出一首完整的曲子，就觉得一切都值了"。'}},
+        {title:'"高考志愿/工科211"',platform:'小红书',desc:'孩子606分志愿填报经验分享',detail:{analysis:'高考志愿填报是每年6-7月的超级热点。你家孩子606分冲211工科的经历，对很多家长来说是刚需信息。',how:'图文笔记形式：一张录取截图（打码）+一张志愿填报表格+经验分享。标题："606分，我们是这样帮孩子冲进211的"。',ref:'内容要具体：列出孩子各科分数、报考的学校和专业、面试经验。越详细越容易被收藏。'}}
+    ];
+
+    function renderHot() {
+        const container = document.getElementById('hot-list');
+        container.innerHTML = hotData.map((hot, i) => {
+            return '<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden cursor-pointer" onclick="toggleHot('+i+')">'+
+                '<div class="p-4 flex items-start gap-3">'+
+                    '<input type="checkbox" class="w-5 h-5 mt-0.5 accent-green-600 rounded" onclick="event.stopPropagation()">'+
+                    '<div class="flex-1">'+
+                        '<div class="flex items-center justify-between"><h3 class="font-medium text-gray-800 text-sm">'+hot.title+'</h3><span class="text-xs text-gray-400">展开 ▼</span></div>'+
+                        '<p class="text-xs text-gray-500 mt-1">'+hot.platform+' → '+hot.desc+'</p>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="hot-detail hidden border-t border-gray-100 bg-gray-50 p-4" id="hot-detail-'+i+'">'+
+                    '<p class="text-sm font-bold text-orange-600 mb-2">🔥 热度分析</p>'+
+                    '<p class="text-sm text-gray-700 mb-3">'+hot.detail.analysis+'</p>'+
+                    '<p class="text-sm font-bold text-orange-600 mb-2">✍️ 怎么写</p>'+
+                    '<p class="text-sm text-gray-700 mb-3">'+hot.detail.how+'</p>'+
+                    '<p class="text-sm font-bold text-orange-600 mb-2">💡 参考</p>'+
+                    '<p class="text-sm text-gray-600">'+hot.detail.ref+'</p>'+
+                '</div>'+
+            '</div>';
+        }).join('');
+    }
+
+    window.toggleHot = function(i) {
+        const detail = document.getElementById('hot-detail-'+i);
+        if(detail.classList.contains('hidden')) {
+            document.querySelectorAll('.hot-detail').forEach(d=>d.classList.add('hidden'));
+            detail.classList.remove('hidden');
+        } else {
+            detail.classList.add('hidden');
+        }
+    };
+
+    renderIdeas();
+    renderHot();
 })();
     </script>
 </body>
