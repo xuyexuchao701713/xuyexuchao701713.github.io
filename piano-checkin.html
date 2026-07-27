@@ -298,6 +298,7 @@ function renderHistory() {
                         '<span class="text-xs text-gray-500">'+r.minutes+'分钟 '+qEmoji+'</span>'+
                     '</div>'+
                     (r.note ? '<p class="text-xs text-gray-500 mt-1">'+r.note+'</p>' : '')+
+                    (r.media ? '<div class="mt-2">'+(r.media.type==='photo'?'<img src="'+r.media.data+'" class="w-full rounded-lg max-h-32 object-cover" onclick="viewFullImage(this.src)">':'<video src="'+r.media.data+'" class="w-full rounded-lg max-h-32" controls></video>')+'</div>' : '')+
                 '</div>';
             }).join('')+
         '</div>';
@@ -340,6 +341,8 @@ function updateStats() {
 }
 
 // ===== 分享 =====
+let currentShareImageData = null;
+
 function generateShare() {
     const practices = get(STORAGE.practices) || [];
     const range = document.querySelector('input[name="share-range"]:checked').value;
@@ -366,9 +369,18 @@ function generateShare() {
     const pieces = records.map(r => '🎵 '+r.piece+' ('+r.minutes+'分钟)').join('\n');
     const dateStr = today.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'});
     
+    // Check if any record has media, use first one found
+    const mediaRecord = records.find(r => r.media && r.media.type === 'photo');
+    
     const preview = document.getElementById('share-preview');
     preview.classList.remove('hidden');
-    preview.innerHTML = '<div style="background:linear-gradient(135deg,#8b5e3c,#6b3a1f);color:#fff;padding:20px;border-radius:16px;text-align:center">'+
+    
+    let mediaHtml = '';
+    if(mediaRecord) {
+        mediaHtml = '<img src="'+mediaRecord.media.data+'" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-bottom:12px" id="share-card-image">';
+    }
+    
+    preview.innerHTML = '<div id="share-card" style="background:linear-gradient(135deg,#8b5e3c,#6b3a1f);color:#fff;padding:20px;border-radius:16px;text-align:center">'+
         '<p style="font-size:28px;margin-bottom:4px">🎹</p>'+
         '<h3 style="font-size:18px;font-weight:bold;margin-bottom:4px">'+title+'</h3>'+
         '<p style="font-size:12px;opacity:0.8;margin-bottom:12px">玛雅辛巴星艺术培训学校 · '+dateStr+'</p>'+
@@ -382,18 +394,170 @@ function generateShare() {
         '<p style="font-size:11px;opacity:0.6;margin-top:12px">坚持就是胜利，每一天都在进步！💪</p>'+
     '</div>';
     
+    // Also show practice photos below the card
+    const allPhotos = records.filter(r => r.media && r.media.type === 'photo');
+    if(allPhotos.length > 0 && !mediaRecord) {
+        // Show photos separately if not already in card
+    }
+    
     document.getElementById('share-btn').classList.remove('hidden');
     
-    // Save share data for WeChat
+    // Save share text
     window._shareText = title+'\n练习时长：'+totalMin+'分钟\n'+pieces.replace(/\n/g,'\n')+'\n\n坚持就是胜利！💪';
+    window._shareRecords = records;
+    window._shareTitle = title;
+    window._shareTotalMin = totalMin;
+    
+    // Generate share card as image using canvas
+    generateShareImage(title, records, totalMin, dateStr);
+}
+
+function generateShareImage(title, records, totalMin, dateStr) {
+    // Build share card as image via canvas
+    const pieces = records.map(r => '🎵 '+r.piece+' ('+r.minutes+'分钟)').join('\n');
+    const mediaRecord = records.find(r => r.media && r.media.type === 'photo');
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const width = 750;
+    const padding = 40;
+    const lineHeight = 36;
+    const textLines = pieces.split('\n');
+    const extraHeight = textLines.length * lineHeight;
+    let height = 380 + extraHeight;
+    
+    canvas.width = width;
+    canvas.height = height;
+    
+    // Background gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, '#8b5e3c');
+    gradient.addColorStop(1, '#6b3a1f');
+    ctx.fillStyle = gradient;
+    roundRect(ctx, 0, 0, width, height, 24);
+    ctx.fill();
+    
+    let y = 50;
+    
+    // Title
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 28px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎹', width/2, y);
+    y += 36;
+    ctx.font = 'bold 36px -apple-system, sans-serif';
+    ctx.fillText(title, width/2, y);
+    y += 30;
+    ctx.font = '20px -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillText('玛雅辛巴星艺术培训学校 · '+dateStr, width/2, y);
+    y += 40;
+    
+    // Total minutes badge
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    roundRect(ctx, width/2-140, y-10, 280, 80, 16);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 56px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(totalMin+'', width/2-20, y+40);
+    ctx.font = '20px -apple-system, sans-serif';
+    ctx.fillText('分钟', width/2+40, y+40);
+    ctx.font = '18px -apple-system, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillText('练习时长', width/2, y+60);
+    y += 95;
+    
+    // Pieces list
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#fff';
+    ctx.font = '24px -apple-system, sans-serif';
+    textLines.forEach(line => {
+        ctx.fillText(line, padding+10, y);
+        y += lineHeight;
+    });
+    
+    y += 20;
+    
+    // Footer
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.font = '18px -apple-system, sans-serif';
+    ctx.fillText('坚持就是胜利，每一天都在进步！💪', width/2, y);
+    
+    currentShareImageData = canvas.toDataURL('image/png');
+    
+    // Update preview to show the generated image
+    const preview = document.getElementById('share-preview');
+    preview.innerHTML = '<img src="'+currentShareImageData+'" style="width:100%;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.15)" id="share-card-img">'+
+        '<p style="font-size:12px;color:#999;text-align:center;margin-top:8px">👆 点击下方按钮分享这张卡片给老师</p>';
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.lineTo(x+w-r, y);
+    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+    ctx.lineTo(x+w, y+h-r);
+    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+    ctx.lineTo(x+r, y+h);
+    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+    ctx.lineTo(x, y+r);
+    ctx.quadraticCurveTo(x, y, x+r, y);
+    ctx.closePath();
 }
 
 function shareToWechat() {
     if(!window._shareText) return;
-    if(navigator.share) {
-        navigator.share({ title: '钢琴练习打卡', text: window._shareText }).catch(() => {});
+    
+    // Try Web Share API with image file
+    if(navigator.share && currentShareImageData) {
+        // Convert base64 to blob
+        const byteString = atob(currentShareImageData.split(',')[1]);
+        const mimeString = currentShareImageData.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for(let i=0; i<byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+        const blob = new Blob([ab], {type: mimeString});
+        const file = new File([blob], 'piano-practice.png', {type: mimeString});
+        
+        navigator.share({
+            title: window._shareTitle,
+            text: window._shareText,
+            files: [file]
+        }).catch(() => {
+            // Fallback if files not supported
+            fallbackShare();
+        });
+    } else if(navigator.share) {
+        navigator.share({ title: '钢琴练习打卡', text: window._shareText }).catch(() => {
+            fallbackShare();
+        });
     } else {
-        // Fallback: copy to clipboard
+        fallbackShare();
+    }
+}
+
+function fallbackShare() {
+    // Save image and copy text
+    if(currentShareImageData) {
+        // Create a download link for the image
+        const a = document.createElement('a');
+        a.href = currentShareImageData;
+        a.download = '钢琴练习打卡.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // Also copy text
+        const ta = document.createElement('textarea');
+        ta.value = window._shareText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('✅ 分享卡片图片已保存到相册\n📋 文字已复制到剪贴板\n\n打开微信 → 发送图片 → 粘贴文字，一起发给老师即可！');
+    } else {
         const ta = document.createElement('textarea');
         ta.value = window._shareText;
         document.body.appendChild(ta);
@@ -431,6 +595,15 @@ if(savedMedia) {
         document.getElementById('video-preview').src = savedMedia.data;
         document.getElementById('video-preview').classList.remove('hidden');
     }
+}
+
+// ===== 图片放大查看 =====
+function viewFullImage(src) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer';
+    overlay.innerHTML = '<img src="'+src+'" style="max-width:95vw;max-height:95vh;object-fit:contain;border-radius:8px">';
+    overlay.addEventListener('click', () => overlay.remove());
+    document.body.appendChild(overlay);
 }
 
 updateStats();
