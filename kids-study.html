@@ -303,7 +303,38 @@ function set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
 let currentKid = get(STORAGE.currentKid) || 'girl';
 
 // English video data
-const englishVideos = [{"id": 1, "title": "早上好", "sentences": ["Good morning! (早上好！)"], "level": "幼儿园", "video": "https://www.bilibili.com/video/BV1example"}, {"id": 2, "title": "再见", "sentences": ["Goodbye! (再见！)"], "level": "幼儿园", "video": ""}, {"id": 3, "title": "谢谢你", "sentences": ["Thank you! (谢谢你！)"], "level": "幼儿园", "video": ""}, {"id": 4, "title": "对不起", "sentences": ["Sorry! (对不起！)"], "level": "幼儿园", "video": ""}, {"id": 5, "title": "我饿了", "sentences": ["I'm hungry. (我饿了。)"], "level": "幼儿园", "video": ""}, {"id": 6, "title": "我渴了", "sentences": ["I'm thirsty. (我渴了。)"], "level": "幼儿园", "video": ""}, {"id": 7, "title": "我要上厕所", "sentences": ["I need to go to the bathroom. (我要上厕所。)"], "level": "幼儿园", "video": ""}, {"id": 8, "title": "我喜欢这个", "sentences": ["I like it! (我喜欢这个！)"], "level": "幼儿园", "video": ""}, {"id": 9, "title": "我爱你", "sentences": ["I love you! (我爱你！)"], "level": "幼儿园", "video": ""}, {"id": 10, "title": "快点", "sentences": ["Hurry up! (快点！)"], "level": "幼儿园", "video": ""}, {"id": 11, "title": "等一下", "sentences": ["Wait a minute. (等一下。)"], "level": "幼儿园", "video": ""}, {"id": 12, "title": "小心", "sentences": ["Be careful! (小心！)"], "level": "幼儿园", "video": ""}, {"id": 13, "title": "好棒", "sentences": ["Good job! (好棒！)"], "level": "幼儿园", "video": ""}, {"id": 14, "title": "再来一次", "sentences": ["One more time! (再来一次！)"], "level": "幼儿园", "video": ""}, {"id": 15, "title": "晚安", "sentences": ["Good night! (晚安！)"], "level": "幼儿园", "video": ""}, {"id": 16, "title": "你叫什么名字", "sentences": ["What's your name? (你叫什么名字？)"], "level": "二年级", "video": ""}, {"id": 17, "title": "我七岁了", "sentences": ["I am seven years old. (我七岁了。)"], "level": "二年级", "video": ""}, {"id": 18, "title": "今天天气很好", "sentences": ["It's a nice day today. (今天天气很好。)"], "level": "二年级", "video": ""}, {"id": 19, "title": "我可以帮你吗", "sentences": ["Can I help you? (我可以帮你吗？)"], "level": "二年级", "video": ""}, {"id": 20, "title": "这个多少钱", "sentences": ["How much is it? (这个多少钱？)"], "level": "二年级", "video": ""}, {"id": 21, "title": "我做完作业了", "sentences": ["I finished my homework. (我做完作业了。)"], "level": "二年级", "video": ""}, {"id": 22, "title": "我们去公园吧", "sentences": ["Let's go to the park! (我们去公园吧！)"], "level": "二年级", "video": ""}, {"id": 23, "title": "你能帮我吗", "sentences": ["Can you help me? (你能帮我吗？)"], "level": "二年级", "video": ""}, {"id": 24, "title": "我想要喝水", "sentences": ["I want to drink some water. (我想要喝水。)"], "level": "二年级", "video": ""}, {"id": 25, "title": "这是我的铅笔", "sentences": ["This is my pencil. (这是我的铅笔。)"], "level": "二年级", "video": ""}, {"id": 26, "title": "你几岁了", "sentences": ["How old are you? (你几岁了？)"], "level": "二年级", "video": ""}, {"id": 27, "title": "我会唱歌", "sentences": ["I can sing a song. (我会唱歌。)"], "level": "二年级", "video": ""}, {"id": 28, "title": "别担心", "sentences": ["Don't worry. (别担心。)"], "level": "二年级", "video": ""}, {"id": 29, "title": "太棒了", "sentences": ["That's great! (太棒了！)"], "level": "二年级", "video": ""}, {"id": 30, "title": "明天见", "sentences": ["See you tomorrow! (明天见！)"], "level": "二年级", "video": ""}];
+const englishVideos = [
+{"id":1,"title":"早上好","sentences":["Good morning! (早上好！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
+{"id":2,"title":"再见","sentences":["Goodbye! (再见！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"},
+{"id":3,"title":"谢谢你","sentences":["Thank you! (谢谢你！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
+{"id":4,"title":"对不起","sentences":["Sorry! (对不起！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"},
+{"id":5,"title":"我饿了","sentences":["I'm hungry. (我饿了。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":6,"title":"我渴了","sentences":["I'm thirsty. (我渴了。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":7,"title":"我要上厕所","sentences":["I need to go to the bathroom. (我要上厕所。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":8,"title":"我喜欢这个","sentences":["I like it! (我喜欢这个！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":9,"title":"我爱你","sentences":["I love you! (我爱你！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":10,"title":"快点","sentences":["Hurry up! (快点！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":11,"title":"等一下","sentences":["Wait a minute. (等一下。)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":12,"title":"小心","sentences":["Be careful! (小心！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":13,"title":"好棒","sentences":["Good job! (好棒！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":14,"title":"再来一次","sentences":["One more time! (再来一次！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":15,"title":"晚安","sentences":["Good night! (晚安！)"],"level":"幼儿园","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"},
+{"id":16,"title":"你叫什么名字","sentences":["What's your name? (你叫什么名字？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
+{"id":17,"title":"我七岁了","sentences":["I am seven years old. (我七岁了。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
+{"id":18,"title":"今天天气很好","sentences":["It's a nice day today. (今天天气很好。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
+{"id":19,"title":"我可以帮你吗","sentences":["Can I help you? (我可以帮你吗？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":20,"title":"这个多少钱","sentences":["How much is it? (这个多少钱？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":21,"title":"我做完作业了","sentences":["I finished my homework. (我做完作业了。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":22,"title":"我们去公园吧","sentences":["Let's go to the park! (我们去公园吧！)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
+{"id":23,"title":"你能帮我吗","sentences":["Can you help me? (你能帮我吗？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":24,"title":"我想要喝水","sentences":["I want to drink some water. (我想要喝水。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1jY411W7SG"},
+{"id":25,"title":"这是我的铅笔","sentences":["This is my pencil. (这是我的铅笔。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
+{"id":26,"title":"你几岁了","sentences":["How old are you? (你几岁了？)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1uN4y1U7xS"},
+{"id":27,"title":"我会唱歌","sentences":["I can sing a song. (我会唱歌。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1GJ4m1u7Fk"},
+{"id":28,"title":"别担心","sentences":["Don't worry. (别担心。)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":29,"title":"太棒了","sentences":["That's great! (太棒了！)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1ab4y117mR"},
+{"id":30,"title":"明天见","sentences":["See you tomorrow! (明天见！)"],"level":"二年级","video":"https://www.bilibili.com/video/BV1Fb4y1n7xR"}
+];
 
 // ===== 孩子切换 =====
 function switchKid(kid) {
@@ -644,6 +675,14 @@ function updateVideo() {
                 </div>
             `).join('')}
         </div>
+        ${video.video ? `
+        <div class="mt-4">
+            <a href="${video.video}" target="_blank" class="block w-full py-3 rounded-xl text-center text-white font-medium text-sm active:opacity-80" style="background:#fb7299">
+                🎬 点击观看教学视频
+            </a>
+            <p class="text-xs text-gray-400 text-center mt-2">将跳转到B站观看</p>
+        </div>
+        ` : ''}
         <div class="mt-4 p-3 rounded-xl bg-gray-50 text-center">
             <p class="text-xs text-gray-500">💡 让孩子跟着读2-3遍，模仿发音和语调</p>
         </div>
