@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="学习打卡">
+    <meta name="theme-color" content="#5b8c5a">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiXHU1YjY5XHU1YjUwXHU1YjY2XHU0ZTYwXHU2MjUzXHU1MzYxIiwic2hvcnRfbmFtZSI6Ilx1NWI2Nlx1NGU2MFx1NjI1M1x1NTM2MSIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y5ZmFmYiIsInRoZW1lX2NvbG9yIjoiIzViOGM1YSIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQUlBQUFEZHZ2dFFBQUFLUEVsRVFWUjRuTzNkYTFCVTV4M0g4ZWZzc2lnWGdXMHdnRmNJRWthMFNFUnpRVVNEalNaZTBMRnB2Q1Z0WXFhMVRXTkphMmZhRjcyK2J6cFQyMHltVm1kaUFtcHFuR2JxUkFlb2tZamF4alpnSlJyamxTUmdBb2dLQ2hJSWJGOXNlM0tLc0p3OXozT2UyL2w5WHJuclhnN1ArYzcvN0xJWGpBMi9XVThBblBLSjNnQlFHd0lDS2dnSXFDQWdvSUtBZ0FvQ0Fpb0lDS2dnSUtDQ2dJQUtBZ0lxQ0Fpb0lDQ2dnb0NBQ2dJQ0tnZ0lxTVNJM2dCWlZHeXBqUFlxVDc2NHdZMHRVWXZod1RlVU9XakZQcTlWNVpXQVhJMW1KRjZJU2VlQWhFUXpFbDFqMGpBZ3FicTVrMllsNlJPUTVOM2NTWStTZEFoSXVYU3NWTTlJN1lDVVRzZEszWXhVRFVpYmRLeFV6RWk5Z0xSTXgwcXRqRlFLU1B0MHJGVEpTSTJBUEpXT2xmd1pLZkJpcW1mcklTcjg3RkpQSVBtWGp4dHBSNUc4RXdqMVdFbTdHakpPSUdrWFN3YXlqU0xwSmhEcWlVeTI5WkVySU5sV1IwNVNyWklzaHpDcEZrVVZNaHpPcEpoQXFNY1pHZFpOZkVBeXJJSzZoSytlNElDRS8vd2FFTHVHSWdOQ1Bhd0lYRWxoQWFFZXRrU3RwNWlBVUk4YmhLeXFnSUJRajN2NHJ5M3ZnRkNQMnppdk1OZUFVQThmUE5lWlgwQ29oeWR1cTgwcElOVERINTgxRi8rYmFGQWFqNEF3ZmtUaHNQS3VCNFI2eEhKNy9kME5DUFhJd05XOWdNZEFRTVhGZ0RCKzVPSGV2bkFySU5Rakc1ZjJDQTVoUU1XVmdEQis1T1RHZm1FZkVPcVJHZk85ZzBNWVVHRWNFTWFQL05qdUkwd2dvTUl5SUl3ZlZURGNVNWhBUUlWWlFCZy9hbUcxdnpDQmdBcWJnREIrVk1Sa3IyRUNBUlVHQVdrNWZ2b0grdnUrNkJPOUZhNmozM2RlbVVDaFVNam1KVnM2V2lwckt6Yi84ZmsvSDMzZDhkMWQ3YnA2NXVQVDl1OVVYYlIvOGxMKzhkUGUxWDdnWHdkT1htejR4YnBmQmhPRGtTLzgyemRmckw5WUgvNTNUVVBOZ3BrTEo2ZE9kbkNudTQvc2Z2ZkRmd1FUZ3cvbVBsUTB2U2dyTGN2QmpmQlJzYVdTNW91cWRKNUE3VjN0THg5NCtjYzd0dFEwVkxkM3RXL2R2M1ZnY0NEeVZiNmFtVy8rZTJCd1lPZWhWeHpjNytYV1N5YytmSmNRY3YzVzlZUHZIZmg1eGMrMlZXMXpjRHRLMERtZ3VFRGNtVTlPbTlHY3YzS3VzbmFVZWJsbzFxSkpxWlBNazJlYnp4Nzc0RmhVZHhvaW9WZmZmaTFFdmp4NHhZK0pYLzNRNnFodVJDRlVBVWwrL0VxTVMvemUwdWNNd3pEUHFXNm9paHlFei9BOXVmQXA2em03MzlsMXUrKzIvVHM5Zk9ydDgxZk9XYzk1ZXRFenFVbXA5bStCUDVyOXFQTUVJb1RrVGM0cnUzK2w5WndkTmR1dlhHdUpjSldaVTJjV1RwdGpucnpSZmVQZ2V3ZHQzbDFuVCtlZUkzdXM1eFRuRlJkTkw3Szl2ZXJSUENCQ3lPcWkxVGtUY3N5VGZmMTlmNnJhYmozRTNHbGR5ZHIvbTF2MVZiMzl2WGJ1YTBmMTlwN1BlOHlUNDVQSGYydlIwMUZ2c1ZLY0J5VDU4Y3ZrOS9rM1Bib3BFQk13enpsLzVkeWhrMytMY0pYMFlFYmh0RUx6NUszZVc0ZFBIUjcxam1vYmE4MW5jSVNRMkpqWThySVg0bUxqSEcwMWI0NzNwdjRUaUJDU0hzeFk5ZUFxNnpuN2p1K0xQRlNXelZsdVBWbmJPRXBBYloxdEZiV3ZXYy9aK01pem1YZG5ScldkS3ZKRVFJU1E1WE5YcEtXa21TZHYzcjVaMDFBZDRmSTVFM0ltZkdXaWViS2xvK1Z5NitXUkx0ei9SZi9Xdi82dXQrL0xJaGZmdDZRNHI1aHVrOVhnbFlEOFB2LzZCZi85VHY2QVA3Qms5cEtTR1NXUnIxS2NONDhRWWhoR3dUMzMvV2pWbHFsM1R4M3BrcThlM3RuVTFtU2V6SjJZdTJHaCtPK1E1OFBobnpxUTlnSFFEN1p0dm5iem11aXRpR1RUbzkrZFAyTys2SzBZbm9OZlNYdGxBb0ZMRUJCUVFVQkF4Y21yOGRJK0FCcGl5dmdweStZdUgvMXlMbXRzYWp4NnBrNzBWdGppNEpWNTJyZHp5Q3dsSVRoditqelJXMEY2UHU5UkpTQUhjQWdES2dnSXFDQWdvSUtBZ0FvQ1lxYWpxOFBtdXo1MEV2V3pNRldldzkrcDVtU05zL2M0MjVjZVRIOSsrV2FsWDRTUDlwazhKaEJMbjEzLzdOZTdmbFhkVUNWNlEvaEJRSXoxRC9TZmJUNDc2c2MvdEtIYkx4STNQdkpzLy84K1Vab1VuOHgvQTByelM1LzUya2JyTzJMek0vUEx5OHJOazFscDkvRGZLdmZvRmxCQlZzRkkvelUzWis3VThTTytweWRhNzMvOC9wdC8vOHRnYU5CNlp0a0RaVThVcnhseXliU1VOT3Q3MlRTalcwQVJwQ1NrcENTazBOL093T0RBdnVOdjdEK3gzL3JKNVlBLzhGVHBOMHZ6Uytsdlh5MGVDb2lKdHM2Mmw5NTY2ZUtuRjZ4bnBpYWxscGVWYTNac3Nna0IyUlVLaFdvYmEzZTlVem5rYzRiNW1mblBMZjErWWx5aXFBMFRDd0haY3VIVEN6c1A3YnpjZXNsNlpteE03T1B6dnZGWTRXUFdoOHhlZzRCRzBkblQrZnFSUFhXbjY0WjhGakYzWXU2M2wzd25QWmd1YXNNa2dZQ0dWMyt4ZnQveE53Z2hyVGRhclovWElZU01DWXg1b25qTjR0bUxEZUxkd1dOQ1FNUHI3dTMrcU8yaklXZjZERi9KekpLdkZ6MCs2dmNNZVFjQ3Nxc2dxMkR0Z25XVDdwbzAra1c5QkFIWnNuVE8wdlVMdlBKWndhamd0VEJiRXNZbWlONEVTZWt6Z1pvN21uLzZ5azljdXZHOVIvZnVQYnFYMWEydG1iOTJ4ZjByV04yYVdKaEFRQ1hxZ0dpKzBSUGtGKzMreFFRQ0t2bzhCaG8zTm5IWm5HV3NidTJUcTgybm12NXRucngzNHIwNUdUa1JMaCtWN0l4c1ZqY2xuRDRCSlNla3JGdmc1S3RxaGxWM3VzNGEwS3lzV1NzZldNWHF4bldDUXhoUVFVQkFCUUVCRlNjQjRabThydkFWZDhBYkFnSXFDQWlvT0F3SUQ0UDA0MnlmWWdJQkZRUUVWQkFRVUhFZWtONFBnMXB2dEZwUHh2Z0RJMTFTRDQ3M3BqNHZwdHJYMk5SNDdJTmpNWDYvMytmMysySU13L0FaQmlFR0lTUkVCZ2NHQjd0NnVrNWVhckJlSlNrdVNkREd5czZMQVdWblpQL2hyZDkzOTNiYnYwcG1XcVpybTZNMnFzZEFpaDdGNHNmRUQvbDdjcEhsVGM1ejl0ZmpWWUcvR3grMWgvTWY5dnY4bzE3TUlFYmh0TUlYVnY2UXd5WXB5b3VITUVMSXVMaHhzN01MLzNuK2hHRVlCakVNd3dqNEE0R1lRQ0Fta0RnMk1Ua2grYTV4cVZscFdUT201S1VITTBSdnJOUWMvc0U1SzNXL3R4VUk5ZU1Rang3Q2dCVUdBU242VUJvSWkzMkhDUVJVMkFTRUlhUWlKbnNORXdpb01Bc0lRMGd0clBZWEpoQlFZUmtRaHBBcUdPNHBUQ0Nnd2pnZ0RDSDVzZDFIbUVCQWhYMUFHRUl5WTc1M1hKbEFhRWhPYnV3WEhNS0FpbHNCWVFqSnhxVTk0dUlFUWtQeWNHOWY0QkFHVk53TkNFTklCcTd1QmRjbkVCb1N5KzMxNTNFSVEwT2ljRmg1UEFZQ0twd0N3aERpajgrYTg1dEFhSWduYnF2TjlSQ0dodmpndWM2OEh3T2hJYmR4WG1FQkQ2TFJrSHY0cjYyWVoyRm95QTFDVmxYWTAzZzB4SmFvOVJUNWV5QTB4SXJBbFJUOGkwUTBSRS9zR29yL1RUUWFvaUY4OWNRSFJDUllCVVhKc0c0TXZtQ0tJWHhYbFUweXBCTW14UVF5eWJNdU1wTnFsZVFLaUVpMk9oS1NiWDNrT29SWjRYQTJoR3pwaEVrM2dVeHlycGNvMHE2R3ZCUEk1UEZSSkcwNllmSk9JSlBrSytncStYOTJCU2FReVZPalNQNTB3bFFLS0V6N2pGUkpKMHk5Z01LMHpFaXRkTUpVRFNoTW00eFVUQ2RNN1lEQ2xNNUkzWFRDZEFnb1RMbU1WRThuVEorQVRKS1hwRWMzSmcwRE1rbFZrbWJkbUhRT3lFcElUTHBHWStXVmdLeGNqY2tMMFZoNU1hQmhPYWpLYTYwTUN3RUJGUVZlVEFXWklTQ2dnb0NBQ2dJQ0tnZ0lxQ0Fnb0lLQWdBb0NBaW9JQ0tnZ0lLQ0NnSUFLQWdJcUNBaW9JQ0NnOGg5d2tmVmx6TmtJWndBQUFBQkpSVTVFcmtKZ2dnPT0iLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn0seyJzcmMiOiJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQUlBQUFCN0drT3RBQUFjQzBsRVFWUjRuTzNkZVpoVjVaM2c4WHRyaFFJUklhZ3NzUkZGUWFNSUtsb3FUY0F0Y1NFeFd5c1lzMDkzek9hTTZYa21TVC9kazBuNmVhWjdrcG5wcEtlN2srNjRKeVltNmFUYkhSV0ZHSmNvWWhOeGkzRUxkcnRnVUFSRVNxajVBeDlEV0tyT3ZYWE9QZTk1MzgvbmorUjU0QlQzVGVwOWY5ODY5MWJkcWkvNjJzSWFBT2xwSzNzQkFKUkRBQUFTSlFBQWlSSUFnRVFKQUVDaUJBQWdVUUlBa0NnQkFFaVVBQUFrU2dBQUVpVUFBSWtTQUlCRUNRQkFvZ1FBSUZFQ0FKQW9BUUJJbEFBQUpFb0FBQklsQUFDSkVnQ0FSQWtBUUtJRUFDQlJBZ0NRS0FFQVNKUUFBQ1JLQUFBU0pRQUFpUklBZ0VRSkFFQ2lCQUFnVVFJQWtDZ0JBRWlVQUFBa1NnQUFFaVVBQUlrU0FJQkVDUUJBb2dRQUlGRUNBSkFvQVFCSWxBQUFKS3FqN0FWQS9xNjQ4THRGL0xQbmZuMVJFZjhzbEtXKzZHc0x5MTRETkthZytUNTBDa0cxQ0FCQkMzYldaNmNLQkVzQUNFZ0U0ejRMU1NBUUFrQ1pFcG40QTlNRHlpSUF0SlNKUHlnOW9HVUVnTUlaK2swVEF3b2xBQlRDME0rZEdKQTdBU0JQNW40TEtBRjVFUUNHeXRBdmtSZ3dGQUpBazh6OW9DZ0JUUkFBR21QdUIwNEp5RTRBeU1UY3J4d2xZRkFDd0NDTS9rcVRBUVlnQU95YXVSOFpKV0JuQXNDT2pQNkl5UURiRXdEZVlPNG5SUW1vQ1FBMW96OWhNcEE0QVVpWHVjK2JsQ0JOQXBBaW81OWRrb0hVQ0VCYWpINEdKUVBwRUlCVUdQMDBSQVpTSUFEeE0vcHBtZ3pFVFFCaVp2U1RDeG1JbFFERXllZ25keklRSHdHSWpkRlBvV1FnSmdJUUQ2T2ZscEdCT0xTVnZRRHlZZnJUU3ZaYkhOd0JWSjZqU0luY0NsU2FBRlNZMFU4Z1pLQ2lCS0NTakg0Q0pBT1Y0eldBNmpIOUNaT2RXVG51QUtyRUFhTVMzQXBVaFR1QXlqRDlxUXA3dFNyY0FWU0E0MFJGdVJVSW5BQUV6ZWduQWpJUUxFOEJoY3YwSnc1MmNyRGNBWVRJZ1NGS2JnVkM0dzRnT0tZL3NiSzNReU1BWVhGQ2lKc2RIaFJQQVlYQ3dTQXBuZzRLZ1R1QUlKaitwTWFlRDRFQWxNOUpJRTEyZnVrOEJWUW1Cd0Jxbmc0cWp6dUEwcGorc0kyelVCWUJLSWNkRDl0eklrcmhLYUJXczlGaEFKNE9haVYzQUMxbCtzUEFuSkZXRW9EV3NiTWhDeWVsWlFTZ1JleHB5TTU1YVEydkFSVE9Wb2FtZVVtZ1VPNEFpbVg2dzFBNFFZVVNnQUxadXpCMHpsRnhCS0FvZGkza3hXa3FpQUFVd242RmZEbFRSUkNBL05tcFVBUW5LM2NDa0RON0ZJcmpmT1ZMQVBKa2QwTFJuTEljK1RtQWZOaVUwR0orUkdEbzNBSGt3UFNIMW5QdWhrNEFoc291aExJNGZVTWtBRU5pLzBHNW5NR2hFSURtMlhrUUFpZXhhUUxRSkhzT3d1RThOa2NBbW1HM1FXaWN5aVlJUU1Qc013aVRzOWtvQVdpTUhRWWhjMEliSWdBTnNMY2dmTTVwZGdJQWtDZ0J5TXFYRlZBVlRtdEdBcENKL1FUVjRzeG1JUUNEczVPZ2lwemNRUW5BSU93aHFDN25kMkFDTUJDN0I2ck9LUjZBQU95V2ZRTnhjSlozUndCMnpZNkJtRGpSdXlRQXUyQ3ZRSHljNjUwSkFFQ2lCR0JIdmt5QVdEbmRPeENBMzJOL1FOeWM4ZTBKd08vWUdaQUNKLzFOQXZBR2V3TFM0Ynh2SXdBQWlSS0FXczJYQTVBZXA3NG1BRFg3QUZMbDdLY2VBRHNBVXBiNEJFZzlBQURKU2pvQWljY2ZxS1U5QjlJTlFNcWZkV0I3eVU2RFJBT1E3T2NiMktVMFowS2lBUUFneFFDa21YcGdZQWxPaHVRQ2tPRG5HTWdvdGZtUVZnQlMrK3dDalVwcVNxUVZBQURlbEZBQWtnbzcwTFIwWmtVcUFVam5Nd29NWFNJVEk1VUFBTENESkFLUVNNeUJIS1V3TjVJSUFBQTdpejhBS1dRY0tFTDAweVB5QUVULytRTUtGZmNNaVR3QUFPeE96QUdJTzkxQWEwUThTYUlOUU1TZk02REZZcDBuMFFZQWdJSEZHWUJZY3cyVUpjcXBFbWNBQUJoVWhBR0lNdFJBNmVLYkxSRUdBSUFzWWd0QWZJa0d3aEhaaElrcUFKRjlib0FBeFRSbm9nb0FBTm5GRTRDWXNneUVMSnBwRTA4QUFHaElKQUdJSnNoQUpjUXhjeUlKQUFDTmlpRUFjYVFZcUpZSUprOE1BUUNnQ1pVUFFBUVJCaXFxNnZPbjhnRUFvRG5WRGtEVjh3dFVYYVduVUxVREFFRFRLaHlBU29jWGlFWjFaMUdGQXdEQVVGUTFBTlZOTGhDZmlrNmtxZ1lBZ0NHcVpBQXFHbHNnWWxXY1M1VU1BQUJESndBQWlhcGVBS3A0bndXa29ITFRxWG9CQUNBWEZRdEE1UUlMSktWYU02cGlBUUFnTHdKQVFoNWUvZkJMRzE0cWV4VVFpaW9Gb0ZyM1ZvVGo1UTB2WFhQUE5aKy82TUt2L3VBckY5OThVZG5MSVhJVm1sUWRaUzhBaXJLMWYrdktKLzd0MWwvZWR2L2pLN1pzM2JMdEQ1Yy90dnp1Uis0NjV1Qmp5MTNiQUxaczNYTHJ5aVZIVFQxNjlJalJaYStGeU5VWGZXMWgyV3ZJcEVKUlpaZFdQcmx5MzczMjNYdlB2VnZ3V0MrOC9NTFNCMjViK3NEU3Rldlg3dnkzbzNwRy9mV0gvOWZJNFNOYnNKSW0zSHovVFpmY2NrbTlYcDgrYVhydnRPT09QdWpva2NNQ1hTb0RPUGZyaThwZXd1RGNBVkNzcmYxYjczN2s3cXQvOGE5UHYvRDBoREVUdjd6b3k4TzdoaGYzY0hjL2V2ZXRLNWVzZW1wVmY2MS9kOWVzMjdqdWl0c3UvNU4zZnJLNFpUUnQ4K3ViZjNyWFQydTFXbjkvLzRPL2VmREIzeng0eVMwWEh6NzU4R09uOVI1NTRKSERPb2VWdlVDaUlnQVVwZS8xdnFXcmxsNTN6N1hQdi96OHRqLzU5OTgrODgycnYvSDU5L3hwVzcyb0Y1OGVYdjN3QTA4OU1PaGx0ejk0ZSsrMDQyYnNQNk9nWlRSdDhZckZPN3hNdldYcmxoV1ByMWp4K0lxdWpxNlpCOHpxUGJoM3hwUVpuZTJkSlMyUXFGVGpLU0RQLzFUTHh0YzIzbnovVFRmY2Q4TzZqZXQyL3R0VFpwNTYzdnp6Q25yb1Z6ZS8rbDh2L3ROZFB2T3pnN0Y3alAyckQvLzFzSzZBdnFaZTkrcTZ6My9ud28ydmJSejRzcDd1bnFNT1BLcDMybkdIN0hkSWUxdDdhOVpHRThKL0ZxaEszd1ZFK05hdVgzdmxzaXMvKyszUFhIWDdWYnVjL3JWYWJmR0tHMi8rdDVzTFdzRHdydUVmbkplcExpKys4dUtQNy9oUlFjdG96bzkvL3FOQnAzK3RWdHY0MnNabHE1YjkxWS8vNTZxblY3VmdWVVNzQWdIdzVYOVYzUEhRSGYvNW55NjQ5cDVyTm0zZU5QQ1ZseSs1TE1zVE5jMlpmZERzSTZiTXpITGw0aFdMbjEzN2JFSExhTlJ2MXZ6bTFwVzNaci8rcEJrbkhUNzU4T0xXdzlDRlA3c3FFQUNxNHNnRGo5eG45RDVacnR5eWRjczNydjZiRjE1K29hQ1ZmUGpFRDNkMWRtVlp4dmVXQm5GRSsydjlsOTF5NmRiK3JSbXYzM2V2OFF2bmh2NzBBdUVUQUhMVDNkbjl1UVdmeS9pZEtodGYyL2lOcTcveCtwYlhpMWpKVzBhOTViMjk3ODF5NVgyL3Z1L0JBSjVJV2ZyTHBRK3RmaWpqeGUxdDdlZWZkbjZXd3NIQVFnOUErUGRRYkcvQ21Ja2ZPK1hqR1M5KzRybkhyMXgyWlVFcmVjZVI3OHg0TzNMRmJWZjA5Ky8yZTBaYllOM0dkZDl2NVArSHMzcmZNMlhmS2NXdGh4d0ZQc0ZDRHdDVjB6dXQ5K1NacDJTOCtNYjdibGorMlBJaWx0SGUxdjZCT1grVTVjcW5YM2g2NlFPM0ZiR0dqSzY0N2ZMMW05Wm52SGpxaEtrTGpsbFE2SHBJaHdDUXYwVnpGeDJ3N3dFWkwvNzJqZDlhczI1TkVjczQ1cUJqTWk3amg3Zi9jTkFYcmd2eXl5ZC9lY2REZDJTOHVLZTc1L3pUUDFYY1QxR1FtcUIzVXVCM1QreE9SM3ZIK2FkL0t1T0xBUnMyYmZqbU5kOTg4NzE2OG5YMjNIT3lYUGJ5eHBldnUvZmFJaFl3c00ydmIyN296ZWsrZnNvbnhvMGFWOXg2S0VMSWN5em9BRkJkKzR6ZTU0T1pmOXJyMS8veDJGVzNYMVhFTXFaUG1qNHoyN2VFM3JqaXhsYzN2MXJFR2did2t6di8rYzBma3g3VVNVZWNQUHVnMllXdWg5UUlBRVdaKzdhNVIwMDlLdVBGMTkxNzdhUFBQRnJFTXY3b0Q4L084cHpKaGswYmJyNy9waUlXc0R0UFB2L2tkZmRlbC9IaS9jYnR0OGozZlpLM2NBTVE4bjBUR1gzODVFOWtmRS9qL3Y3K2I5LzRyYzE5bTNOZnc2U3hrMDQ0NUlRc1YxNS83L1ZGTEdDWCtsN3YrL3ZyL2k3akUxL2RuZDJmT2VPem5SM2UvNmVxZ3AxbTRRYUFDSXdjUHZLUDMvRW45Vm85eThYUHJuMzJCN2Yvb0lobG5ESDd6Q3hyV1BmcXVsdC91YVNJQmV6cyt6Lzcvak12UHBQeDRvK2M5Tkh4WThZWHVoN1NKQUFVNjdESmg1MTR4RWtaTDE2ODRzWW5ubnNpOXpWTUdETmgxb0d6c2x4NXpUM1hGUFN6YWR0YjlmU3F4ZmZkbVBIaWVZZlB5M2dIQTQwU0FBcDM5cHl6eCt3eEpzdVYvZjM5RjkxMFVSRS9sblhHMFdkbXVXenQrclhMVmkzTC9kRzN0MkhUaG0vZDhBOEQvTHFDN2UyL3ovN256ZjlRb2VzaFpZRUdJTmluekdqQ3NLNWhIem5wb3hrdmZ1SzV4NHQ0cjlDcEU2WWVQT25nTEZkZWQrKzFHYWR6Y3k2NTVlTGZ2dkxiTEZlT0hEYnljd3N1OE5iL2NRaHpwZ1VhQUNJemM4ck1ZelAvR3Q0ZjM1SHBYWkVibGZFbTRObTF6ejcwOUlPNVAvbzJkejU4eDUwUDM1bmx5bnE5ZnY3cDU3OWwxRnNLV2duVUJJQ1dPVy8raHpMK2J0djFyNjYvK2hkWDU3NkFJNlljTVduc3BDeFhGdlRyQ2w1YzkrTEZOMStjOGVLemV0OXorT1RnZm1FWmtRa3hBR0hlS3pGRW8zcEdMWHg3MXU5a3YrRys2N1A4VnErRzFHdjFVMlpsZXBPaTVZOHRmK1hWVi9KOTlDMWJ0L3p0dGQvTWVHY3pZLzhaWngxN1ZyNExvSFFCVHJZUUEwQ3M1aHc2NTREeEIyYTVzdS8xdnV1WFovMGhxZXlPbTNaOGQyZjNvSmR0MmJybG5sLzlJdCtIdnVwblAvalZ2LzhxeTVYang0ei8xT21mcnRjemZlOHNESVVBMERyMVd2M2N0NStiOGVJbEs1Zmsva3JBc0s1aHgyUjdLZUt1aCsvSzhYRlhQTDRpNHcvOTluVDMvSmQzWGRqVDNaUGpvOFB1Q0FBdE5YWEMxTjVwdllOZVZxL1ZEOTN2YmEvMXZaYjdBdVljT21mUWF5YU1tVERyZ0NQemVzVG5YbnJ1SDY3Lyt5emZXVlN2MXo5MStxZjl6QmN0MDFIMkFuWVU0Tk5rNU92c09lZmMrOWk5ZmEvMzdlNkNXUWZNZXM5eDc1Mjg5K1FpSG4zYXhHbDdqaGo5OG9hWGR2NnJybzZ1MlFmTm5uZlkvSXpmTUpyRjVyN05mL092LzNmRHBnMVpMajU3enRrejl2ZkNiOHl1dVBDNzUzNDlvUGQwQ2k0QVJHL3NxTEduSFhuNnY5ejkwNTMvYXVhVW1lODk3bjJUOTVsYzNLUFg2L1haQjgyK2FjWGk3Zjl3djNIN3pUdHMzdkdIbkpEN2N5Ly91UGdmbjM3aDZTeFhIai85K05PUFBpUGZSNGVCMVJkOWJXSFphL2c5N2dEQ3RHVGxMUmZkMU1BNzExT3U2VytkL3FVUC9GblpxMkFYZ3JvRDhCb0FRS0xDQ29Bdi80RzRCVFhsd2dvQUFDMGpBQUNKRWdDQVJBa0FRS0lDQ2tCUXI0MEFGQ1NjV1JkUUFBQm9KUUVBU0pRQUFDVEtld0dSbTVIRFI1NXd5QWxscnlKK055eS9vZXdsRUlsUUFoRE9xeUkwYmZTSTBlZSsvWU5scnlKK0FoQ0JRTjRXMUZOQUFJa1NBSUJFQ1FCQW9nUUFJRkVDQUpDb0lBTGdXNENBMUlRdzk0SUlBQUN0SndBQWlSSUFnRVFKQUVDaUJBQWdVUUlBa0tqeUF4REM5MElCdEY3cDA2LzhBQUJRQ2dFQVNGUW92dzhBVXJCKzAvcEhuM24wNGRVUHpad3lhL3BicDVlOUhGSW5BTFRhUTZzZitzc2ZmTFhzVlpUcyt1WFh2L3ZZczg3cVBhdXQ3aTZjMHRoOFVJTCsvdjZmM1BuUGYzblZWMy83eW0vTFhndnBFZ0FvelNPckgvbmlaVjlZL3RqeXNoZENvZ1FBeXJSKzAvci84eS8vKzdJbGwvVnQ2U3Q3TFNSSEFLQjhpMWZjK04rLzl4ZlBydjJQc2hkQ1dnUUFndkRVODA5OTVmdGYyZmpheHJJWFFrSUVBSUxRMDkxendic3U2T251S1hzaEpLVGtBSlQrazlBUWdwSERSMzd4L1YrYU91R2dzaGRDcTVVN0EvMGNBSlJzenhHanYvRCtMMHdhTzZuc2haQWNBU0NUK1llZk9QL3dFOHRlUllURzdUbnV2NzN2Qy91TTNpZjdoN2h2Smk4Q0FLVTVZUHlCRjc3N3dsRTlvOHBlQ0lrU0FGcHQ4dDZULy96c3Z5aDdGWGxhczI3TjViZGU5c3FycnpUMFVVZFBQZnFUcDUzZjFkRlYwS3BnVUFKQXF3M3ZHbjdReEhoZTdWeisyTDJYTHJsa3c2WU5EWDNVYVVlZGRzN2NoZlZhdmFCVlFSWUNBRTNxMjlKMzVkSXJGNis0c2FHUGFtOXJQMi8raDA2YzRRVVZ5aWNBMEl4bjF6Nzd0OWQ4ODhubm4yem9vL1ljTWZxelozNzI0SWtIRjdNb2FJd0FRTU9XUGJEMHNpV1hiZXJiMU5CSFRaMXcwT2NXZkc3MGlOSEZMQW9hSmdEUWdMWHIxMzVuOFQvZC84VDlqWDdnU1ROTyt1RDg4OXJiMmd0WUZEUkpBQ0Nybno5MCs2VzNYTnJvMi9WMGRYWjk1TVNQempsMFRrR3JncVlKQUF6dTVRMHZmZWVtNzl6MzYvc2EvY0Q5eHUzMzZUTStNMkhNaENKV0JVTWtBRENJMngvODJSVzNYYkgrMWZXTmZ1QXBNMDg5Wis0NW5lMmRSYXdLaGs0QVlMZFdyMWw5OFMwWFBiTDZrVVkvY09Ud2tmL3AxRCtlZGNDc0lsWUZlUkVBMklWTmZadCtjdWRQYmxoKy9aYXRXeHI5MkpsVFpuNzA1SS90TlhLdkloWUdPUklBMk5FOXYvckY1YmRlM3NTdmF4L1ZNK3FEODg3cm5kWmJ4S29nZHdJQXYvUGtjMDlldWV4N3E1NWUxY1RIbm5ESW5IUG5uVHR5Mk1qY1Z3VUZFUUNvMVdxMTUxNTY3a2MvLytGZEQ5L1ZYK3R2OUdQSDdUbnVZeWQvN0cxL2NGZ1JDNFBpQ0FDcGUzbkRTeis1NjZlM3JselN4TlA5YmZXMlUyZWQrdjdqUDlEVjZVMDlxUjRCSUJVdnJIdmgvc2Z2MytFUDE2eGJjL1A5TjczVzkxb1QvK0IrNC9iNytDbWZtTEx2bEJ3V0IyVVFBRkx4ekpyVmw5NXlTUzcvVkdkNzU3dDczMzNHMFdkNmF3Y3FUUUNnTVlkTlB1eThlUjhhUDJaODJRdUJvUklBeUdyUzJFbm56RjA0WS84WlpTOEU4aUVBTUxoUlBhUGVlOXo3NWgwK3I2M2VWdlphSURjQ0FBUHA2dXc2ZGVZN0ZoeXpZSGpYOExMWEFqa1RBTmkxcm82dUUyZWNkT2JzTTBmMWpDcDdMVkFJQVlBZGRYWjB6ajk4L29MWkMvYjAyN3VJbWdEQTd6bGcvSUVYTExqQVc3bVJBcTlvd2UrWk9HYUM2VThpU2c3QXVWOWZWTzRDQUVwVTdneDBCd0NRS0FFQVNKUVhnUm5JbHk3LzRsUFBQMVgyS2xwcTJhcGx5MVl0SzNzVnVUbCsrZ21mUE8yVFphK0NRTGtEQUVpVUFBQWtTZ0FBRWlVQUFJa1NBSUJFQ1FCQW9nUUFJRkhsQjhDN1FRQnBLbjM2bFI4QUFFb2hBQUNKRWdDQVJIa3ZJQWJ5cFEvODJkYXRXOHRlUlQ1V1Bybnk3Njc3ZjROZTFqdXQ5MFB6UDF6OGNscWtvOE1aWjdkc0RnYlMwOTFUOWhKeTA5T2Q2YmU2ZDdaM2podytzdWpGUUFnOEJRU1FxQ0FDVVByM1FnRzBXQWh6TDRnQUFOQjZBZ0NRS0FFQVNKUUFBQ1JLQUFBU0ZVb0FRbmhCSEtBMUFwbDRvUVFBZ0JZVEFJQkVDUUJBb2dRQUlGRUJCU0NRVjBVQUNoWE9yQXNvQUFDMGtnQUFKRW9BQUJJbEFBQ0pDaXNBNGJ3MkFsQ0VvS1pjV0FFQW9HVUVBQ0JSQWdDUXFPQUNFTlFUWkFBNUNtMitCUmNBQUZwREFBQVNKUUFBaVFveEFLRTlUUVl3ZEFGT3RoQURBRUFMQ0FCQW9nSU5RSUQzU2dCTkMzT21CUm9BQUlvbUFBQ0pFZ0JTMGJlbEw5TjE5WHJCQzRGUWhCdUFNSjh5bzdyV3JGdVQ1Ykt1anE2aVYwSnFncDFtNFFZQWNyU3BiOVBOOTkrYzVjcXVqczZpRndPQjZDaDdBZkNHQjMvejRKcDFhOXJiMmp2YU96cmEydHUzLzgrMmpyYTJ0clo2Mnh2L1dXK3IxK3R0OWJaYXZkYTI3WXVZZXEzV1grdXY5ZmZYK3JkdTNkcmZ2L1gxclZ2Nlh1L2J0SG5UaTYrOCtNeUxxNWMrc0hUZHhuVlpsdEhUUGFMWS81MFFqS0FEY083WEYxMXg0WGZMWGdXdDB0Ly83UnUrVmZZaWFudnZ1WGZaU3lBcXdUNy9VL01VRU9FNFpMOURaeDB3cSt4VjFQYlphNSt5bHdBdElnQUU1SncvWE5oV0wzTlBEdXNhTm5udnlTVXVBRm9wOUFDRWZQZEU3c2FQR2Q4NzdiZ1NGL0MyUDNoYmUxdDdpUXNnTW9GUHNOQURRR3JlZGV5Q2VubmZpWC9xckhlVTlkRFFlZ0pBV0NhTW1UaDc2dXhTSHZxd3lZZE5uelM5bEllR1VsUWdBSUhmUTVHN2R4ejV6dFkvNkY0ajkvcmtPODl2L2VNU3NmQm5Wd1VDUUdxbVRwamE0bGRpSjQ2ZCtPZm4vTVdvbmxHdGZGQW9YVFVDRUg1SXlkZEpSNXpjbWdmcWJPODhjL2FaWDE3NFA4YU5HdGVhUnlRUmxaaGFRZjhnR01ucW5kWjcyYTJYYnU3YlhOeERqQjAxZHU2aGMrY2U5dmF4ZTR3dDdsRWdaQUpBaUxvN3UyZnVQL1B1UisvTzhkL3M3T2ljTUdiQ3BMR1RwazZZT3YydGgwd2NPekhIZnh5cXFESUI4TFlRcVRsMjJyRnZCcUJlcTIvN3IyM3ZBclJOVzcydG82MWoyM3NIdGJlMWQzWjBkbmQyZDNkMGQzZDJEKzhlUHFKN3hJaGhJMGNPSHpGNnhGNWo5eGc3Wm84eFkvY1lXK0kzbUpLVVNqei9VNnRRQUVqTjBWTm5TejRVcWhvdkFtOVRsYWdDS2F2UXBLcFNBQURJa1FBQUpLcGlBYWpRdlJXUW9Hck5xSW9GQUlDOFZDOEExUW9za0k3S1RhZnFCUUNBWEFnQVFLSXFHWURLM1djQjBhdmlYS3BrQUFBWXVxb0dvSXF4QldKVjBZbFUxUUFBTUVRVkRrQkZrd3RFcHJxenFNSUJBR0FvcWgyQTZvWVhpRU9scDFDMUF3QkEweW9mZ0VybkY2aTBxcytmeWdjQWdPYkVFSUNxUnhpb29nZ21Ud3dCQUtBSmtRUWdnaFFERlJMSHpJa2tBQUEwS3A0QXhCRmtJSHpSVEp0NEFnQkFRNklLUURSWkJvSVYwNXlKS2dDMXVENDNRR2dpbXpDeEJRQ0FqQ0lNUUdTSkJnSVIzMnlKTUFBQVpCRm5BT0lMTlZDdUtLZEtuQUVBWUZEUkJpREtYQU9saUhXZVJCdUFXcnlmTTZDVklwNGtNUWNBZ0FGRUhvQ0kwdzIwUU53ekpQSUExR0wvL0FIRmlYNTZ4QjhBQUhZcGlRQkVuM0VnZHluTWpTUUNBTURPVWdsQUNqRUg4cExJeEVnbEFMVmtQcVBBRUtVekt4SUtBQURiU3lzQTZZUWRhRTVTVXlLdEFOUVMrK3dDRFVsdFBpUVhnRnA2bjJNZ2l3UW5RNG9CQUtDV2JBQVNURDB3Z0RSblFxSUJxS1g2K1FaMmx1dzBTRGNBdFlRLzY4Q2JVcDREU1FjQUlHV3BCeURsK0FPSlQ0RFVBMUJMZmdkQXNweDlBYWpWN0FOSWoxTmZFd0NBWkFuQUczdzVBT2x3M3JjUmdOK3hKeUFGVHZxYkJPRDMyQmtRTjJkOGV3S3dJL3NEWXVWMDcwQUFBQklsQUx2Z3l3U0lqM085TXdIWU5Yc0ZZdUpFNzVJQTdKWWRBM0Z3bG5kSEFBWmkzMERWT2NVREVJQkIyRDFRWGM3dndBUmdjUFlRVkpHVE95Z0J5TVJPZ21weFpyTVFnS3pzSjZnS3B6VWpBUUJJbEFBMHdKY1ZFRDduTkRzQmFJeTlCU0Z6UWhzaUFBMnp3eUJNem1hakJLQVo5aG1FeHFsc2dnQTB5VzZEY0RpUHpSR0E1dGx6RUFJbnNXa0NNQ1IySHBUTEdSd0tBUmdxK3cvSzR2UU5rUURrd0M2RTFuUHVocTYrNkdzTHkxNURQSzY0OEx0bEx3SGlaL1RueFIxQW51eExLSnBUbGlNQnlKbmRDY1Z4dnZJbEFQbXpSNkVJVGxidUJLQVFkaXJreTVrcWdnQVV4WDZGdkRoTkJSR0FBdG0xTUhUT1VYRUVvRmoyTGd5RkUxUW9Qd2ZRSW41RUFCcGk5TGVBTzRBV3Nac2hPK2VsTlFTZ2RleHB5TUpKYVJrQmFDazdHd2JtakxTUzF3REs0U1VCMklIUjMzcnVBTXBocjhQMm5JaFNDRUJwN0hqWXhsa29pNmVBeXVmcElKSmw5SmZMSFVENW5BSFNaT2VYVGdDQzRDU1FHbnMrQko0Q0NvdW5nNGllMFI4T2R3QmhjVGFJbXgwZUZBRUlqaE5Dck96dDBIZ0tLRnllRGlJYVJuK1kzQUdFeTVraERuWnlzTndCVklCYkFTcks2QStjQUZTR0RGQWhSbjhsZUFxb01wd29xc0plclFwM0FOWGpWb0JnR2YzVjRnNmdlcHd4d21SblZvNDdnQXB6SzBBZ2pQNktFb0RLa3dGS1pQUlhtZ0JFUWdab01hTS9BbDREaUlUVFNDdlpiM0Z3QnhBYnR3SVV5dWlQaVFERVNRYkluZEVmSHdHSW1ReVFDNk0vVmdJUVB4bWdhVVovM0FRZ0ZUSkFRNHorRkFoQVdtU0FRUm45NlJDQUZNa0F1MlQwcDBZQTBpVUR2TW5vVDVNQW9BVHBNdmNUSndDOFFRYVNZdlJURXdCMnBnUVJNL2ZabmdDd2F6SVFHYU9mblFrQWcxQ0NTalAzR1lBQWtJa01WSTdSejZBRWdNWW9RZURNZmJJVEFKcWtCRUV4OTJtQ0FEQlVTbEFpYzUraEVBRHlKQVl0WU9pVEZ3R2dFRXFRTzNPZjNBa0FoUk9EcGhuNkZFb0FhQ2t4R0pTaFQ4c0lBR1hTZzVxSlQza0VnSUFrMGdNVG4wQUlBRUdMSUFuR1BjRVNBS29uMkNxWTlWU0xBQkNoZ2dwaHZoTVpBUUJJVkZ2WkN3Q2dIQUlBa0NnQkFFaVVBQUFrU2dBQUVpVUFBSWtTQUlCRUNRQkFvZ1FBSUZFQ0FKQW9BUUJJbEFBQUpFb0FBQklsQUFDSkVnQ0FSQWtBUUtJRUFDQlJBZ0NRS0FFQVNKUUFBQ1JLQUFBU0pRQUFpUklBZ0VRSkFFQ2lCQUFnVVFJQWtDZ0JBRWlVQUFBa1NnQUFFaVVBQUlrU0FJQkVDUUJBb2dRQUlGRUNBSkFvQVFCSWxBQUFKRW9BQUJJbEFBQ0pFZ0NBUkFrQVFLTCtQeTZZVFZwa1FoaGdBQUFBQUVsRlRrU3VRbUNDIiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3BuZyJ9XX0=">
+    <link rel="apple-touch-icon" href="data:image/png;base64,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">
+    <title>孩子学习打卡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{--safe:env(safe-area-inset-bottom,16px)}
+        *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none}
+        .tab-bar{padding-bottom:var(--safe)}
+        .tab-item.active{color:#5b8c5a}
+        .tab-item.active .dot{opacity:1}
+        .dot{opacity:0}
+        .card{transition:all .2s}
+        .card:active{transform:scale(.98)}
+        .card.done{background:#f0fdf4;border-color:#86efac}
+        .card.done .ctitle{text-decoration:line-through;color:#6b7280}
+        .page{display:none}
+        .page.active{display:block}
+        .kid-tab.active{background:#5b8c5a;color:#fff}
+        .flashcard{perspective:1000px}
+        .flashcard-inner{transition:transform .5s;transform-style:preserve-3d}
+        .flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+        .flashcard-front,.flashcard-back{backface-visibility:hidden}
+        .flashcard-back{transform:rotateY(180deg)}
+        .star{animation:pop .3s ease}
+        @keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.3)}100%{transform:scale(1)}}
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<header class="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shrink-0 sticky top-0 z-10">
+    <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center text-white text-sm font-bold" style="background:#5b8c5a">学</div>
+        <div><h1 class="text-base font-bold text-gray-800">孩子学习打卡</h1><p class="text-xs text-gray-400" id="kid-label">👧 妹妹</p></div>
+    </div>
+    <div class="flex items-center gap-2">
+        <button class="kid-tab active px-3 py-1 rounded-full text-xs font-medium border" style="border-color:#5b8c5a;color:#5b8c5a" onclick="switchKid('girl')">👧 妹妹</button>
+        <button class="kid-tab px-3 py-1 rounded-full text-xs font-medium border border-gray-300 text-gray-500" onclick="switchKid('boy')">👦 哥哥</button>
+    </div>
+</header>
+
+<main class="flex-1 overflow-y-auto pb-24" id="main-content">
+
+<!-- ====== 妹妹页面 ====== -->
+<div id="page-girl-daily" class="page active p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-3">👧 妹妹每日打卡</h2>
+
+    <!-- 认字输入区 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-2">📝 今日认字</h3>
+        <div class="flex gap-2 mb-2">
+            <input id="girl-word-input" placeholder="输入一个汉字" class="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm" maxlength="1">
+            <button onclick="addGirlWord()" class="px-4 py-2 rounded-xl text-sm font-medium text-white active:opacity-80" style="background:#5b8c5a">添加</button>
+        </div>
+        <div id="girl-words-today" class="flex flex-wrap gap-2 min-h-[40px]"></div>
+    </div>
+
+    <!-- 英语单词 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-2">🔤 英语单词</h3>
+        <div class="flex gap-2 mb-2">
+            <input id="girl-en-input" placeholder="输入一个英语单词" class="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm">
+            <button onclick="addGirlEnWord()" class="px-4 py-2 rounded-xl text-sm font-medium text-white active:opacity-80" style="background:#5b8c5a">添加</button>
+        </div>
+        <div id="girl-en-words-today" class="flex flex-wrap gap-2 min-h-[40px]"></div>
+    </div>
+
+    <!-- 每日句子 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-2">💬 每日一句</h3>
+        <textarea id="girl-sentence" placeholder="输入今天教的英语句子..." class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm resize-none h-16"></textarea>
+    </div>
+
+    <!-- 绘本打卡 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3 cursor-pointer" onclick="girlReadingCheck()" id="girl-reading-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-xl">📖</div>
+            <div class="flex-1">
+                <h3 class="font-bold text-gray-800 text-sm">绘本阅读打卡</h3>
+                <p class="text-xs text-gray-500">拍照 + 标记完成</p>
+            </div>
+            <div id="girl-reading-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+        <!-- 拍照预览 -->
+        <div id="girl-photo-preview" class="mt-3 hidden">
+            <img id="girl-photo-img" class="w-full rounded-xl max-h-48 object-cover">
+        </div>
+        <div class="mt-3 flex gap-2">
+            <input type="file" accept="image/*" capture="environment" id="girl-photo-input" onchange="previewGirlPhoto(event)" class="hidden">
+            <button onclick="document.getElementById('girl-photo-input').click()" class="text-xs px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 active:bg-gray-50">📷 拍照</button>
+        </div>
+    </div>
+
+    <!-- 睡觉打卡 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm cursor-pointer" onclick="girlSleepCheck()" id="girl-sleep-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-xl">😴</div>
+            <div class="flex-1"><h3 class="font-bold text-gray-800 text-sm">10点前睡觉</h3><p class="text-xs text-gray-500">养成好习惯</p></div>
+            <div id="girl-sleep-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 妹妹字卡复习 -->
+<div id="page-girl-review" class="page p-4">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold text-gray-800">🃏 认字复习卡</h2>
+        <button onclick="resetGirlWords()" class="text-xs text-red-400 px-3 py-1 rounded-full border border-red-200">清空</button>
+    </div>
+    <p class="text-sm text-gray-500 mb-3" id="girl-review-count">本周累计：0 个字</p>
+    <div id="girl-flashcard" class="flashcard w-full h-56 mb-4 cursor-pointer" onclick="flipGirlCard()">
+        <div class="flashcard-inner relative w-full h-full">
+            <div class="flashcard-front absolute inset-0 bg-white rounded-3xl border-2 flex items-center justify-center" style="border-color:#5b8c5a">
+                <span class="text-6xl font-bold text-gray-800" id="girl-card-front">字</span>
+            </div>
+            <div class="flashcard-back absolute inset-0 bg-white rounded-3xl border-2 flex flex-col items-center justify-center" style="border-color:#5b8c5a;background:#f0fdf4">
+                <span class="text-6xl font-bold" style="color:#5b8c5a" id="girl-card-back">✓</span>
+                <span class="text-sm text-gray-500 mt-2">翻回继续</span>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-between items-center">
+        <button onclick="prevGirlCard()" class="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium text-sm active:bg-gray-50">← 上一个</button>
+        <span class="text-sm text-gray-500" id="girl-card-index">1/1</span>
+        <button onclick="nextGirlCard()" class="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium text-sm active:bg-gray-50">下一个 →</button>
+    </div>
+</div>
+
+<!-- ====== 哥哥页面 ====== -->
+<div id="page-boy-daily" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-3">👦 哥哥每日打卡</h2>
+
+    <!-- 词语 -->
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-2">📝 今日词语</h3>
+        <div class="flex gap-2 mb-2">
+            <input id="boy-word-input" placeholder="输入一个词语" class="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm">
+            <button onclick="addBoyWord()" class="px-4 py-2 rounded-xl text-sm font-medium text-white active:opacity-80" style="background:#5b8c5a">添加</button>
+        </div>
+        <div id="boy-words-today" class="flex flex-wrap gap-2 min-h-[40px]"></div>
+    </div>
+
+    <!-- 阅读理解 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3 cursor-pointer" onclick="toggleBoyTask('reading')" id="boy-reading-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-xl">📄</div>
+            <div class="flex-1"><h3 class="font-bold text-gray-800 text-sm">阅读理解 1篇</h3><p class="text-xs text-gray-500">每天一篇，提升理解力</p></div>
+            <div id="boy-reading-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 课文预习 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3 cursor-pointer" onclick="toggleBoyTask('preview')" id="boy-preview-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-xl">📖</div>
+            <div class="flex-1"><h3 class="font-bold text-gray-800 text-sm">课文预习</h3><p class="text-xs text-gray-500">二年级语文课文预习</p></div>
+            <div id="boy-preview-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 口算题 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3 cursor-pointer" onclick="toggleBoyTask('math')" id="boy-math-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-yellow-100 flex items-center justify-center text-xl">🧮</div>
+            <div class="flex-1"><h3 class="font-bold text-gray-800 text-sm">口算题 1页</h3><p class="text-xs text-gray-500">加减法口算练习</p></div>
+            <div id="boy-math-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 英语课本 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-3 cursor-pointer" onclick="toggleBoyTask('english')" id="boy-english-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center text-xl">🔤</div>
+            <div class="flex-1"><h3 class="font-bold text-gray-800 text-sm">英语课本复习</h3><p class="text-xs text-gray-500">二年级课本内容</p></div>
+            <div id="boy-english-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 睡觉 -->
+    <div class="card bg-white p-4 rounded-2xl border border-gray-100 shadow-sm cursor-pointer" onclick="boySleepCheck()" id="boy-sleep-card">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-xl">😴</div>
+            <div class="flex-1"><h3 class="font-bold text-gray-800 text-sm">10点前睡觉</h3><p class="text-xs text-gray-500">养成好习惯</p></div>
+            <div id="boy-sleep-check" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                <svg class="w-5 h-5 hidden text-green-600" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 哥哥词语复习 -->
+<div id="page-boy-review" class="page p-4">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold text-gray-800">🃏 词语复习卡</h2>
+        <button onclick="resetBoyWords()" class="text-xs text-red-400 px-3 py-1 rounded-full border border-red-200">清空</button>
+    </div>
+    <p class="text-sm text-gray-500 mb-3" id="boy-review-count">本周累计：0 个词语</p>
+    <div id="boy-flashcard" class="flashcard w-full h-56 mb-4 cursor-pointer" onclick="flipBoyCard()">
+        <div class="flashcard-inner relative w-full h-full">
+            <div class="flashcard-front absolute inset-0 bg-white rounded-3xl border-2 flex items-center justify-center" style="border-color:#5b8c5a">
+                <span class="text-4xl font-bold text-gray-800" id="boy-card-front">词语</span>
+            </div>
+            <div class="flashcard-back absolute inset-0 bg-white rounded-3xl border-2 flex flex-col items-center justify-center" style="border-color:#5b8c5a;background:#f0fdf4">
+                <span class="text-4xl font-bold" style="color:#5b8c5a" id="boy-card-back">✓</span>
+                <span class="text-sm text-gray-500 mt-2">翻回继续</span>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-between items-center">
+        <button onclick="prevBoyCard()" class="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium text-sm active:bg-gray-50">← 上一个</button>
+        <span class="text-sm text-gray-500" id="boy-card-index">1/1</span>
+        <button onclick="nextBoyCard()" class="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium text-sm active:bg-gray-50">下一个 →</button>
+    </div>
+</div>
+
+<!-- ====== 英语短视频页面 ====== -->
+<div id="page-english-video" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-3">🎬 今日英语短视频</h2>
+    <div id="video-content" class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm"></div>
+    <p class="text-xs text-gray-400 mt-3 text-center">内容每天自动更新 · 共30天</p>
+</div>
+
+<!-- ====== 积分勋章 ====== -->
+<div id="page-rewards" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-3">🏆 打卡记录 & 勋章</h2>
+    <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <p class="text-xs text-gray-500">👧 妹妹连续打卡</p>
+            <p class="text-2xl font-bold mt-1" style="color:#5b8c5a" id="girl-streak">0天</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-center">
+            <p class="text-xs text-gray-500">👦 哥哥连续打卡</p>
+            <p class="text-2xl font-bold mt-1" style="color:#5b8c5a" id="boy-streak">0天</p>
+        </div>
+    </div>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">🌟 勋章墙</h3>
+        <div class="flex flex-wrap gap-3" id="badges-wall"></div>
+    </div>
+</div>
+
+</main>
+
+<!-- 底部Tab -->
+<nav class="tab-bar bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 z-20">
+    <div class="flex justify-around items-center h-16 max-w-lg mx-auto">
+        <button class="tab-item active flex flex-col items-center gap-0.5 px-1 py-1" data-page="daily">
+            <span class="text-lg">✅</span><span class="text-[9px] font-medium">打卡</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
+        </button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="review">
+            <span class="text-lg">🃏</span><span class="text-[9px] font-medium">字卡复习</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
+        </button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="english-video">
+            <span class="text-lg">🎬</span><span class="text-[9px] font-medium">英语视频</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
+        </button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-1 py-1" data-page="rewards">
+            <span class="text-lg">🏆</span><span class="text-[9px] font-medium">勋章</span><span class="dot w-1 h-1 rounded-full" style="background:#5b8c5a"></span>
+        </button>
+    </div>
+</nav>
+
+<script>
+// ===== 数据存储 =====
+const STORAGE = {
+    girlWords: 'kid_girl_words',
+    girlEnWords: 'kid_girl_en',
+    girlSentence: 'kid_girl_sentence',
+    girlReading: 'kid_girl_reading',
+    girlSleep: 'kid_girl_sleep',
+    girlPhoto: 'kid_girl_photo',
+    boyWords: 'kid_boy_words',
+    boyTasks: 'kid_boy_tasks',
+    boySleep: 'kid_boy_sleep',
+    currentKid: 'kid_current',
+    streaks: 'kid_streaks',
+    lastDate: 'kid_last_date'
+};
+
+function get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){return null;} }
+function set(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+
+let currentKid = get(STORAGE.currentKid) || 'girl';
+
+// English video data
+const englishVideos = [{"id": 1, "title": "早上好", "sentences": ["Good morning! (早上好！)"], "level": "幼儿园", "video": "https://www.bilibili.com/video/BV1example"}, {"id": 2, "title": "再见", "sentences": ["Goodbye! (再见！)"], "level": "幼儿园", "video": ""}, {"id": 3, "title": "谢谢你", "sentences": ["Thank you! (谢谢你！)"], "level": "幼儿园", "video": ""}, {"id": 4, "title": "对不起", "sentences": ["Sorry! (对不起！)"], "level": "幼儿园", "video": ""}, {"id": 5, "title": "我饿了", "sentences": ["I'm hungry. (我饿了。)"], "level": "幼儿园", "video": ""}, {"id": 6, "title": "我渴了", "sentences": ["I'm thirsty. (我渴了。)"], "level": "幼儿园", "video": ""}, {"id": 7, "title": "我要上厕所", "sentences": ["I need to go to the bathroom. (我要上厕所。)"], "level": "幼儿园", "video": ""}, {"id": 8, "title": "我喜欢这个", "sentences": ["I like it! (我喜欢这个！)"], "level": "幼儿园", "video": ""}, {"id": 9, "title": "我爱你", "sentences": ["I love you! (我爱你！)"], "level": "幼儿园", "video": ""}, {"id": 10, "title": "快点", "sentences": ["Hurry up! (快点！)"], "level": "幼儿园", "video": ""}, {"id": 11, "title": "等一下", "sentences": ["Wait a minute. (等一下。)"], "level": "幼儿园", "video": ""}, {"id": 12, "title": "小心", "sentences": ["Be careful! (小心！)"], "level": "幼儿园", "video": ""}, {"id": 13, "title": "好棒", "sentences": ["Good job! (好棒！)"], "level": "幼儿园", "video": ""}, {"id": 14, "title": "再来一次", "sentences": ["One more time! (再来一次！)"], "level": "幼儿园", "video": ""}, {"id": 15, "title": "晚安", "sentences": ["Good night! (晚安！)"], "level": "幼儿园", "video": ""}, {"id": 16, "title": "你叫什么名字", "sentences": ["What's your name? (你叫什么名字？)"], "level": "二年级", "video": ""}, {"id": 17, "title": "我七岁了", "sentences": ["I am seven years old. (我七岁了。)"], "level": "二年级", "video": ""}, {"id": 18, "title": "今天天气很好", "sentences": ["It's a nice day today. (今天天气很好。)"], "level": "二年级", "video": ""}, {"id": 19, "title": "我可以帮你吗", "sentences": ["Can I help you? (我可以帮你吗？)"], "level": "二年级", "video": ""}, {"id": 20, "title": "这个多少钱", "sentences": ["How much is it? (这个多少钱？)"], "level": "二年级", "video": ""}, {"id": 21, "title": "我做完作业了", "sentences": ["I finished my homework. (我做完作业了。)"], "level": "二年级", "video": ""}, {"id": 22, "title": "我们去公园吧", "sentences": ["Let's go to the park! (我们去公园吧！)"], "level": "二年级", "video": ""}, {"id": 23, "title": "你能帮我吗", "sentences": ["Can you help me? (你能帮我吗？)"], "level": "二年级", "video": ""}, {"id": 24, "title": "我想要喝水", "sentences": ["I want to drink some water. (我想要喝水。)"], "level": "二年级", "video": ""}, {"id": 25, "title": "这是我的铅笔", "sentences": ["This is my pencil. (这是我的铅笔。)"], "level": "二年级", "video": ""}, {"id": 26, "title": "你几岁了", "sentences": ["How old are you? (你几岁了？)"], "level": "二年级", "video": ""}, {"id": 27, "title": "我会唱歌", "sentences": ["I can sing a song. (我会唱歌。)"], "level": "二年级", "video": ""}, {"id": 28, "title": "别担心", "sentences": ["Don't worry. (别担心。)"], "level": "二年级", "video": ""}, {"id": 29, "title": "太棒了", "sentences": ["That's great! (太棒了！)"], "level": "二年级", "video": ""}, {"id": 30, "title": "明天见", "sentences": ["See you tomorrow! (明天见！)"], "level": "二年级", "video": ""}];
+
+// ===== 孩子切换 =====
+function switchKid(kid) {
+    currentKid = kid;
+    set(STORAGE.currentKid, kid);
+    document.getElementById('kid-label').textContent = kid==='girl' ? '👧 妹妹' : '👦 哥哥';
+    document.querySelectorAll('.kid-tab').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    if(kid==='girl') {
+        document.querySelector('.kid-tab:first-child').classList.add('active');
+        document.querySelector('.kid-tab:first-child').style.cssText = 'background:#5b8c5a;color:#fff;border-color:#5b8c5a';
+    }
+    refreshAll();
+    updateVideo();
+}
+
+// ===== 妹妹：认字 =====
+function addGirlWord() {
+    const input = document.getElementById('girl-word-input');
+    const word = input.value.trim();
+    if(!word) return;
+    const words = get(STORAGE.girlWords) || [];
+    if(words.includes(word)) { input.value=''; return; }
+    words.push(word);
+    set(STORAGE.girlWords, words);
+    input.value = '';
+    renderGirlWords();
+}
+
+function renderGirlWords() {
+    const words = get(STORAGE.girlWords) || [];
+    const container = document.getElementById('girl-words-today');
+    container.innerHTML = words.map((w,i) => 
+        '<span class="px-3 py-1.5 rounded-xl text-sm font-bold text-white cursor-pointer active:opacity-80" style="background:#5b8c5a" onclick="removeGirlWord('+i+')">'+w+' ✕</span>'
+    ).join('');
+    if(words.length===0) container.innerHTML = '<span class="text-xs text-gray-400">今天还没添加认字</span>';
+    updateGirlReview();
+}
+
+function removeGirlWord(i) {
+    const words = get(STORAGE.girlWords) || [];
+    words.splice(i,1);
+    set(STORAGE.girlWords, words);
+    renderGirlWords();
+}
+
+function resetGirlWords() {
+    if(confirm('确定清空所有认字记录��')) {
+        set(STORAGE.girlWords, []);
+        renderGirlWords();
+        updateGirlReview();
+    }
+}
+
+// 妹妹：英语单词
+function addGirlEnWord() {
+    const input = document.getElementById('girl-en-input');
+    const word = input.value.trim();
+    if(!word) return;
+    const words = get(STORAGE.girlEnWords) || [];
+    if(words.includes(word)) { input.value=''; return; }
+    words.push(word);
+    set(STORAGE.girlEnWords, words);
+    input.value = '';
+    renderGirlEnWords();
+}
+
+function renderGirlEnWords() {
+    const words = get(STORAGE.girlEnWords) || [];
+    document.getElementById('girl-en-words-today').innerHTML = words.map((w,i) =>
+        '<span class="px-3 py-1.5 rounded-xl text-sm font-bold text-white cursor-pointer active:opacity-80" style="background:#e8804a" onclick="removeGirlEnWord('+i+')">'+w+' ✕</span>'
+    ).join('') || '<span class="text-xs text-gray-400">今天还没添加英语单词</span>';
+}
+
+function removeGirlEnWord(i) {
+    const words = get(STORAGE.girlEnWords) || [];
+    words.splice(i,1);
+    set(STORAGE.girlEnWords, words);
+    renderGirlEnWords();
+}
+
+// 妹妹：句子
+const girlSentenceInput = document.getElementById('girl-sentence');
+girlSentenceInput.value = get(STORAGE.girlSentence) || '';
+girlSentenceInput.addEventListener('input', function() {
+    set(STORAGE.girlSentence, this.value);
+});
+
+// 妹妹：绘本打卡
+let girlReadingDone = !!get(STORAGE.girlReading);
+function girlReadingCheck() {
+    girlReadingDone = !girlReadingDone;
+    set(STORAGE.girlReading, girlReadingDone);
+    updateGirlReadingUI();
+    updateStreaks();
+}
+function updateGirlReadingUI() {
+    const card = document.getElementById('girl-reading-card');
+    const check = document.getElementById('girl-reading-check');
+    if(girlReadingDone) {
+        card.classList.add('done');
+        check.classList.add('bg-green-600','border-green-600');
+        check.classList.remove('border-gray-300');
+        check.querySelector('svg').classList.remove('hidden');
+    } else {
+        card.classList.remove('done');
+        check.classList.remove('bg-green-600','border-green-600');
+        check.classList.add('border-gray-300');
+        check.querySelector('svg').classList.add('hidden');
+    }
+}
+
+function previewGirlPhoto(event) {
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        set(STORAGE.girlPhoto, e.target.result);
+        document.getElementById('girl-photo-img').src = e.target.result;
+        document.getElementById('girl-photo-preview').classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+}
+
+// 妹妹：睡觉
+let girlSleepDone = !!get(STORAGE.girlSleep);
+function girlSleepCheck() {
+    girlSleepDone = !girlSleepDone;
+    set(STORAGE.girlSleep, girlSleepDone);
+    updateGirlSleepUI();
+    updateStreaks();
+}
+function updateGirlSleepUI() {
+    const card = document.getElementById('girl-sleep-card');
+    const check = document.getElementById('girl-sleep-check');
+    if(girlSleepDone) {
+        card.classList.add('done');
+        check.classList.add('bg-indigo-600','border-indigo-600');
+        check.classList.remove('border-gray-300');
+        check.querySelector('svg').classList.remove('hidden');
+    } else {
+        card.classList.remove('done');
+        check.classList.remove('bg-indigo-600','border-indigo-600');
+        check.classList.add('border-gray-300');
+        check.querySelector('svg').classList.add('hidden');
+    }
+}
+
+// ===== 妹妹：字卡复习 =====
+let girlCardIndex = 0;
+function updateGirlReview() {
+    const words = get(STORAGE.girlWords) || [];
+    document.getElementById('girl-review-count').textContent = '本周累计：' + words.length + ' 个字';
+    girlCardIndex = 0;
+    showGirlCard();
+}
+
+function showGirlCard() {
+    const words = get(STORAGE.girlWords) || [];
+    const flashcard = document.getElementById('girl-flashcard');
+    flashcard.classList.remove('flipped');
+    if(words.length === 0) {
+        document.getElementById('girl-card-front').textContent = '无';
+        document.getElementById('girl-card-index').textContent = '0/0';
+        return;
+    }
+    document.getElementById('girl-card-front').textContent = words[girlCardIndex];
+    document.getElementById('girl-card-back').textContent = words[girlCardIndex];
+    document.getElementById('girl-card-index').textContent = (girlCardIndex+1)+'/'+words.length;
+}
+
+function flipGirlCard() {
+    const words = get(STORAGE.girlWords)||[];
+    if(!words.length) return;
+    document.getElementById('girl-flashcard').classList.toggle('flipped');
+}
+
+function nextGirlCard() {
+    const words = get(STORAGE.girlWords)||[];
+    if(!words.length) return;
+    girlCardIndex = (girlCardIndex+1) % words.length;
+    showGirlCard();
+}
+
+function prevGirlCard() {
+    const words = get(STORAGE.girlWords)||[];
+    if(!words.length) return;
+    girlCardIndex = (girlCardIndex-1+words.length) % words.length;
+    showGirlCard();
+}
+
+// ===== 哥哥：词语 =====
+function addBoyWord() {
+    const input = document.getElementById('boy-word-input');
+    const word = input.value.trim();
+    if(!word) return;
+    const words = get(STORAGE.boyWords) || [];
+    if(words.includes(word)) { input.value=''; return; }
+    words.push(word);
+    set(STORAGE.boyWords, words);
+    input.value = '';
+    renderBoyWords();
+}
+
+function renderBoyWords() {
+    const words = get(STORAGE.boyWords) || [];
+    document.getElementById('boy-words-today').innerHTML = words.map((w,i) =>
+        '<span class="px-3 py-1.5 rounded-xl text-sm font-bold text-white cursor-pointer active:opacity-80" style="background:#5b8c5a" onclick="removeBoyWord('+i+')">'+w+' ✕</span>'
+    ).join('') || '<span class="text-xs text-gray-400">今天还没添加词语</span>';
+    updateBoyReview();
+}
+
+function removeBoyWord(i) {
+    const words = get(STORAGE.boyWords) || [];
+    words.splice(i,1);
+    set(STORAGE.boyWords, words);
+    renderBoyWords();
+}
+
+function resetBoyWords() {
+    if(confirm('确定清空所有词语记录？')) {
+        set(STORAGE.boyWords, []);
+        renderBoyWords();
+        updateBoyReview();
+    }
+}
+
+// 哥哥：打卡任务
+const boyTaskKeys = ['reading','preview','math','english'];
+let boyTasks = get(STORAGE.boyTasks) || {};
+
+function toggleBoyTask(key) {
+    boyTasks[key] = !boyTasks[key];
+    set(STORAGE.boyTasks, boyTasks);
+    updateBoyTaskUI(key);
+    updateStreaks();
+}
+
+function updateBoyTaskUI(key) {
+    const check = document.getElementById('boy-'+key+'-check');
+    const card = document.getElementById('boy-'+key+'-card');
+    if(boyTasks[key]) {
+        card.classList.add('done');
+        check.classList.add('bg-green-600','border-green-600');
+        check.classList.remove('border-gray-300');
+        check.querySelector('svg').classList.remove('hidden');
+    } else {
+        card.classList.remove('done');
+        check.classList.remove('bg-green-600','border-green-600');
+        check.classList.add('border-gray-300');
+        check.querySelector('svg').classList.add('hidden');
+    }
+}
+
+// 哥哥：睡觉
+let boySleepDone = !!get(STORAGE.boySleep);
+function boySleepCheck() {
+    boySleepDone = !boySleepDone;
+    set(STORAGE.boySleep, boySleepDone);
+    updateBoySleepUI();
+    updateStreaks();
+}
+function updateBoySleepUI() {
+    const card = document.getElementById('boy-sleep-card');
+    const check = document.getElementById('boy-sleep-check');
+    if(boySleepDone) {
+        card.classList.add('done');
+        check.classList.add('bg-indigo-600','border-indigo-600');
+        check.classList.remove('border-gray-300');
+        check.querySelector('svg').classList.remove('hidden');
+    } else {
+        card.classList.remove('done');
+        check.classList.remove('bg-indigo-600','border-indigo-600');
+        check.classList.add('border-gray-300');
+        check.querySelector('svg').classList.add('hidden');
+    }
+}
+
+// 哥哥：词语复习
+let boyCardIndex = 0;
+function updateBoyReview() {
+    const words = get(STORAGE.boyWords) || [];
+    document.getElementById('boy-review-count').textContent = '本周累计：' + words.length + ' 个词语';
+    boyCardIndex = 0;
+    showBoyCard();
+}
+
+function showBoyCard() {
+    const words = get(STORAGE.boyWords) || [];
+    document.getElementById('boy-flashcard').classList.remove('flipped');
+    if(words.length===0) {
+        document.getElementById('boy-card-front').textContent = '无';
+        document.getElementById('boy-card-index').textContent = '0/0';
+        return;
+    }
+    document.getElementById('boy-card-front').textContent = words[boyCardIndex];
+    document.getElementById('boy-card-back').textContent = words[boyCardIndex];
+    document.getElementById('boy-card-index').textContent = (boyCardIndex+1)+'/'+words.length;
+}
+
+function flipBoyCard() {
+    const words = get(STORAGE.boyWords)||[];
+    if(!words.length) return;
+    document.getElementById('boy-flashcard').classList.toggle('flipped');
+}
+
+function nextBoyCard() {
+    const words = get(STORAGE.boyWords)||[];
+    if(!words.length) return;
+    boyCardIndex = (boyCardIndex+1)%words.length;
+    showBoyCard();
+}
+
+function prevBoyCard() {
+    const words = get(STORAGE.boyWords)||[];
+    if(!words.length) return;
+    boyCardIndex = (boyCardIndex-1+words.length)%words.length;
+    showBoyCard();
+}
+
+// ===== 英语短视频 =====
+function updateVideo() {
+    const dayOfYear = Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000);
+    const idx = dayOfYear % englishVideos.length;
+    const video = englishVideos[idx];
+    const container = document.getElementById('video-content');
+    const levelLabel = video.level==='幼儿园' ? '👧 幼儿园' : '👦 二年级';
+    container.innerHTML = `
+        <div class="flex items-center gap-2 mb-3">
+            <span class="px-2 py-1 rounded-lg text-xs font-medium" style="background:#fef3c7;color:#92400e">${levelLabel}</span>
+            <span class="text-sm text-gray-400">第${idx+1}/${englishVideos.length}天</span>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-4">${video.title}</h3>
+        <div class="space-y-3">
+            ${video.sentences.map((s,i) => `
+                <div class="p-3 rounded-xl" style="background:#f0fdf4">
+                    <p class="text-sm font-medium" style="color:#5b8c5a">${s}</p>
+                </div>
+            `).join('')}
+        </div>
+        <div class="mt-4 p-3 rounded-xl bg-gray-50 text-center">
+            <p class="text-xs text-gray-500">💡 让孩子跟着读2-3遍，模仿发音和语调</p>
+        </div>
+    `;
+}
+
+// ===== 积分勋章 =====
+function updateStreaks() {
+    const today = new Date().toDateString();
+    const lastDate = get(STORAGE.lastDate) || {};
+    const streaks = get(STORAGE.streaks) || {girl:0,boy:0};
+
+    // Check girl completion
+    const girlWords = (get(STORAGE.girlWords)||[]).length;
+    const girlComplete = girlWords >= 1 && girlReadingDone && girlSleepDone;
+    
+    // Check boy completion  
+    const boyWordsCount = (get(STORAGE.boyWords)||[]).length;
+    const boyTasksDone = boyTaskKeys.filter(k=>boyTasks[k]).length;
+    const boyComplete = boyWordsCount >= 1 && boyTasksDone >= 2 && boySleepDone;
+
+    const yesterday = new Date(Date.now()-86400000).toDateString();
+
+    if(girlComplete) {
+        if(lastDate.girl === yesterday) streaks.girl++;
+        else if(lastDate.girl !== today) streaks.girl = 1;
+        lastDate.girl = today;
+    } else if(lastDate.girl !== today && lastDate.girl !== yesterday) {
+        streaks.girl = 0;
+    }
+
+    if(boyComplete) {
+        if(lastDate.boy === yesterday) streaks.boy++;
+        else if(lastDate.boy !== today) streaks.boy = 1;
+        lastDate.boy = today;
+    } else if(lastDate.boy !== today && lastDate.boy !== yesterday) {
+        streaks.boy = 0;
+    }
+
+    set(STORAGE.streaks, streaks);
+    set(STORAGE.lastDate, lastDate);
+
+    document.getElementById('girl-streak').textContent = streaks.girl + '天';
+    document.getElementById('boy-streak').textContent = streaks.boy + '天';
+
+    renderBadges(streaks);
+}
+
+function renderBadges(streaks) {
+    const badges = [
+        {name:'妹妹3天',icon:'🌟',cond:streaks.girl>=3,color:'#fbbf24'},
+        {name:'妹妹7天',icon:'🏅',cond:streaks.girl>=7,color:'#f59e0b'},
+        {name:'妹妹14天',icon:'👑',cond:streaks.girl>=14,color:'#ef4444'},
+        {name:'妹妹30天',icon:'💎',cond:streaks.girl>=30,color:'#8b5cf6'},
+        {name:'哥哥3天',icon:'🌟',cond:streaks.boy>=3,color:'#fbbf24'},
+        {name:'哥哥7天',icon:'🏅',cond:streaks.boy>=7,color:'#f59e0b'},
+        {name:'哥哥14天',icon:'👑',cond:streaks.boy>=14,color:'#ef4444'},
+        {name:'哥哥30天',icon:'💎',cond:streaks.boy>=30,color:'#8b5cf6'},
+    ];
+    document.getElementById('badges-wall').innerHTML = badges.map(b => 
+        '<div class="flex flex-col items-center gap-1 '+(b.cond?'star':'opacity-30')+'">'+
+        '<div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style="background:'+(b.cond?b.color+'20':'#f3f4f6')+'">'+b.icon+'</div>'+
+        '<span class="text-[10px] text-gray-500">'+b.name+'</span></div>'
+    ).join('');
+}
+
+// ===== Tab切换 =====
+let currentPage = 'daily';
+function switchPage(id) {
+    currentPage = id;
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+    
+    if(currentKid==='girl') {
+        if(id==='daily') document.getElementById('page-girl-daily').classList.add('active');
+        else if(id==='review') document.getElementById('page-girl-review').classList.add('active');
+        else if(id==='english-video') document.getElementById('page-english-video').classList.add('active');
+        else if(id==='rewards') document.getElementById('page-rewards').classList.add('active');
+    } else {
+        if(id==='daily') document.getElementById('page-boy-daily').classList.add('active');
+        else if(id==='review') document.getElementById('page-boy-review').classList.add('active');
+        else if(id==='english-video') document.getElementById('page-english-video').classList.add('active');
+        else if(id==='rewards') document.getElementById('page-rewards').classList.add('active');
+    }
+    
+    document.querySelectorAll('.tab-item[data-page="'+id+'"]').forEach(el => el.classList.add('active'));
+    document.getElementById('main-content').scrollTop = 0;
+}
+
+document.querySelectorAll('.tab-item').forEach(btn => {
+    btn.addEventListener('click', () => switchPage(btn.dataset.page));
+});
+
+// ===== 初始化 =====
+function refreshAll() {
+    renderGirlWords();
+    renderGirlEnWords();
+    girlSentenceInput.value = get(STORAGE.girlSentence) || '';
+    updateGirlReadingUI();
+    updateGirlSleepUI();
+    updateGirlReview();
+    
+    renderBoyWords();
+    boyTaskKeys.forEach(updateBoyTaskUI);
+    updateBoySleepUI();
+    updateBoyReview();
+    
+    updateStreaks();
+    updateVideo();
+    switchPage(currentPage);
+}
+
+// Load photo
+const savedPhoto = get(STORAGE.girlPhoto);
+if(savedPhoto) {
+    document.getElementById('girl-photo-img').src = savedPhoto;
+    document.getElementById('girl-photo-preview').classList.remove('hidden');
+}
+
+// Init kid tab styles
+document.querySelectorAll('.kid-tab').forEach(b => {
+    b.addEventListener('click', function() {
+        document.querySelectorAll('.kid-tab').forEach(x => { x.classList.remove('active'); x.style.cssText = 'border-color:#d1d5db;color:#6b7280;background:transparent'; });
+        this.classList.add('active');
+        this.style.cssText = 'background:#5b8c5a;color:#fff;border-color:#5b8c5a';
+    });
+});
+
+refreshAll();
+switchKid(currentKid);
+</script>
+</body>
+</html>
