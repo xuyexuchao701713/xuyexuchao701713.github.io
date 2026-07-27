@@ -121,14 +121,14 @@
         <button onclick="resetGirlWords()" class="text-xs text-red-400 px-3 py-1 rounded-full border border-red-200">清空</button>
     </div>
     <p class="text-sm text-gray-500 mb-3" id="girl-review-count">本周累计：0 个字</p>
-    <div id="girl-flashcard" class="flashcard w-full h-56 mb-4 cursor-pointer" onclick="flipGirlCard()">
+    <div id="girl-flashcard" class="flashcard w-full h-72 mb-4 cursor-pointer" onclick="flipGirlCard()">
         <div class="flashcard-inner relative w-full h-full">
             <div class="flashcard-front absolute inset-0 bg-white rounded-3xl border-2 flex items-center justify-center" style="border-color:#5b8c5a">
-                <span class="text-8xl font-bold text-gray-800" id="girl-card-front">字</span>
+                <span class="font-bold text-gray-800" id="girl-card-front" style="font-size:130px;line-height:1">字</span>
             </div>
             <div class="flashcard-back absolute inset-0 bg-white rounded-3xl border-2 flex flex-col items-center justify-center" style="border-color:#5b8c5a;background:#f0fdf4">
-                <span class="text-8xl font-bold" style="color:#5b8c5a" id="girl-card-back">✓</span>
-                <span class="text-base text-gray-500 mt-2">翻回继续</span>
+                <span class="font-bold" id="girl-card-back" style="color:#5b8c5a;font-size:100px;line-height:1">✓</span>
+                <span class="text-base text-gray-500 mt-3">翻回继续</span>
             </div>
         </div>
     </div>
@@ -216,14 +216,14 @@
         <button onclick="resetBoyWords()" class="text-xs text-red-400 px-3 py-1 rounded-full border border-red-200">清空</button>
     </div>
     <p class="text-sm text-gray-500 mb-3" id="boy-review-count">本周累计：0 个词语</p>
-    <div id="boy-flashcard" class="flashcard w-full h-56 mb-4 cursor-pointer" onclick="flipBoyCard()">
+    <div id="boy-flashcard" class="flashcard w-full h-72 mb-4 cursor-pointer" onclick="flipBoyCard()">
         <div class="flashcard-inner relative w-full h-full">
             <div class="flashcard-front absolute inset-0 bg-white rounded-3xl border-2 flex items-center justify-center" style="border-color:#5b8c5a">
-                <span class="text-6xl font-bold text-gray-800" id="boy-card-front">词语</span>
+                <span class="font-bold text-gray-800" id="boy-card-front" style="font-size:90px;line-height:1">词语</span>
             </div>
             <div class="flashcard-back absolute inset-0 bg-white rounded-3xl border-2 flex flex-col items-center justify-center" style="border-color:#5b8c5a;background:#f0fdf4">
-                <span class="text-6xl font-bold" style="color:#5b8c5a" id="boy-card-back">✓</span>
-                <span class="text-base text-gray-500 mt-2">翻回继续</span>
+                <span class="font-bold" id="boy-card-back" style="color:#5b8c5a;font-size:100px;line-height:1">✓</span>
+                <span class="text-base text-gray-500 mt-3">翻回继续</span>
             </div>
         </div>
     </div>
