@@ -252,6 +252,10 @@
         <h3 class="font-bold text-gray-800 text-sm mb-3">🌟 勋章墙</h3>
         <div class="flex flex-wrap gap-3" id="badges-wall"></div>
     </div>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mt-3">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">📅 打卡历史记录</h3>
+        <div id="history-list" class="space-y-2"></div>
+    </div>
 </div>
 
 </main>
@@ -288,7 +292,8 @@ const STORAGE = {
     currentKid: 'kid_current',
     streaks: 'kid_streaks',
     lastDate: 'kid_last_date',
-    dailyReset: 'kid_daily_reset'
+    dailyReset: 'kid_daily_reset',
+    history: 'kid_history'
 };
 
 function get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){return null;} }
@@ -712,6 +717,73 @@ function updateStreaks() {
     document.getElementById('boy-streak').textContent = streaks.boy + '天';
 
     renderBadges(streaks);
+    renderHistory();
+}
+
+// ===== 渲染历史记录 =====
+function renderHistory() {
+    const history = get(STORAGE.history) || [];
+    const container = document.getElementById('history-list');
+    
+    // 今天的打卡也显示
+    const todayStr = new Date().toDateString();
+    const todayRecord = {
+        date: todayStr,
+        girlWords: get(STORAGE.girlWords) || [],
+        girlEnWords: get(STORAGE.girlEnWords) || [],
+        girlReading: get(STORAGE.girlReading) || false,
+        girlSleep: get(STORAGE.girlSleep) || false,
+        boyWords: get(STORAGE.boyWords) || [],
+        boyTasks: get(STORAGE.boyTasks) || {},
+        boySleep: get(STORAGE.boySleep) || false,
+        isToday: true
+    };
+    
+    const allRecords = [todayRecord, ...history.reverse()];
+    
+    if(allRecords.length === 0 || (allRecords.length === 1 && allRecords[0].girlWords.length === 0 && allRecords[0].boyWords.length === 0)) {
+        container.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">暂无历史记录</p>';
+        return;
+    }
+    
+    const taskLabels = {reading:'阅读',preview:'预习',math:'口算',english:'英语'};
+    
+    container.innerHTML = allRecords.map(r => {
+        const d = new Date(r.date);
+        const dateLabel = r.isToday ? '今天' : d.toLocaleDateString('zh-CN',{month:'numeric',day:'numeric',weekday:'short'});
+        
+        // 妹妹部分
+        let girlHtml = '';
+        if(r.girlWords.length > 0 || r.girlEnWords.length > 0 || r.girlReading || r.girlSleep) {
+            girlHtml = '<div class="bg-pink-50 rounded-lg p-2 mb-1.5">'+
+                '<p class="text-xs font-bold text-pink-600 mb-1">👧 妹妹</p>'+
+                (r.girlWords.length > 0 ? '<p class="text-xs text-gray-600">识字：'+r.girlWords.join('、')+'</p>' : '')+
+                (r.girlEnWords.length > 0 ? '<p class="text-xs text-gray-600">英语：'+r.girlEnWords.join('、')+'</p>' : '')+
+                (r.girlReading ? '<p class="text-xs text-green-600">✓ 绘本阅读</p>' : '')+
+                (r.girlSleep ? '<p class="text-xs text-green-600">✓ 早睡</p>' : '')+
+            '</div>';
+        }
+        
+        // 哥哥部分
+        let boyHtml = '';
+        if(r.boyWords.length > 0 || Object.values(r.boyTasks||{}).some(v=>v) || r.boySleep) {
+            const doneTasks = Object.entries(r.boyTasks||{}).filter(([k,v])=>v).map(([k])=>taskLabels[k]).join('、');
+            boyHtml = '<div class="bg-blue-50 rounded-lg p-2">'+
+                '<p class="text-xs font-bold text-blue-600 mb-1">👦 哥哥</p>'+
+                (r.boyWords.length > 0 ? '<p class="text-xs text-gray-600">词语：'+r.boyWords.join('、')+'</p>' : '')+
+                (doneTasks ? '<p class="text-xs text-gray-600">任务：'+doneTasks+'</p>' : '')+
+                (r.boySleep ? '<p class="text-xs text-green-600">✓ 早睡</p>' : '')+
+            '</div>';
+        }
+        
+        if(!girlHtml && !boyHtml) return '';
+        
+        return '<div class="border border-gray-100 rounded-xl p-3">'+
+            '<p class="text-xs font-bold text-gray-500 mb-2">'+(r.isToday?'🔵 ':'📅 ')+dateLabel+'</p>'+
+            girlHtml + boyHtml+
+        '</div>';
+    }).join('');
+}
 }
 
 function renderBadges(streaks) {
@@ -767,15 +839,35 @@ function checkDailyReset() {
     // 如果是同一天，不重置
     if(lastReset === today) return;
     
-    // 新的一天，清空当日打卡项（保留字卡复习的历史积累）
-    set(STORAGE.girlWords, []);        // 妹妹今日识字
-    set(STORAGE.girlEnWords, []);      // 妹妹今日英语单词
-    set(STORAGE.girlReading, false);   // 妹妹绘本阅读
-    set(STORAGE.girlSleep, false);     // 妹妹睡觉打卡
-    set(STORAGE.girlPhoto, null);      // 妹妹绘本照片
-    set(STORAGE.boyWords, []);         // 哥哥今日词语
-    set(STORAGE.boyTasks, {});         // 哥哥今日任务
-    set(STORAGE.boySleep, false);      // 哥哥睡觉打卡
+    // 新的一天，先把昨天的打卡数据存入历史
+    const yesterday = lastReset || '';
+    const history = get(STORAGE.history) || [];
+    
+    // 保存昨天的记录
+    history.push({
+        date: yesterday,
+        girlWords: get(STORAGE.girlWords) || [],
+        girlEnWords: get(STORAGE.girlEnWords) || [],
+        girlReading: get(STORAGE.girlReading) || false,
+        girlSleep: get(STORAGE.girlSleep) || false,
+        boyWords: get(STORAGE.boyWords) || [],
+        boyTasks: get(STORAGE.boyTasks) || {},
+        boySleep: get(STORAGE.boySleep) || false
+    });
+    
+    // 只保留最近90天的历史
+    if(history.length > 90) history.splice(0, history.length - 90);
+    set(STORAGE.history, history);
+    
+    // 清空当日打卡项
+    set(STORAGE.girlWords, []);
+    set(STORAGE.girlEnWords, []);
+    set(STORAGE.girlReading, false);
+    set(STORAGE.girlSleep, false);
+    set(STORAGE.girlPhoto, null);
+    set(STORAGE.boyWords, []);
+    set(STORAGE.boyTasks, {});
+    set(STORAGE.boySleep, false);
     
     // 重置内存变量
     girlReadingDone = false;
