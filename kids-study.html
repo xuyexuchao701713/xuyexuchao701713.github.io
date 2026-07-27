@@ -287,7 +287,8 @@ const STORAGE = {
     boySleep: 'kid_boy_sleep',
     currentKid: 'kid_current',
     streaks: 'kid_streaks',
-    lastDate: 'kid_last_date'
+    lastDate: 'kid_last_date',
+    dailyReset: 'kid_daily_reset'
 };
 
 function get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){return null;} }
@@ -758,8 +759,37 @@ document.querySelectorAll('.tab-item').forEach(btn => {
     btn.addEventListener('click', () => switchPage(btn.dataset.page));
 });
 
+// ===== 每日自动重置 =====
+function checkDailyReset() {
+    const today = new Date().toDateString();
+    const lastReset = get(STORAGE.dailyReset);
+    
+    // 如果是同一天，不重置
+    if(lastReset === today) return;
+    
+    // 新的一天，清空当日打卡项（保留字卡复习的历史积累）
+    set(STORAGE.girlWords, []);        // 妹妹今日识字
+    set(STORAGE.girlEnWords, []);      // 妹妹今日英语单词
+    set(STORAGE.girlReading, false);   // 妹妹绘本阅读
+    set(STORAGE.girlSleep, false);     // 妹妹睡觉打卡
+    set(STORAGE.girlPhoto, null);      // 妹妹绘本照片
+    set(STORAGE.boyWords, []);         // 哥哥今日词语
+    set(STORAGE.boyTasks, {});         // 哥哥今日任务
+    set(STORAGE.boySleep, false);      // 哥哥睡觉打卡
+    
+    // 重置内存变量
+    girlReadingDone = false;
+    girlSleepDone = false;
+    boySleepDone = false;
+    boyTasks = {};
+    
+    // 更新日期标记
+    set(STORAGE.dailyReset, today);
+}
+
 // ===== 初始化 =====
 function refreshAll() {
+    checkDailyReset();
     renderGirlWords();
     renderGirlEnWords();
     updateGirlReadingUI();
