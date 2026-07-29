@@ -506,7 +506,7 @@ function renderCalendar(){
         let style='', textColor='', status='none';
         if(isFuture){
             style='background:#f8fafc;border:1px solid #e2e8f0';
-            textColor='color:#cbd5e1';
+            textColor='color:#64748b';
         }else{
             const jjDone=jjExpected.length>0&&jjExpected.every(n=>(jjMap[n]||0)>=1);
             const jlDone=jlExpected.length>0&&jlExpected.every(n=>(jlMap[n]||0)>=1);
@@ -514,7 +514,7 @@ function renderCalendar(){
             const jlPartial=jlExpected.some(n=>(jlMap[n]||0)>=1);
             if(jjDone&&jlDone){style='background:#3b82f6';textColor='color:#fff;font-weight:700';status='done';}
             else if(jjPartial||jlPartial){style='background:#bfdbfe';textColor='color:#1e40af;font-weight:600';status='partial';}
-            else{style='background:#f1f5f9';textColor='color:#94a3b8';}
+            else{style='background:#f1f5f9';textColor='color:#64748b';}
         }
         html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer hover:opacity-80" style="'+style+';'+textColor+'" onclick="showDayDetail(\'firstPass\','+d+',\''+dateStr+'\')">'+dayNum+'</div>';
     }
@@ -533,7 +533,7 @@ function renderCalendar(){
         const dateStr=dateObj.toISOString().split('T')[0];
         const done=reviewDays.includes(dateStr);
         let style='', textColor='';
-        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#cbd5e1';}
+        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#64748b';}
         else if(done){style='background:#fbbf24';textColor='color:#fff;font-weight:700';}
         else{style='background:#fef3c7';textColor='color:#92400e';}
         html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer hover:opacity-80" style="'+style+';'+textColor+'" onclick="showDayDetail(\'review\','+d+',\''+dateStr+'\')">'+dateObj.getDate()+'</div>';
@@ -551,7 +551,7 @@ function renderCalendar(){
         const dateKey='2026-9-'+d;
         const done=sepPractice[dateKey];
         let style='', textColor='';
-        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#cbd5e1';}
+        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#64748b';}
         else if(done){style='background:#8b5cf6';textColor='color:#fff;font-weight:700';}
         else{style='background:#f3e8ff';textColor='color:#7c3aed';}
         html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer hover:opacity-80" style="'+style+';'+textColor+'" onclick="showDayDetail(\'practice\','+d+',\''+dateKey+'\')">'+d+'</div>';
