@@ -25,6 +25,7 @@
         .fade-in{animation:fadeIn .3s ease-out}
         @keyframes pop{0%{transform:scale(.5);opacity:0}50%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
         .reward-pop{animation:pop .4s ease-out}
+        .review-badge{font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px}
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -59,7 +60,7 @@
 
     <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="font-bold text-gray-800 text-sm" id="today-title">📊 今日计划</h3>
+            <h3 class="font-bold text-gray-800 text-sm">📊 今日计划</h3>
             <span class="text-xs text-gray-400" id="today-phase"></span>
         </div>
         <div id="today-videos" class="space-y-2"></div>
@@ -98,24 +99,32 @@
 <div id="page-calendar" class="page p-4">
     <h2 class="text-lg font-bold text-gray-800 mb-4">📅 学习日历</h2>
     <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
-        <h3 class="font-bold text-gray-700 text-sm mb-3">8月 · 视频阶段</h3>
-        <div id="aug-cal" class="grid grid-cols-7 gap-1"></div>
-        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400">
+        <h3 class="font-bold text-gray-700 text-sm mb-3">7/30-8/20 · 视频首刷</h3>
+        <div id="cal-phase1" class="grid grid-cols-7 gap-1"></div>
+        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400 flex-wrap">
             <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#dbeafe"></span> 未开始</span>
             <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#bfdbfe"></span> 部分完成</span>
             <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#3b82f6"></span> 全部完成</span>
         </div>
     </div>
     <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-700 text-sm mb-3">8/21-8/31 · 重点复习</h3>
+        <div id="cal-phase2" class="grid grid-cols-7 gap-1"></div>
+        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400 flex-wrap">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#fef3c7"></span> 未复习</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#fbbf24"></span> 已复习</span>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
         <h3 class="font-bold text-gray-700 text-sm mb-3">9月 · 刷题阶段</h3>
-        <div id="sep-cal" class="grid grid-cols-7 gap-1"></div>
-        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400">
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#fef3c7"></span> 未打卡</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#f59e0b"></span> 已打卡</span>
+        <div id="cal-phase3" class="grid grid-cols-7 gap-1"></div>
+        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400 flex-wrap">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#f3e8ff"></span> 未打卡</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#8b5cf6"></span> 已打卡</span>
         </div>
     </div>
     <div class="bg-blue-50 rounded-xl p-3">
-        <p class="text-xs text-blue-700">💡 <b>学习计划</b><br>• 8月1日-8月21日：计价61集（每天3集）<br>• 8月1日-8月30日：计量59集（每天2集）<br>• 每天共5集，8月看完<br>• 9月起：每天刷真题+整理错题</p>
+        <p class="text-xs text-blue-700">💡 <b>学习计划</b><br>• 7/30-8/20（22天）：首刷120集视频，每天分配5~6集<br>• 8/21-8/31（11天）：反复复习，找重点<br>• 9月起：正式刷真题+整理错题<br>• 10月17日考试</p>
     </div>
 </div>
 
@@ -130,7 +139,15 @@
 </nav>
 
 <script>
-const S={jijie:'zao_jijie',jiliang:'zao_jiliang',extra:'zao_extra',lastDate:'zao_lastdate',history:'zao_history',sepPractice:'zao_sep_practice'};
+const S={
+    jijie:'zao_jijie',        // 计价看过哪些集（数组，每集可出现多次=看过几次）
+    jiliang:'zao_jiliang',    // 计量看过哪些集
+    extra:'zao_extra',        // 每日额外打卡
+    lastDate:'zao_lastdate',  // 上次访问日期
+    history:'zao_history',    // 历史记录
+    sepPractice:'zao_sep_practice', // 9月刷题打卡
+    reviewDays:'zao_review_days'    // 复习阶段打卡的日期
+};
 function get(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
 function set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
@@ -142,33 +159,85 @@ const diff=Math.ceil((examDate-today)/(1000*60*60*24));
 document.getElementById('today-date').textContent=today.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('countdown').textContent=diff+'天';
 
+const START_DATE=new Date(2026,6,30); // 7月30日开始
+START_DATE.setHours(0,0,0,0);
+const REVIEW_START=new Date(2026,7,21); // 8月21日复习开始
+REVIEW_START.setHours(0,0,0,0);
+const PRACTICE_START=new Date(2026,8,1); // 9月1日刷题
+PRACTICE_START.setHours(0,0,0,0);
+
+const TOTAL_JJ=61, TOTAL_JL=59, TOTAL_VIDEOS=TOTAL_JJ+TOTAL_JL; // 120集
+const FIRST_PASS_DAYS=22; // 7/30~8/20 共22天
+
 const rewards=[
     '今天的努力，是考场上最坚实的底气！💪',
     '每一集视频都在缩短你和证书的距离！📖',
     '坚持住，造价师不是梦，是计划中的确定！🎯',
-    '今天的5集视频，就是明天的5分考分！⭐',
+    '今天的视频，就是明天的考分！⭐',
     '别人在刷手机，你在刷视频，这就是差距！🔥',
-    '8月看完视频，9月刷题，10月拿证！📊',
+    '22天首刷，11天复习，9月刷题，10月拿证！📊',
     '每天进步一点点，120集终将被你拿下！🏆',
     '你不是在备考，你是在给自己的未来加码！💎',
     '今天的自律，是明天考场上的自信！✨',
     '计价计量双管齐下，证书就在前方！🚀'
 ];
 
+// ====== 阶段判断 ======
+function getPhase(){
+    if(today<START_DATE) return {type:'prep', label:'等待开始'};
+    if(today<REVIEW_START) return {type:'firstPass', label:'首刷阶段'};
+    if(today<PRACTICE_START) return {type:'review', label:'重点复习'};
+    return {type:'practice', label:'刷题阶段'};
+}
+
 // ====== 今日计划 ======
 function getTodayPlan(){
-    const aug1=new Date(2026,7,1);
-    aug1.setHours(0,0,0,0);
-    if(today<aug1) return {phase:'准备阶段',jijie:[],jiliang:[],isPrep:true};
-    const dayDiff=Math.floor((today-aug1)/(1000*60*60*24));
-    if(dayDiff<31){
-        const jjStart=dayDiff*3, jlStart=dayDiff*2;
-        const jijie=[],jiliang=[];
-        for(let i=0;i<3;i++) if(jjStart+i+1<=61) jijie.push(jjStart+i+1);
-        for(let i=0;i<2;i++) if(jlStart+i+1<=59) jiliang.push(jlStart+i+1);
-        return {phase:'📺 8月视频阶段 第'+(dayDiff+1)+'天',jijie,jiliang};
+    const phase=getPhase();
+    
+    if(phase.type==='prep'){
+        return {phase:phase.label, jijie:[], jiliang:[], isPrep:true};
     }
-    return {phase:'✏️ 9月刷题阶段',jijie:[],jiliang:[],isPractice:true};
+    
+    if(phase.type==='firstPass'){
+        // 22天内均分120集：每天5~6集（3计价+2~3计量，交替）
+        const dayDiff=Math.floor((today-START_DATE)/(1000*60*60*24));
+        const dayIndex=dayDiff; // 0-based，第1天=0
+        
+        // 计价61集 / 22天 ≈ 每天2.77集 → 3集/天，最后一天1集
+        // 计量59集 / 22天 ≈ 每天2.68集 → 3集/天，后期减为2集
+        const jjPerDay=3, jlPerDay=3;
+        const jjStart=dayIndex*jjPerDay;
+        const jlStart=dayIndex*jlPerDay;
+        
+        const jijie=[], jiliang=[];
+        for(let i=0;i<jjPerDay;i++) if(jjStart+i+1<=TOTAL_JJ) jijie.push(jjStart+i+1);
+        for(let i=0;i<jlPerDay;i++) if(jlStart+i+1<=TOTAL_JL) jiliang.push(jlStart+i+1);
+        
+        const videosToday=jijie.length+jiliang.length;
+        return {
+            phase:'📺 首刷 · 第'+(dayIndex+1)+'天/22天 · '+videosToday+'集',
+            jijie, jiliang,
+            isFirstPass:true
+        };
+    }
+    
+    if(phase.type==='review'){
+        // 复习阶段：列出全部120集，用户自己选要复习哪些
+        const dayDiff=Math.floor((today-REVIEW_START)/(1000*60*60*24));
+        return {
+            phase:'🔁 复习 · 第'+(dayDiff+1)+'天/11天',
+            jijie:[], jiliang:[],
+            isReview:true
+        };
+    }
+    
+    // 刷题阶段
+    const dayDiff=Math.floor((today-PRACTICE_START)/(1000*60*60*24));
+    return {
+        phase:'✏️ 刷题 · 第'+(dayDiff+1)+'天',
+        jijie:[], jiliang:[],
+        isPractice:true
+    };
 }
 
 function renderToday(){
@@ -177,8 +246,33 @@ function renderToday(){
     const container=document.getElementById('today-videos');
     
     if(plan.isPrep){
-        const daysLeft=Math.ceil((new Date(2026,7,1)-today)/(1000*60*60*24));
-        container.innerHTML='<div class="text-center py-6"><p class="text-4xl mb-2">📚</p><p class="text-sm text-gray-500">8月1日正式开始</p><p class="text-lg font-bold" style="color:#1e3a5f">还有 '+daysLeft+' 天</p><p class="text-xs text-gray-400 mt-1">提前看看教材，做好心理准备！</p></div>';
+        container.innerHTML='<div class="text-center py-6"><p class="text-4xl mb-2">📚</p><p class="text-sm text-gray-500">7月30日正式开始</p><p class="text-lg font-bold" style="color:#1e3a5f">还有 '+Math.ceil((START_DATE-today)/(1000*60*60*24))+' 天</p><p class="text-xs text-gray-400 mt-1">提前看看教材，做好心理准备！</p></div>';
+        renderExtra();
+        updateProgress();
+        return;
+    }
+    
+    if(plan.isReview){
+        // 复习阶段：显示全部120集列表，显示每集看过几次，可反复打卡
+        const jjCounts=get(S.jijie)||[];
+        const jlCounts=get(S.jiliang)||[];
+        // 统计每集看过次数
+        const jjMap={}, jlMap={};
+        jjCounts.forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
+        jlCounts.forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
+        
+        let html='<p class="text-xs text-gray-400 mb-2">🎯 点击打卡复习，可反复复习多次</p>';
+        html+='<p class="text-xs text-blue-500 font-medium mb-2">🔵 计价（61集）</p>';
+        for(let i=1;i<=TOTAL_JJ;i++){
+            const cnt=jjMap[i]||0;
+            html+=renderVideoRow('jijie',i,cnt,'blue');
+        }
+        html+='<p class="text-xs text-orange-500 font-medium mb-2 mt-3">🟠 计量（59集）</p>';
+        for(let i=1;i<=TOTAL_JL;i++){
+            const cnt=jlMap[i]||0;
+            html+=renderVideoRow('jiliang',i,cnt,'orange');
+        }
+        container.innerHTML=html;
         renderExtra();
         updateProgress();
         return;
@@ -199,39 +293,40 @@ function renderToday(){
                 '<span class="text-lg mr-1">🔍</span>'+
                 '<span class="vt text-sm text-gray-700">复习薄弱章节</span></div>'+
         '</div>';
-        // 检查刷题完成状态
         checkPracticeComplete();
         renderExtra();
         updateProgress();
         return;
     }
     
+    // 首刷阶段：显示当天分配的视频
     let html='';
+    const jjCounts=get(S.jijie)||[];
+    const jlCounts=get(S.jiliang)||[];
+    const jjMap={}, jlMap={};
+    jjCounts.forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
+    jlCounts.forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
+    
     if(plan.jijie.length>0){
         html+='<p class="text-xs text-blue-500 font-medium mb-2">🔵 计价</p>';
         plan.jijie.forEach(n=>{
-            const done=(get(S.jijie)||[]).includes(n);
-            html+='<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleVideo(\'jijie\','+n+')">'+
-                '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-blue-500 border-blue-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
-                '<span class="text-xs px-2 py-0.5 rounded-lg font-medium bg-blue-100 text-blue-700">计价</span>'+
-                '<span class="vt text-sm text-gray-700 flex-1">第'+n+'集</span></div>';
+            const cnt=jjMap[n]||0;
+            html+=renderVideoRow('jijie',n,cnt,'blue');
         });
     }
     if(plan.jiliang.length>0){
         html+='<p class="text-xs text-orange-500 font-medium mb-2 mt-3">🟠 计量</p>';
         plan.jiliang.forEach(n=>{
-            const done=(get(S.jiliang)||[]).includes(n);
-            html+='<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleVideo(\'jiliang\','+n+')">'+
-                '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-orange-500 border-orange-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
-                '<span class="text-xs px-2 py-0.5 rounded-lg font-medium bg-orange-100 text-orange-700">计量</span>'+
-                '<span class="vt text-sm text-gray-700 flex-1">第'+n+'集</span></div>';
+            const cnt=jlMap[n]||0;
+            html+=renderVideoRow('jiliang',n,cnt,'orange');
         });
     }
     container.innerHTML=html;
     
-    // 检查今日视频是否全部完成
+    // 检查今日视频是否全部完成（至少看过1次）
     const allDone=[...plan.jijie,...plan.jiliang].every(n=>{
-        return plan.jijie.includes(n)?(get(S.jijie)||[]).includes(n):(get(S.jiliang)||[]).includes(n);
+        const map=plan.jijie.includes(n)?jjMap:jlMap;
+        return (map[n]||0)>=1;
     });
     const rewardSection=document.getElementById('reward-section');
     if(allDone && plan.jijie.length+plan.jiliang.length>0){
@@ -245,15 +340,35 @@ function renderToday(){
     updateProgress();
 }
 
+function renderVideoRow(type,n,cnt,color){
+    const done=cnt>=1;
+    const bg=color==='blue'?'bg-blue-100 text-blue-700':'bg-orange-100 text-orange-700';
+    const label=type==='jijie'?'计价':'计量';
+    return '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleVideo(\''+type+'\','+n+')">'+
+        '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-'+color+'-500 border-'+color+'-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+        '<span class="text-xs px-2 py-0.5 rounded-lg font-medium '+bg+'">'+label+'</span>'+
+        '<span class="vt text-sm text-gray-700 flex-1">第'+n+'集</span>'+
+        (cnt>1?'<span class="review-badge text-white" style="background:#1e3a5f">×'+cnt+'</span>':'')+
+    '</div>';
+}
+
 function toggleVideo(type,n){
     const key=type==='jijie'?S.jijie:S.jiliang;
-    const done=get(key)||[];
-    const idx=done.indexOf(n);
-    if(idx>=0) done.splice(idx,1);
-    else done.push(n);
-    set(key,done);
+    const list=get(key)||[];
+    list.push(n); // 每次点击追加一次打卡，不删除
+    set(key,list);
     saveHistory();
     renderToday();
+}
+
+// 复习阶段标记当天已复习
+function markReviewDay(){
+    const reviewDays=get(S.reviewDays)||[];
+    const dateStr=today.toISOString().split('T')[0];
+    if(!reviewDays.includes(dateStr)){
+        reviewDays.push(dateStr);
+        set(S.reviewDays,reviewDays);
+    }
 }
 
 // ====== 额外打卡 ======
@@ -274,7 +389,6 @@ function renderExtra(){
             '<span class="vt text-sm text-gray-700 flex-1">'+t.label+'</span></div>';
     }).join('');
     
-    // practice阶段额外项的状态
     if(getTodayPlan().isPractice){
         const pTasks=['practice1','practice2','practice3'];
         pTasks.forEach(id=>{
@@ -297,12 +411,11 @@ function toggleExtra(id){
     renderToday();
 }
 
-// 刷题阶段完成检查
 function checkPracticeComplete(){
     const extra=get(S.extra)||{};
-    const allPracticeDone=['practice1','practice2','practice3'].every(id=>extra[id]);
+    const allDone=['practice1','practice2','practice3'].every(id=>extra[id]);
     const rewardSection=document.getElementById('reward-section');
-    if(allPracticeDone){
+    if(allDone){
         rewardSection.classList.remove('hidden');
         document.getElementById('reward-text').textContent=rewards[Math.floor(Math.random()*rewards.length)];
     } else {
@@ -313,11 +426,14 @@ function checkPracticeComplete(){
 // ====== 进度 ======
 let currentPhase='jijie';
 function updateProgress(){
-    const jj=get(S.jijie)||[], jl=get(S.jiliang)||[];
-    document.getElementById('jj-progress').textContent=jj.length+'/61';
-    document.getElementById('jl-progress').textContent=jl.length+'/59';
-    document.getElementById('jj-bar').style.width=Math.round(jj.length/61*100)+'%';
-    document.getElementById('jl-bar').style.width=Math.round(jl.length/59*100)+'%';
+    const jjList=get(S.jijie)||[], jlList=get(S.jiliang)||[];
+    // 去重计数：看过至少1次的集数
+    const jjUnique=new Set(jjList).size;
+    const jlUnique=new Set(jlList).size;
+    document.getElementById('jj-progress').textContent=jjUnique+'/'+TOTAL_JJ;
+    document.getElementById('jl-progress').textContent=jlUnique+'/'+TOTAL_JL;
+    document.getElementById('jj-bar').style.width=Math.round(jjUnique/TOTAL_JJ*100)+'%';
+    document.getElementById('jl-bar').style.width=Math.round(jlUnique/TOTAL_JL*100)+'%';
 }
 
 function switchPhase(phase){
@@ -331,146 +447,117 @@ function switchPhase(phase){
 
 function renderVideoList(){
     const key=currentPhase==='jijie'?S.jijie:S.jiliang;
-    const total=currentPhase==='jijie'?61:59;
+    const total=currentPhase==='jijie'?TOTAL_JJ:TOTAL_JL;
     const color=currentPhase==='jijie'?'blue':'orange';
-    const done=get(key)||[];
+    const list=get(key)||[];
+    // 统计每集次数
+    const cntMap={};
+    list.forEach(n=>{cntMap[n]=(cntMap[n]||0)+1});
+    const uniqueDone=Object.keys(cntMap).length;
     
-    document.getElementById('p-watched').textContent=done.length;
-    document.getElementById('p-remaining').textContent=total-done.length;
-    document.getElementById('p-percent').textContent=Math.round(done.length/total*100)+'%';
+    document.getElementById('p-watched').textContent=uniqueDone;
+    document.getElementById('p-remaining').textContent=total-uniqueDone;
+    document.getElementById('p-percent').textContent=Math.round(uniqueDone/total*100)+'%';
     
     const container=document.getElementById('video-list');
     let html='';
     for(let i=1;i<=total;i++){
-        const isDone=done.includes(i);
+        const cnt=cntMap[i]||0;
+        const isDone=cnt>=1;
         html+='<div class="video-card flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 '+(isDone?'done':'')+'" onclick="toggleVideo(\''+currentPhase+'\','+i+')">'+
             '<div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 '+(isDone?'bg-'+color+'-500 border-'+color+'-500':'border-gray-300')+'">'+(isDone?'<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
             '<span class="text-xs text-gray-400 w-8">#'+i+'</span>'+
             '<span class="vt text-sm text-gray-700">第'+i+'集</span>'+
+            (cnt>1?'<span class="review-badge text-white ml-auto" style="background:#1e3a5f">×'+cnt+'</span>':'')+
         '</div>';
     }
     container.innerHTML=html;
 }
 
 // ====== 日历 ======
-function getDayStatus(augDay){
-    // augDay: 1-31 (8月第几天)
-    const dayIndex=augDay-1; // 0-based
-    const jjDone=get(S.jijie)||[];
-    const jlDone=get(S.jiliang)||[];
-    
-    // 该天预期的视频
-    const jjStart=dayIndex*3, jlStart=dayIndex*2;
-    const jjExpected=[],jlExpected=[];
-    for(let i=0;i<3;i++) if(jjStart+i+1<=61) jjExpected.push(jjStart+i+1);
-    for(let i=0;i<2;i++) if(jlStart+i+1<=59) jlExpected.push(jlStart+i+1);
-    
-    const jjComplete=jjExpected.every(n=>jjDone.includes(n));
-    const jlComplete=jlExpected.every(n=>jlDone.includes(n));
-    const jjPartial=jjExpected.some(n=>jjDone.includes(n));
-    const jlPartial=jlExpected.some(n=>jlDone.includes(n));
-    const hasAnyTask=jjExpected.length>0||jlExpected.length>0;
-    
-    if(!hasAnyTask) return 'empty';
-    if(jjComplete&&jlComplete) return 'all';
-    if(jjPartial||jlPartial) return 'partial';
-    return 'none';
-}
-
 function renderCalendar(){
-    const jjDone=get(S.jijie)||[];
-    const jlDone=get(S.jiliang)||[];
-    
-    // 8月日历
-    const aug1=new Date(2026,7,1);
-    aug1.setHours(0,0,0,0);
-    const augOffset=(aug1.getDay()+6)%7; // 周一=0
-    
-    let augHtml='';
-    const weekDays=['一','二','三','四','五','六','日'];
-    weekDays.forEach(d=>{augHtml+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
-    for(let i=0;i<augOffset;i++) augHtml+='<div></div>';
-    
-    for(let d=1;d<=31;d++){
-        const dateObj=new Date(2026,7,d);
-        const isFuture=dateObj>today;
-        const dayIndex=d-1;
-        const jjStart=dayIndex*3, jlStart=dayIndex*2;
-        const jjExpected=[],jlExpected=[];
-        for(let i=0;i<3;i++) if(jjStart+i+1<=61) jjExpected.push(jjStart+i+1);
-        for(let i=0;i<2;i++) if(jlStart+i+1<=59) jlExpected.push(jlStart+i+1);
-        
-        const jjComplete=jjExpected.length>0&&jjExpected.every(n=>jjDone.includes(n));
-        const jlComplete=jlExpected.length>0&&jlExpected.every(n=>jlDone.includes(n));
-        const jjPartial=jjExpected.some(n=>jjDone.includes(n));
-        const jlPartial=jlExpected.some(n=>jlDone.includes(n));
-        const hasTask=jjExpected.length>0||jlExpected.length>0;
-        
-        let bgClass='bg-gray-50 text-gray-300';
-        let tooltip='';
-        if(isFuture&&hasTask){
-            bgClass='bg-white border border-gray-100 text-gray-300';
-            tooltip='未到';
-        }else if(!hasTask){
-            bgClass='bg-gray-50 text-gray-300';
-        }else if(jjComplete&&jlComplete){
-            bgClass='text-white font-bold';
-            tooltip='全部完成 ✓';
-        }else if(jjPartial||jlPartial){
-            bgClass='text-blue-800 font-medium';
-            tooltip='部分完成';
-        }else if(!isFuture){
-            bgClass='text-gray-400';
-            tooltip='未完成';
-        }
-        
-        let style='';
-        if(jjComplete&&jlComplete) style='background:#3b82f6';
-        else if(jjPartial||jlPartial) style='background:#bfdbfe';
-        else if(!isFuture&&hasTask) style='background:#f1f5f9';
-        
-        augHtml+='<div class="text-center rounded-lg py-2 text-xs cursor-default relative" style="'+style+'" title="'+tooltip+'">'+
-            '<span class="'+(bgClass.includes('text-')?bgClass.match(/text-\S+/)?.[0]||'':'')+'">'+d+'</span>'+
-        '</div>';
-    }
-    document.getElementById('aug-cal').innerHTML=augHtml;
-    
-    // 9月日历
-    const sep1=new Date(2026,8,1);
-    sep1.setHours(0,0,0,0);
-    const sepOffset=(sep1.getDay()+6)%7;
-    const sepDays=30;
+    const jjList=get(S.jijie)||[], jlList=get(S.jiliang)||[];
+    const jjMap={}, jlMap={};
+    jjList.forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
+    jlList.forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
+    const reviewDays=get(S.reviewDays)||[];
     const sepPractice=get(S.sepPractice)||{};
+    const weekDays=['一','二','三','四','五','六','日'];
     
-    let sepHtml='';
-    weekDays.forEach(d=>{sepHtml+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
-    for(let i=0;i<sepOffset;i++) sepHtml+='<div></div>';
+    // === 7/30-8/20 首刷阶段 ===
+    let html='';
+    weekDays.forEach(d=>{html+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
+    const startOffset=(START_DATE.getDay()+6)%7;
+    for(let i=0;i<startOffset;i++) html+='<div></div>';
     
-    for(let d=1;d<=sepDays;d++){
+    for(let d=0;d<FIRST_PASS_DAYS;d++){
+        const dateObj=new Date(START_DATE);
+        dateObj.setDate(dateObj.getDate()+d);
+        const isFuture=dateObj>today;
+        const dayNum=dateObj.getDate();
+        const monthLabel=(dateObj.getMonth()+1)+'/'+dayNum;
+        
+        // 该天预期视频
+        const jjStart=d*3, jlStart=d*3;
+        const jjExpected=[], jlExpected=[];
+        for(let i=0;i<3;i++) if(jjStart+i+1<=TOTAL_JJ) jjExpected.push(jjStart+i+1);
+        for(let i=0;i<3;i++) if(jlStart+i+1<=TOTAL_JL) jlExpected.push(jlStart+i+1);
+        const hasTask=jjExpected.length+JlExpected.length>0;
+        
+        let style='', textColor='';
+        if(isFuture){
+            style='background:#f8fafc;border:1px solid #e2e8f0';
+            textColor='color:#cbd5e1';
+        }else{
+            const jjDone=jjExpected.every(n=>(jjMap[n]||0)>=1);
+            const jlDone=jlExpected.every(n=>(jlMap[n]||0)>=1);
+            const jjPartial=jjExpected.some(n=>(jjMap[n]||0)>=1);
+            const jlPartial=jlExpected.some(n=>(jlMap[n]||0)>=1);
+            if(jjDone&&jlDone){style='background:#3b82f6';textColor='color:#fff;font-weight:700';}
+            else if(jjPartial||jlPartial){style='background:#bfdbfe';textColor='color:#1e40af;font-weight:600';}
+            else{style='background:#f1f5f9';textColor='color:#94a3b8';}
+        }
+        html+='<div class="text-center rounded-lg py-2 text-xs" style="'+style+';'+textColor+'" title="'+monthLabel+'">'+dayNum+'</div>';
+    }
+    document.getElementById('cal-phase1').innerHTML=html;
+    
+    // === 8/21-8/31 复习阶段 ===
+    html='';
+    weekDays.forEach(d=>{html+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
+    const reviewOffset=(REVIEW_START.getDay()+6)%7;
+    for(let i=0;i<reviewOffset;i++) html+='<div></div>';
+    const reviewTotalDays=11;
+    for(let d=0;d<reviewTotalDays;d++){
+        const dateObj=new Date(REVIEW_START);
+        dateObj.setDate(dateObj.getDate()+d);
+        const isFuture=dateObj>today;
+        const dateStr=dateObj.toISOString().split('T')[0];
+        const done=reviewDays.includes(dateStr);
+        let style='', textColor='';
+        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#cbd5e1';}
+        else if(done){style='background:#fbbf24';textColor='color:#fff;font-weight:700';}
+        else{style='background:#fef3c7';textColor='color:#92400e';}
+        html+='<div class="text-center rounded-lg py-2 text-xs" style="'+style+';'+textColor+'">'+dateObj.getDate()+'</div>';
+    }
+    document.getElementById('cal-phase2').innerHTML=html;
+    
+    // === 9月 刷题阶段 ===
+    html='';
+    weekDays.forEach(d=>{html+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
+    const practiceOffset=(PRACTICE_START.getDay()+6)%7;
+    for(let i=0;i<practiceOffset;i++) html+='<div></div>';
+    for(let d=1;d<=30;d++){
         const dateObj=new Date(2026,8,d);
         const isFuture=dateObj>today;
         const dateKey='2026-9-'+d;
         const done=sepPractice[dateKey];
-        
-        let bgClass='bg-gray-50 text-gray-300';
-        let tooltip='';
-        if(isFuture){
-            bgClass='bg-white border border-gray-100 text-gray-300';
-        }else if(done){
-            bgClass='text-white font-bold';
-            tooltip='已打卡 ✓';
-        }else{
-            bgClass='text-gray-400';
-            tooltip='未打卡';
-        }
-        
-        let style='';
-        if(done) style='background:#f59e0b';
-        else if(!isFuture) style='background:#f1f5f9';
-        
-        sepHtml+='<div class="text-center rounded-lg py-2 text-xs" style="'+style+'">'+d+'</div>';
+        let style='', textColor='';
+        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#cbd5e1';}
+        else if(done){style='background:#8b5cf6';textColor='color:#fff;font-weight:700';}
+        else{style='background:#f3e8ff';textColor='color:#7c3aed';}
+        html+='<div class="text-center rounded-lg py-2 text-xs" style="'+style+';'+textColor+'">'+d+'</div>';
     }
-    document.getElementById('sep-cal').innerHTML=sepHtml;
+    document.getElementById('cal-phase3').innerHTML=html;
 }
 
 // ====== 历史记录 ======
@@ -481,7 +568,8 @@ function saveHistory(){
         jijie:get(S.jijie)||[],
         jiliang:get(S.jiliang)||[],
         extra:get(S.extra)||{},
-        sepPractice:get(S.sepPractice)||{}
+        sepPractice:get(S.sepPractice)||{},
+        reviewDays:get(S.reviewDays)||[]
     };
     set(S.history,history);
     set(S.lastDate,dateStr);
@@ -492,25 +580,24 @@ function checkDailyReset(){
     const lastDate=get(S.lastDate);
     const dateStr=today.toISOString().split('T')[0];
     if(lastDate!==dateStr){
-        // 先保存昨天的历史
         if(lastDate){
             const history=get(S.history)||{};
             history[lastDate]={
                 jijie:get(S.jijie)||[],
                 jiliang:get(S.jiliang)||[],
                 extra:get(S.extra)||{},
-                sepPractice:get(S.sepPractice)||{}
+                sepPractice:get(S.sepPractice)||{},
+                reviewDays:get(S.reviewDays)||[]
             };
             set(S.history,history);
         }
-        // 重置每日数据（保留视频进度！）
+        // 每日重置额外打卡，保留视频进度
         set(S.extra,{});
         set(S.lastDate,dateStr);
-        // 如果是9月，自动记录当日刷题打卡
-        if(getTodayPlan().isPractice){
-            const sepPractice=get(S.sepPractice)||{};
-            // 不自动标记，保留用户手动打卡
-        }
+    }
+    // 复习阶段自动标记今天
+    if(getPhase().type==='review'){
+        markReviewDay();
     }
 }
 
@@ -533,9 +620,6 @@ function init(){
     renderToday();
     updateProgress();
     renderCalendar();
-    // 设置今日标题
-    const plan=getTodayPlan();
-    document.getElementById('today-title').textContent=plan.isPrep?'📚 等待开始':'📊 今日计划';
 }
 
 init();
