@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="造价备考">
+    <meta name="theme-color" content="#1e3a5f">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi5L2c55Oc5a2m6LSiIiwic2hvcnRfbmFtZSI6IuS9nOeTnCIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2YxZjVmOSIsInRoZW1lX2NvbG9yIjoiIzFlM2E1ZiIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUIzYVdSMGFEMHhPREFnSUc5bUlDMHhPREFnSUR4aGJtTnNaV1FnWkQwaU1UZ3dKU0lnWkQwaU1UZ3dKU0lnWlhod2FYSmxQU0l3SURBZ01UZ3dJREV3TUNJZ2FHVnBaMmgwUFNJeE9EQWxJaUJvWldsbmFIUTlJakV3TUNVaVBqeDBaWGgwWlhKdWFXNXZiaUE4TDNOMlp6ND0iLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg width='192' height='192' viewBox='0 0 192 192' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='192' height='192' rx='40' fill='%231e3a5f'/%3E%3Ctext x='96' y='128' font-size='80' font-family='sans-serif' fill='%23fff' text-anchor='middle'%3E%E9%80%A0%3C/text%3E%3C/svg%3E">
+    <title>一级造价师备考</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{--safe:env(safe-area-inset-bottom,16px)}
+        *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overscroll-behavior:none;background:#f1f5f9}
+        .tab-bar{padding-bottom:var(--safe)}
+        .tab-item{color:#94a3b8;transition:all .2s}
+        .tab-item.active{color:#1e3a5f}
+        .page{display:none}.page.active{display:block}
+        .video-card{transition:all .2s}.video-card:active{transform:scale(.98)}
+        .video-card.done{opacity:.45}.video-card.done .vt{text-decoration:line-through}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .fade-in{animation:fadeIn .3s ease-out}
+        @keyframes pop{0%{transform:scale(.5);opacity:0}50%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+        .reward-pop{animation:pop .4s ease-out}
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<header class="bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between shrink-0 sticky top-0 z-10">
+    <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-bold" style="background:#1e3a5f">造</div>
+        <div><h1 class="text-base font-bold text-gray-800">一级造价师备考</h1><p class="text-xs text-gray-400" id="today-date"></p></div>
+    </div>
+    <div class="text-center">
+        <p class="text-xs text-gray-400">距考试</p>
+        <p class="text-lg font-bold" style="color:#dc2626" id="countdown">--天</p>
+    </div>
+</header>
+
+<main class="flex-1 overflow-y-auto pb-20" id="main-content">
+
+<!-- ====== 今日 ====== -->
+<div id="page-today" class="page active p-4">
+    <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+            <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full" style="background:#3b82f6"></span><span class="text-xs text-gray-500">计价</span></div>
+            <p class="text-xl font-bold text-gray-800" id="jj-progress">0/61</p>
+            <div class="w-full bg-gray-100 h-1.5 rounded-full mt-2"><div id="jj-bar" class="h-1.5 rounded-full transition-all" style="background:#3b82f6;width:0%"></div></div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+            <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full" style="background:#f59e0b"></span><span class="text-xs text-gray-500">计量</span></div>
+            <p class="text-xl font-bold text-gray-800" id="jl-progress">0/59</p>
+            <div class="w-full bg-gray-100 h-1.5 rounded-full mt-2"><div id="jl-bar" class="h-1.5 rounded-full transition-all" style="background:#f59e0b;width:0%"></div></div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-gray-800 text-sm" id="today-title">📊 今日计划</h3>
+            <span class="text-xs text-gray-400" id="today-phase"></span>
+        </div>
+        <div id="today-videos" class="space-y-2"></div>
+    </div>
+
+    <div id="reward-section" class="hidden mb-3">
+        <div class="rounded-2xl p-5 text-center text-white reward-pop" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6)">
+            <p class="text-3xl mb-2">🎉</p>
+            <p class="text-base font-bold mb-1">今日任务全部完成！</p>
+            <p class="text-sm opacity-80" id="reward-text"></p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+        <h3 class="font-bold text-gray-800 text-sm mb-3">📝 额外打卡</h3>
+        <div class="space-y-2" id="extra-tasks"></div>
+    </div>
+</div>
+
+<!-- ====== 进度 ====== -->
+<div id="page-progress" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-4">📈 学习进度</h2>
+    <div class="flex gap-2 mb-4">
+        <button onclick="switchPhase('jijie')" id="btn-jijie" class="flex-1 py-2 rounded-xl text-sm font-medium transition-all" style="background:#3b82f6;color:#fff">计价 61集</button>
+        <button onclick="switchPhase('jiliang')" id="btn-jiliang" class="flex-1 py-2 rounded-xl text-sm font-medium transition-all bg-gray-100 text-gray-500">计量 59集</button>
+    </div>
+    <div class="grid grid-cols-3 gap-2 mb-4">
+        <div class="bg-white rounded-xl p-3 border border-gray-100 text-center"><p class="text-lg font-bold text-gray-800" id="p-watched">0</p><p class="text-xs text-gray-400">已看</p></div>
+        <div class="bg-white rounded-xl p-3 border border-gray-100 text-center"><p class="text-lg font-bold text-gray-800" id="p-remaining">0</p><p class="text-xs text-gray-400">剩余</p></div>
+        <div class="bg-white rounded-xl p-3 border border-gray-100 text-center"><p class="text-lg font-bold" style="color:#1e3a5f" id="p-percent">0%</p><p class="text-xs text-gray-400">完成率</p></div>
+    </div>
+    <div id="video-list" class="space-y-1.5"></div>
+</div>
+
+<!-- ====== 日历 ====== -->
+<div id="page-calendar" class="page p-4">
+    <h2 class="text-lg font-bold text-gray-800 mb-4">📅 学习日历</h2>
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-700 text-sm mb-3">8月 · 视频阶段</h3>
+        <div id="aug-cal" class="grid grid-cols-7 gap-1"></div>
+        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#dbeafe"></span> 未开始</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#bfdbfe"></span> 部分完成</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#3b82f6"></span> 全部完成</span>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
+        <h3 class="font-bold text-gray-700 text-sm mb-3">9月 · 刷题阶段</h3>
+        <div id="sep-cal" class="grid grid-cols-7 gap-1"></div>
+        <div class="mt-3 flex items-center gap-4 text-xs text-gray-400">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#fef3c7"></span> 未打卡</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded" style="background:#f59e0b"></span> 已打卡</span>
+        </div>
+    </div>
+    <div class="bg-blue-50 rounded-xl p-3">
+        <p class="text-xs text-blue-700">💡 <b>学习计划</b><br>• 8月1日-8月21日：计价61集（每天3集）<br>• 8月1日-8月30日：计量59集（每天2集）<br>• 每天共5集，8月看完<br>• 9月起：每天刷真题+整理错题</p>
+    </div>
+</div>
+
+</main>
+
+<nav class="tab-bar bg-white border-t border-gray-100 fixed bottom-0 left-0 right-0 z-20">
+    <div class="flex justify-around items-center h-16 max-w-lg mx-auto">
+        <button class="tab-item active flex flex-col items-center gap-0.5 px-3 py-1" data-page="today"><span class="text-xl">📋</span><span class="text-[10px] font-medium">今日</span></button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-3 py-1" data-page="progress"><span class="text-xl">📈</span><span class="text-[10px] font-medium">进度</span></button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-3 py-1" data-page="calendar"><span class="text-xl">📅</span><span class="text-[10px] font-medium">日历</span></button>
+    </div>
+</nav>
+
+<script>
+const S={jijie:'zao_jijie',jiliang:'zao_jiliang',extra:'zao_extra',lastDate:'zao_lastdate',history:'zao_history',sepPractice:'zao_sep_practice'};
+function get(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+const today=new Date();
+today.setHours(0,0,0,0);
+const examDate=new Date('2026-10-17');
+examDate.setHours(0,0,0,0);
+const diff=Math.ceil((examDate-today)/(1000*60*60*24));
+document.getElementById('today-date').textContent=today.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+document.getElementById('countdown').textContent=diff+'天';
+
+const rewards=[
+    '今天的努力，是考场上最坚实的底气！💪',
+    '每一集视频都在缩短你和证书的距离！📖',
+    '坚持住，造价师不是梦，是计划中的确定！🎯',
+    '今天的5集视频，就是明天的5分考分！⭐',
+    '别人在刷手机，你在刷视频，这就是差距！🔥',
+    '8月看完视频，9月刷题，10月拿证！📊',
+    '每天进步一点点，120集终将被你拿下！🏆',
+    '你不是在备考，你是在给自己的未来加码！💎',
+    '今天的自律，是明天考场上的自信！✨',
+    '计价计量双管齐下，证书就在前方！🚀'
+];
+
+// ====== 今日计划 ======
+function getTodayPlan(){
+    const aug1=new Date(2026,7,1);
+    aug1.setHours(0,0,0,0);
+    if(today<aug1) return {phase:'准备阶段',jijie:[],jiliang:[],isPrep:true};
+    const dayDiff=Math.floor((today-aug1)/(1000*60*60*24));
+    if(dayDiff<31){
+        const jjStart=dayDiff*3, jlStart=dayDiff*2;
+        const jijie=[],jiliang=[];
+        for(let i=0;i<3;i++) if(jjStart+i+1<=61) jijie.push(jjStart+i+1);
+        for(let i=0;i<2;i++) if(jlStart+i+1<=59) jiliang.push(jlStart+i+1);
+        return {phase:'📺 8月视频阶段 第'+(dayDiff+1)+'天',jijie,jiliang};
+    }
+    return {phase:'✏️ 9月刷题阶段',jijie:[],jiliang:[],isPractice:true};
+}
+
+function renderToday(){
+    const plan=getTodayPlan();
+    document.getElementById('today-phase').textContent=plan.phase;
+    const container=document.getElementById('today-videos');
+    
+    if(plan.isPrep){
+        const daysLeft=Math.ceil((new Date(2026,7,1)-today)/(1000*60*60*24));
+        container.innerHTML='<div class="text-center py-6"><p class="text-4xl mb-2">📚</p><p class="text-sm text-gray-500">8月1日正式开始</p><p class="text-lg font-bold" style="color:#1e3a5f">还有 '+daysLeft+' 天</p><p class="text-xs text-gray-400 mt-1">提前看看教材，做好心理准备！</p></div>';
+        renderExtra();
+        updateProgress();
+        return;
+    }
+    
+    if(plan.isPractice){
+        container.innerHTML='<div class="space-y-2">'+
+            '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100" onclick="toggleExtra(\'practice1\')">'+
+                '<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0" id="extra-practice1-check"></div>'+
+                '<span class="text-lg mr-1">📝</span>'+
+                '<span class="vt text-sm text-gray-700">刷真题 1套</span></div>'+
+            '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100" onclick="toggleExtra(\'practice2\')">'+
+                '<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0" id="extra-practice2-check"></div>'+
+                '<span class="text-lg mr-1">📕</span>'+
+                '<span class="vt text-sm text-gray-700">整理错题本（5题）</span></div>'+
+            '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100" onclick="toggleExtra(\'practice3\')">'+
+                '<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0" id="extra-practice3-check"></div>'+
+                '<span class="text-lg mr-1">🔍</span>'+
+                '<span class="vt text-sm text-gray-700">复习薄弱章节</span></div>'+
+        '</div>';
+        // 检查刷题完成状态
+        checkPracticeComplete();
+        renderExtra();
+        updateProgress();
+        return;
+    }
+    
+    let html='';
+    if(plan.jijie.length>0){
+        html+='<p class="text-xs text-blue-500 font-medium mb-2">🔵 计价</p>';
+        plan.jijie.forEach(n=>{
+            const done=(get(S.jijie)||[]).includes(n);
+            html+='<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleVideo(\'jijie\','+n+')">'+
+                '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-blue-500 border-blue-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+                '<span class="text-xs px-2 py-0.5 rounded-lg font-medium bg-blue-100 text-blue-700">计价</span>'+
+                '<span class="vt text-sm text-gray-700 flex-1">第'+n+'集</span></div>';
+        });
+    }
+    if(plan.jiliang.length>0){
+        html+='<p class="text-xs text-orange-500 font-medium mb-2 mt-3">🟠 计量</p>';
+        plan.jiliang.forEach(n=>{
+            const done=(get(S.jiliang)||[]).includes(n);
+            html+='<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleVideo(\'jiliang\','+n+')">'+
+                '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-orange-500 border-orange-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+                '<span class="text-xs px-2 py-0.5 rounded-lg font-medium bg-orange-100 text-orange-700">计量</span>'+
+                '<span class="vt text-sm text-gray-700 flex-1">第'+n+'集</span></div>';
+        });
+    }
+    container.innerHTML=html;
+    
+    // 检查今日视频是否全部完成
+    const allDone=[...plan.jijie,...plan.jiliang].every(n=>{
+        return plan.jijie.includes(n)?(get(S.jijie)||[]).includes(n):(get(S.jiliang)||[]).includes(n);
+    });
+    const rewardSection=document.getElementById('reward-section');
+    if(allDone && plan.jijie.length+plan.jiliang.length>0){
+        rewardSection.classList.remove('hidden');
+        document.getElementById('reward-text').textContent=rewards[Math.floor(Math.random()*rewards.length)];
+    } else {
+        rewardSection.classList.add('hidden');
+    }
+    
+    renderExtra();
+    updateProgress();
+}
+
+function toggleVideo(type,n){
+    const key=type==='jijie'?S.jijie:S.jiliang;
+    const done=get(key)||[];
+    const idx=done.indexOf(n);
+    if(idx>=0) done.splice(idx,1);
+    else done.push(n);
+    set(key,done);
+    saveHistory();
+    renderToday();
+}
+
+// ====== 额外打卡 ======
+function renderExtra(){
+    const extra=get(S.extra)||{};
+    const tasks=[
+        {id:'read',label:'看教材/讲义 30分钟',icon:'📖'},
+        {id:'note',label:'整理笔记',icon:'✏️'},
+        {id:'review',label:'复习昨天内容',icon:'🔄'}
+    ];
+    const container=document.getElementById('extra-tasks');
+    if(!container) return;
+    container.innerHTML=tasks.map(t=>{
+        const done=extra[t.id];
+        return '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleExtra(\''+t.id+'\')">'+
+            '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-green-500 border-green-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+            '<span class="text-lg">'+t.icon+'</span>'+
+            '<span class="vt text-sm text-gray-700 flex-1">'+t.label+'</span></div>';
+    }).join('');
+    
+    // practice阶段额外项的状态
+    if(getTodayPlan().isPractice){
+        const pTasks=['practice1','practice2','practice3'];
+        pTasks.forEach(id=>{
+            const el=document.getElementById('extra-'+id+'-check');
+            if(el){
+                const done=extra[id];
+                el.className='w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-green-500 border-green-500':'border-gray-300');
+                if(done) el.innerHTML='<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+                else el.innerHTML='';
+            }
+        });
+    }
+}
+
+function toggleExtra(id){
+    const extra=get(S.extra)||{};
+    extra[id]=!extra[id];
+    set(S.extra,extra);
+    saveHistory();
+    renderToday();
+}
+
+// 刷题阶段完成检查
+function checkPracticeComplete(){
+    const extra=get(S.extra)||{};
+    const allPracticeDone=['practice1','practice2','practice3'].every(id=>extra[id]);
+    const rewardSection=document.getElementById('reward-section');
+    if(allPracticeDone){
+        rewardSection.classList.remove('hidden');
+        document.getElementById('reward-text').textContent=rewards[Math.floor(Math.random()*rewards.length)];
+    } else {
+        rewardSection.classList.add('hidden');
+    }
+}
+
+// ====== 进度 ======
+let currentPhase='jijie';
+function updateProgress(){
+    const jj=get(S.jijie)||[], jl=get(S.jiliang)||[];
+    document.getElementById('jj-progress').textContent=jj.length+'/61';
+    document.getElementById('jl-progress').textContent=jl.length+'/59';
+    document.getElementById('jj-bar').style.width=Math.round(jj.length/61*100)+'%';
+    document.getElementById('jl-bar').style.width=Math.round(jl.length/59*100)+'%';
+}
+
+function switchPhase(phase){
+    currentPhase=phase;
+    document.getElementById('btn-jijie').className='flex-1 py-2 rounded-xl text-sm font-medium transition-all '+(phase==='jijie'?'text-white':'bg-gray-100 text-gray-500');
+    document.getElementById('btn-jijie').style.background=phase==='jijie'?'#3b82f6':'';
+    document.getElementById('btn-jiliang').className='flex-1 py-2 rounded-xl text-sm font-medium transition-all '+(phase==='jiliang'?'text-white':'bg-gray-100 text-gray-500');
+    document.getElementById('btn-jiliang').style.background=phase==='jiliang'?'#f59e0b':'';
+    renderVideoList();
+}
+
+function renderVideoList(){
+    const key=currentPhase==='jijie'?S.jijie:S.jiliang;
+    const total=currentPhase==='jijie'?61:59;
+    const color=currentPhase==='jijie'?'blue':'orange';
+    const done=get(key)||[];
+    
+    document.getElementById('p-watched').textContent=done.length;
+    document.getElementById('p-remaining').textContent=total-done.length;
+    document.getElementById('p-percent').textContent=Math.round(done.length/total*100)+'%';
+    
+    const container=document.getElementById('video-list');
+    let html='';
+    for(let i=1;i<=total;i++){
+        const isDone=done.includes(i);
+        html+='<div class="video-card flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 '+(isDone?'done':'')+'" onclick="toggleVideo(\''+currentPhase+'\','+i+')">'+
+            '<div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 '+(isDone?'bg-'+color+'-500 border-'+color+'-500':'border-gray-300')+'">'+(isDone?'<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+            '<span class="text-xs text-gray-400 w-8">#'+i+'</span>'+
+            '<span class="vt text-sm text-gray-700">第'+i+'集</span>'+
+        '</div>';
+    }
+    container.innerHTML=html;
+}
+
+// ====== 日历 ======
+function getDayStatus(augDay){
+    // augDay: 1-31 (8月第几天)
+    const dayIndex=augDay-1; // 0-based
+    const jjDone=get(S.jijie)||[];
+    const jlDone=get(S.jiliang)||[];
+    
+    // 该天预期的视频
+    const jjStart=dayIndex*3, jlStart=dayIndex*2;
+    const jjExpected=[],jlExpected=[];
+    for(let i=0;i<3;i++) if(jjStart+i+1<=61) jjExpected.push(jjStart+i+1);
+    for(let i=0;i<2;i++) if(jlStart+i+1<=59) jlExpected.push(jlStart+i+1);
+    
+    const jjComplete=jjExpected.every(n=>jjDone.includes(n));
+    const jlComplete=jlExpected.every(n=>jlDone.includes(n));
+    const jjPartial=jjExpected.some(n=>jjDone.includes(n));
+    const jlPartial=jlExpected.some(n=>jlDone.includes(n));
+    const hasAnyTask=jjExpected.length>0||jlExpected.length>0;
+    
+    if(!hasAnyTask) return 'empty';
+    if(jjComplete&&jlComplete) return 'all';
+    if(jjPartial||jlPartial) return 'partial';
+    return 'none';
+}
+
+function renderCalendar(){
+    const jjDone=get(S.jijie)||[];
+    const jlDone=get(S.jiliang)||[];
+    
+    // 8月日历
+    const aug1=new Date(2026,7,1);
+    aug1.setHours(0,0,0,0);
+    const augOffset=(aug1.getDay()+6)%7; // 周一=0
+    
+    let augHtml='';
+    const weekDays=['一','二','三','四','五','六','日'];
+    weekDays.forEach(d=>{augHtml+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
+    for(let i=0;i<augOffset;i++) augHtml+='<div></div>';
+    
+    for(let d=1;d<=31;d++){
+        const dateObj=new Date(2026,7,d);
+        const isFuture=dateObj>today;
+        const dayIndex=d-1;
+        const jjStart=dayIndex*3, jlStart=dayIndex*2;
+        const jjExpected=[],jlExpected=[];
+        for(let i=0;i<3;i++) if(jjStart+i+1<=61) jjExpected.push(jjStart+i+1);
+        for(let i=0;i<2;i++) if(jlStart+i+1<=59) jlExpected.push(jlStart+i+1);
+        
+        const jjComplete=jjExpected.length>0&&jjExpected.every(n=>jjDone.includes(n));
+        const jlComplete=jlExpected.length>0&&jlExpected.every(n=>jlDone.includes(n));
+        const jjPartial=jjExpected.some(n=>jjDone.includes(n));
+        const jlPartial=jlExpected.some(n=>jlDone.includes(n));
+        const hasTask=jjExpected.length>0||jlExpected.length>0;
+        
+        let bgClass='bg-gray-50 text-gray-300';
+        let tooltip='';
+        if(isFuture&&hasTask){
+            bgClass='bg-white border border-gray-100 text-gray-300';
+            tooltip='未到';
+        }else if(!hasTask){
+            bgClass='bg-gray-50 text-gray-300';
+        }else if(jjComplete&&jlComplete){
+            bgClass='text-white font-bold';
+            tooltip='全部完成 ✓';
+        }else if(jjPartial||jlPartial){
+            bgClass='text-blue-800 font-medium';
+            tooltip='部分完成';
+        }else if(!isFuture){
+            bgClass='text-gray-400';
+            tooltip='未完成';
+        }
+        
+        let style='';
+        if(jjComplete&&jlComplete) style='background:#3b82f6';
+        else if(jjPartial||jlPartial) style='background:#bfdbfe';
+        else if(!isFuture&&hasTask) style='background:#f1f5f9';
+        
+        augHtml+='<div class="text-center rounded-lg py-2 text-xs cursor-default relative" style="'+style+'" title="'+tooltip+'">'+
+            '<span class="'+(bgClass.includes('text-')?bgClass.match(/text-\S+/)?.[0]||'':'')+'">'+d+'</span>'+
+        '</div>';
+    }
+    document.getElementById('aug-cal').innerHTML=augHtml;
+    
+    // 9月日历
+    const sep1=new Date(2026,8,1);
+    sep1.setHours(0,0,0,0);
+    const sepOffset=(sep1.getDay()+6)%7;
+    const sepDays=30;
+    const sepPractice=get(S.sepPractice)||{};
+    
+    let sepHtml='';
+    weekDays.forEach(d=>{sepHtml+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
+    for(let i=0;i<sepOffset;i++) sepHtml+='<div></div>';
+    
+    for(let d=1;d<=sepDays;d++){
+        const dateObj=new Date(2026,8,d);
+        const isFuture=dateObj>today;
+        const dateKey='2026-9-'+d;
+        const done=sepPractice[dateKey];
+        
+        let bgClass='bg-gray-50 text-gray-300';
+        let tooltip='';
+        if(isFuture){
+            bgClass='bg-white border border-gray-100 text-gray-300';
+        }else if(done){
+            bgClass='text-white font-bold';
+            tooltip='已打卡 ✓';
+        }else{
+            bgClass='text-gray-400';
+            tooltip='未打卡';
+        }
+        
+        let style='';
+        if(done) style='background:#f59e0b';
+        else if(!isFuture) style='background:#f1f5f9';
+        
+        sepHtml+='<div class="text-center rounded-lg py-2 text-xs" style="'+style+'">'+d+'</div>';
+    }
+    document.getElementById('sep-cal').innerHTML=sepHtml;
+}
+
+// ====== 历史记录 ======
+function saveHistory(){
+    const dateStr=today.toISOString().split('T')[0];
+    const history=get(S.history)||{};
+    history[dateStr]={
+        jijie:get(S.jijie)||[],
+        jiliang:get(S.jiliang)||[],
+        extra:get(S.extra)||{},
+        sepPractice:get(S.sepPractice)||{}
+    };
+    set(S.history,history);
+    set(S.lastDate,dateStr);
+}
+
+// ====== 每日重置检查 ======
+function checkDailyReset(){
+    const lastDate=get(S.lastDate);
+    const dateStr=today.toISOString().split('T')[0];
+    if(lastDate!==dateStr){
+        // 先保存昨天的历史
+        if(lastDate){
+            const history=get(S.history)||{};
+            history[lastDate]={
+                jijie:get(S.jijie)||[],
+                jiliang:get(S.jiliang)||[],
+                extra:get(S.extra)||{},
+                sepPractice:get(S.sepPractice)||{}
+            };
+            set(S.history,history);
+        }
+        // 重置每日数据（保留视频进度！）
+        set(S.extra,{});
+        set(S.lastDate,dateStr);
+        // 如果是9月，自动记录当日刷题打卡
+        if(getTodayPlan().isPractice){
+            const sepPractice=get(S.sepPractice)||{};
+            // 不自动标记，保留用户手动打卡
+        }
+    }
+}
+
+// ====== Tab 切换 ======
+document.querySelectorAll('.tab-item').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const page=btn.dataset.page;
+        document.querySelectorAll('.tab-item').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+        document.getElementById('page-'+page).classList.add('active');
+        if(page==='progress') renderVideoList();
+        if(page==='calendar') renderCalendar();
+    });
+});
+
+// ====== 初始化 ======
+function init(){
+    checkDailyReset();
+    renderToday();
+    updateProgress();
+    renderCalendar();
+    // 设置今日标题
+    const plan=getTodayPlan();
+    document.getElementById('today-title').textContent=plan.isPrep?'📚 等待开始':'📊 今日计划';
+}
+
+init();
+</script>
+
+</body>
+</html>
