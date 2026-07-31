@@ -19,13 +19,9 @@
         .tab-item{color:#94a3b8;transition:all .2s}
         .tab-item.active{color:#1e3a5f}
         .page{display:none}.page.active{display:block}
-        .video-card{transition:all .2s}.video-card:active{transform:scale(.98)}
-        .video-card.done{opacity:.45}.video-card.done .vt{text-decoration:line-through}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-        .fade-in{animation:fadeIn .3s ease-out}
+        .video-card{transition:all .15s}.video-card:active{transform:scale(.97)}
         @keyframes pop{0%{transform:scale(.5);opacity:0}50%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
         .reward-pop{animation:pop .4s ease-out}
-        .review-badge{font-size:10px;padding:1px 6px;border-radius:10px;margin-left:4px}
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -43,56 +39,53 @@
 
 <main class="flex-1 overflow-y-auto pb-20" id="main-content">
 
-<!-- ====== 今日 ====== -->
-<div id="page-today" class="page active p-4">
+<!-- ====== 打卡 ====== -->
+<div id="page-checkin" class="page active p-4">
     <div class="grid grid-cols-2 gap-3 mb-4">
         <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
             <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full" style="background:#3b82f6"></span><span class="text-xs text-gray-500">计价</span></div>
-            <p class="text-xl font-bold text-gray-800" id="jj-progress">0/61</p>
+            <p class="text-xl font-bold text-gray-800"><span id="jj-count">0</span>/61</p>
             <div class="w-full bg-gray-100 h-1.5 rounded-full mt-2"><div id="jj-bar" class="h-1.5 rounded-full transition-all" style="background:#3b82f6;width:0%"></div></div>
         </div>
         <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
             <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full" style="background:#f59e0b"></span><span class="text-xs text-gray-500">计量</span></div>
-            <p class="text-xl font-bold text-gray-800" id="jl-progress">0/59</p>
+            <p class="text-xl font-bold text-gray-800"><span id="jl-count">0</span>/59</p>
             <div class="w-full bg-gray-100 h-1.5 rounded-full mt-2"><div id="jl-bar" class="h-1.5 rounded-full transition-all" style="background:#f59e0b;width:0%"></div></div>
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
-        <div class="flex items-center justify-between mb-3">
-            <h3 class="font-bold text-gray-800 text-sm">📊 今日计划</h3>
-            <span class="text-xs text-gray-400" id="today-phase"></span>
-        </div>
-        <div id="today-videos" class="space-y-2"></div>
+    <div class="bg-blue-50 rounded-xl p-3 mb-3">
+        <p class="text-xs text-blue-700" id="phase-info">💡 点击下方视频打卡，多听多打、提前补卡都行</p>
     </div>
 
     <div id="reward-section" class="hidden mb-3">
         <div class="rounded-2xl p-5 text-center text-white reward-pop" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6)">
             <p class="text-3xl mb-2">🎉</p>
-            <p class="text-base font-bold mb-1">今日任务全部完成！</p>
+            <p class="text-base font-bold mb-1" id="reward-title">打卡达成！</p>
             <p class="text-sm opacity-80" id="reward-text"></p>
         </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-gray-800 text-sm">🔵 计价（61集）</h3>
+            <span class="text-xs text-gray-400" id="jj-summary">0/61</span>
+        </div>
+        <div id="jj-list" class="space-y-1.5"></div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm mb-3">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-gray-800 text-sm">🟠 计量（59集）</h3>
+            <span class="text-xs text-gray-400" id="jl-summary">0/59</span>
+        </div>
+        <div id="jl-list" class="space-y-1.5"></div>
     </div>
 
     <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
         <h3 class="font-bold text-gray-800 text-sm mb-3">📝 额外打卡</h3>
         <div class="space-y-2" id="extra-tasks"></div>
     </div>
-</div>
-
-<!-- ====== 进度 ====== -->
-<div id="page-progress" class="page p-4">
-    <h2 class="text-lg font-bold text-gray-800 mb-4">📈 学习进度</h2>
-    <div class="flex gap-2 mb-4">
-        <button onclick="switchPhase('jijie')" id="btn-jijie" class="flex-1 py-2 rounded-xl text-sm font-medium transition-all" style="background:#3b82f6;color:#fff">计价 61集</button>
-        <button onclick="switchPhase('jiliang')" id="btn-jiliang" class="flex-1 py-2 rounded-xl text-sm font-medium transition-all bg-gray-100 text-gray-500">计量 59集</button>
-    </div>
-    <div class="grid grid-cols-3 gap-2 mb-4">
-        <div class="bg-white rounded-xl p-3 border border-gray-100 text-center"><p class="text-lg font-bold text-gray-800" id="p-watched">0</p><p class="text-xs text-gray-400">已看</p></div>
-        <div class="bg-white rounded-xl p-3 border border-gray-100 text-center"><p class="text-lg font-bold text-gray-800" id="p-remaining">0</p><p class="text-xs text-gray-400">剩余</p></div>
-        <div class="bg-white rounded-xl p-3 border border-gray-100 text-center"><p class="text-lg font-bold" style="color:#1e3a5f" id="p-percent">0%</p><p class="text-xs text-gray-400">完成率</p></div>
-    </div>
-    <div id="video-list" class="space-y-1.5"></div>
 </div>
 
 <!-- ====== 日历 ====== -->
@@ -124,7 +117,7 @@
         </div>
     </div>
     <div class="bg-blue-50 rounded-xl p-3">
-        <p class="text-xs text-blue-700">💡 <b>学习计划</b><br>• 7/30-8/20（22天）：首刷120集视频，每天分配5~6集<br>• 8/21-8/31（11天）：反复复习，找重点<br>• 9月起：正式刷真题+整理错题<br>• 10月17日考试</p>
+        <p class="text-xs text-blue-700">💡 <b>学习计划</b><br>• 7/30-8/20（22天）：首刷120集视频<br>• 8/21-8/31（11天）：反复复习，找重点<br>• 9月起：正式刷真题+整理错题<br>• 10月17日考试</p>
     </div>
 </div>
 
@@ -132,21 +125,18 @@
 
 <nav class="tab-bar bg-white border-t border-gray-100 fixed bottom-0 left-0 right-0 z-20">
     <div class="flex justify-around items-center h-16 max-w-lg mx-auto">
-        <button class="tab-item active flex flex-col items-center gap-0.5 px-3 py-1" data-page="today"><span class="text-xl">📋</span><span class="text-[10px] font-medium">今日</span></button>
-        <button class="tab-item flex flex-col items-center gap-0.5 px-3 py-1" data-page="progress"><span class="text-xl">📈</span><span class="text-[10px] font-medium">进度</span></button>
-        <button class="tab-item flex flex-col items-center gap-0.5 px-3 py-1" data-page="calendar"><span class="text-xl">📅</span><span class="text-[10px] font-medium">日历</span></button>
+        <button class="tab-item active flex flex-col items-center gap-0.5 px-6 py-1" data-page="checkin"><span class="text-xl">✅</span><span class="text-[10px] font-medium">打卡</span></button>
+        <button class="tab-item flex flex-col items-center gap-0.5 px-6 py-1" data-page="calendar"><span class="text-xl">📅</span><span class="text-[10px] font-medium">日历</span></button>
     </div>
 </nav>
 
 <script>
 const S={
-    jijie:'zao_jijie',        // 计价看过哪些集（数组，每集可出现多次=看过几次）
-    jiliang:'zao_jiliang',    // 计量看过哪些集
-    extra:'zao_extra',        // 每日额外打卡
-    lastDate:'zao_lastdate',  // 上次访问日期
-    history:'zao_history',    // 历史记录
-    sepPractice:'zao_sep_practice', // 9月刷题打卡
-    reviewDays:'zao_review_days'    // 复习阶段打卡的日期
+    jijie:'zao_jijie_v2',      // 计价已打卡集数 [1,2,3...]
+    jiliang:'zao_jiliang_v2',  // 计量已打卡集数
+    extra:'zao_extra_v2',      // 额外打卡
+    reviewDays:'zao_review_v2',// 复习打卡日期
+    sepPractice:'zao_sep_v2'   // 9月刷题打卡
 };
 function get(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
 function set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -159,388 +149,227 @@ const diff=Math.ceil((examDate-today)/(1000*60*60*24));
 document.getElementById('today-date').textContent=today.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 document.getElementById('countdown').textContent=diff+'天';
 
-const START_DATE=new Date(2026,6,30); // 7月30日开始
-START_DATE.setHours(0,0,0,0);
-const REVIEW_START=new Date(2026,7,21); // 8月21日复习开始
-REVIEW_START.setHours(0,0,0,0);
-const PRACTICE_START=new Date(2026,8,1); // 9月1日刷题
-PRACTICE_START.setHours(0,0,0,0);
-
-const TOTAL_JJ=61, TOTAL_JL=59, TOTAL_VIDEOS=TOTAL_JJ+TOTAL_JL; // 120集
-const FIRST_PASS_DAYS=22; // 7/30~8/20 共22天
+const TOTAL_JJ=61, TOTAL_JL=59;
+const START_DATE=new Date(2026,6,30); START_DATE.setHours(0,0,0,0);
+const REVIEW_START=new Date(2026,7,21); REVIEW_START.setHours(0,0,0,0);
+const PRACTICE_START=new Date(2026,8,1); PRACTICE_START.setHours(0,0,0,0);
 
 const rewards=[
-    '今天的努力，是考场上最坚实的底气！💪',
-    '每一集视频都在缩短你和证书的距离！📖',
-    '坚持住，造价师不是梦，是计划中的确定！🎯',
-    '今天的视频，就是明天的考分！⭐',
-    '别人在刷手机，你在刷视频，这就是差距！🔥',
-    '22天首刷，11天复习，9月刷题，10月拿证！📊',
-    '每天进步一点点，120集终将被你拿下！🏆',
-    '你不是在备考，你是在给自己的未来加码！💎',
-    '今天的自律，是明天考场上的自信！✨',
-    '计价计量双管齐下，证书就在前方！🚀'
+    '今天的努力，是考场上最坚实的底气！💪','每一集视频都在缩短你和证书的距离！📖',
+    '坚持住，造价师不是梦，是计划中的确定！🎯','今天的视频，就是明天的考分！⭐',
+    '别人在刷手机，你在刷视频，这就是差距！🔥','22天首刷，11天复习，9月刷题，10月拿证！📊',
+    '每天进步一点点，120集终将被你拿下！🏆','你不是在备考，你是在给自己的未来加码！💎',
+    '今天的自律，是明天考场上的自信！✨','计价计量双管齐下，证书就在前方！🚀'
 ];
 
-// ====== 阶段判断 ======
 function getPhase(){
-    if(today<START_DATE) return {type:'prep', label:'等待开始'};
-    if(today<REVIEW_START) return {type:'firstPass', label:'首刷阶段'};
-    if(today<PRACTICE_START) return {type:'review', label:'重点复习'};
-    return {type:'practice', label:'刷题阶段'};
+    if(today<START_DATE) return 'prep';
+    if(today<REVIEW_START) return 'firstPass';
+    if(today<PRACTICE_START) return 'review';
+    return 'practice';
 }
 
-// ====== 今日计划 ======
-function getTodayPlan(){
+// ====== 打卡页 ======
+function renderCheckin(){
+    const jjDone=get(S.jijie)||[];
+    const jlDone=get(S.jiliang)||[];
     const phase=getPhase();
     
-    if(phase.type==='prep'){
-        return {phase:phase.label, jijie:[], jiliang:[], isPrep:true};
+    // 阶段提示
+    let phaseText='';
+    if(phase==='prep') phaseText='💡 7月30日正式开始，可提前打卡';
+    else if(phase==='firstPass'){
+        const dayDiff=Math.floor((today-START_DATE)/(1000*60*60*24))+1;
+        phaseText='💡 首刷阶段 第'+dayDiff+'天/22天 · 建议每天5~6集，多点少点都行';
     }
-    
-    if(phase.type==='firstPass'){
-        // 22天内均分120集：每天5~6集（3计价+2~3计量，交替）
-        const dayDiff=Math.floor((today-START_DATE)/(1000*60*60*24));
-        const dayIndex=dayDiff; // 0-based，第1天=0
-        
-        // 计价61集 / 22天 ≈ 每天2.77集 → 3集/天，最后一天1集
-        // 计量59集 / 22天 ≈ 每天2.68集 → 3集/天，后期减为2集
-        const jjPerDay=3, jlPerDay=3;
-        const jjStart=dayIndex*jjPerDay;
-        const jlStart=dayIndex*jlPerDay;
-        
-        const jijie=[], jiliang=[];
-        for(let i=0;i<jjPerDay;i++) if(jjStart+i+1<=TOTAL_JJ) jijie.push(jjStart+i+1);
-        for(let i=0;i<jlPerDay;i++) if(jlStart+i+1<=TOTAL_JL) jiliang.push(jlStart+i+1);
-        
-        const videosToday=jijie.length+jiliang.length;
-        return {
-            phase:'📺 首刷 · 第'+(dayIndex+1)+'天/22天 · '+videosToday+'集',
-            jijie, jiliang,
-            isFirstPass:true
-        };
+    else if(phase==='review'){
+        const dayDiff=Math.floor((today-REVIEW_START)/(1000*60*60*24))+1;
+        phaseText='💡 复习阶段 第'+dayDiff+'天/11天 · 反复看，找重点';
     }
-    
-    if(phase.type==='review'){
-        // 复习阶段：列出全部120集，用户自己选要复习哪些
-        const dayDiff=Math.floor((today-REVIEW_START)/(1000*60*60*24));
-        return {
-            phase:'🔁 复习 · 第'+(dayDiff+1)+'天/11天',
-            jijie:[], jiliang:[],
-            isReview:true
-        };
+    else{
+        const dayDiff=Math.floor((today-PRACTICE_START)/(1000*60*60*24))+1;
+        phaseText='💡 刷题阶段 第'+dayDiff+'天 · 刷真题+整理错题';
     }
+    document.getElementById('phase-info').textContent=phaseText;
     
-    // 刷题阶段
-    const dayDiff=Math.floor((today-PRACTICE_START)/(1000*60*60*24));
-    return {
-        phase:'✏️ 刷题 · 第'+(dayDiff+1)+'天',
-        jijie:[], jiliang:[],
-        isPractice:true
-    };
-}
-
-function renderToday(){
-    const plan=getTodayPlan();
-    document.getElementById('today-phase').textContent=plan.phase;
-    const container=document.getElementById('today-videos');
+    // 进度
+    document.getElementById('jj-count').textContent=jjDone.length;
+    document.getElementById('jl-count').textContent=jlDone.length;
+    document.getElementById('jj-summary').textContent=jjDone.length+'/61';
+    document.getElementById('jl-summary').textContent=jlDone.length+'/59';
+    document.getElementById('jj-bar').style.width=Math.round(jjDone.length/61*100)+'%';
+    document.getElementById('jl-bar').style.width=Math.round(jlDone.length/59*100)+'%';
     
-    if(plan.isPrep){
-        container.innerHTML='<div class="text-center py-6"><p class="text-4xl mb-2">📚</p><p class="text-sm text-gray-500">7月30日正式开始</p><p class="text-lg font-bold" style="color:#1e3a5f">还有 '+Math.ceil((START_DATE-today)/(1000*60*60*24))+' 天</p><p class="text-xs text-gray-400 mt-1">提前看看教材，做好心理准备！</p></div>';
-        renderExtra();
-        updateProgress();
-        return;
-    }
-    
-    if(plan.isReview){
-        // 复习阶段：显示全部120集列表，显示每集看过几次，可反复打卡
-        const jjCounts=get(S.jijie)||[];
-        const jlCounts=get(S.jiliang)||[];
-        // 统计每集看过次数
-        const jjMap={}, jlMap={};
-        jjCounts.forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
-        jlCounts.forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
-        
-        let html='<p class="text-xs text-gray-400 mb-2">🎯 点击打卡复习，可反复复习多次</p>';
-        html+='<p class="text-xs text-blue-500 font-medium mb-2">🔵 计价（61集）</p>';
-        for(let i=1;i<=TOTAL_JJ;i++){
-            const cnt=jjMap[i]||0;
-            html+=renderVideoRow('jijie',i,cnt,'blue');
-        }
-        html+='<p class="text-xs text-orange-500 font-medium mb-2 mt-3">🟠 计量（59集）</p>';
-        for(let i=1;i<=TOTAL_JL;i++){
-            const cnt=jlMap[i]||0;
-            html+=renderVideoRow('jiliang',i,cnt,'orange');
-        }
-        container.innerHTML=html;
-        renderExtra();
-        updateProgress();
-        return;
-    }
-    
-    if(plan.isPractice){
-        container.innerHTML='<div class="space-y-2">'+
-            '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100" onclick="toggleExtra(\'practice1\')">'+
-                '<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0" id="extra-practice1-check"></div>'+
-                '<span class="text-lg mr-1">📝</span>'+
-                '<span class="vt text-sm text-gray-700">刷真题 1套</span></div>'+
-            '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100" onclick="toggleExtra(\'practice2\')">'+
-                '<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0" id="extra-practice2-check"></div>'+
-                '<span class="text-lg mr-1">📕</span>'+
-                '<span class="vt text-sm text-gray-700">整理错题本（5题）</span></div>'+
-            '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100" onclick="toggleExtra(\'practice3\')">'+
-                '<div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center shrink-0" id="extra-practice3-check"></div>'+
-                '<span class="text-lg mr-1">🔍</span>'+
-                '<span class="vt text-sm text-gray-700">复习薄弱章节</span></div>'+
+    // 计价列表
+    let jjHtml='';
+    for(let i=1;i<=TOTAL_JJ;i++){
+        const done=jjDone.includes(i);
+        jjHtml+='<div class="video-card flex items-center gap-3 p-2.5 rounded-xl border '+(done?'border-blue-300 bg-blue-50':'border-gray-100')+'" onclick="toggleVideo(\'jijie\','+i+')">'+
+            '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-blue-500 border-blue-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+            '<span class="text-xs text-gray-400 w-7">#'+i+'</span>'+
+            '<span class="text-sm '+(done?'text-blue-700 line-through':'text-gray-700')+'">第'+i+'集</span>'+
         '</div>';
-        checkPracticeComplete();
-        renderExtra();
-        updateProgress();
-        return;
     }
+    document.getElementById('jj-list').innerHTML=jjHtml;
     
-    // 首刷阶段：显示当天分配的视频
-    let html='';
-    const jjCounts=get(S.jijie)||[];
-    const jlCounts=get(S.jiliang)||[];
-    const jjMap={}, jlMap={};
-    jjCounts.forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
-    jlCounts.forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
-    
-    if(plan.jijie.length>0){
-        html+='<p class="text-xs text-blue-500 font-medium mb-2">🔵 计价</p>';
-        plan.jijie.forEach(n=>{
-            const cnt=jjMap[n]||0;
-            html+=renderVideoRow('jijie',n,cnt,'blue');
-        });
+    // 计量列表
+    let jlHtml='';
+    for(let i=1;i<=TOTAL_JL;i++){
+        const done=jlDone.includes(i);
+        jlHtml+='<div class="video-card flex items-center gap-3 p-2.5 rounded-xl border '+(done?'border-orange-300 bg-orange-50':'border-gray-100')+'" onclick="toggleVideo(\'jiliang\','+i+')">'+
+            '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-orange-500 border-orange-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
+            '<span class="text-xs text-gray-400 w-7">#'+i+'</span>'+
+            '<span class="text-sm '+(done?'text-orange-700 line-through':'text-gray-700')+'">第'+i+'集</span>'+
+        '</div>';
     }
-    if(plan.jiliang.length>0){
-        html+='<p class="text-xs text-orange-500 font-medium mb-2 mt-3">🟠 计量</p>';
-        plan.jiliang.forEach(n=>{
-            const cnt=jlMap[n]||0;
-            html+=renderVideoRow('jiliang',n,cnt,'orange');
-        });
-    }
-    container.innerHTML=html;
-    
-    // 检查今日视频是否全部完成（至少看过1次）
-    const allDone=[...plan.jijie,...plan.jiliang].every(n=>{
-        const map=plan.jijie.includes(n)?jjMap:jlMap;
-        return (map[n]||0)>=1;
-    });
-    const rewardSection=document.getElementById('reward-section');
-    if(allDone && plan.jijie.length+plan.jiliang.length>0){
-        rewardSection.classList.remove('hidden');
-        document.getElementById('reward-text').textContent=rewards[Math.floor(Math.random()*rewards.length)];
-    } else {
-        rewardSection.classList.add('hidden');
-    }
+    document.getElementById('jl-list').innerHTML=jlHtml;
     
     renderExtra();
-    updateProgress();
-}
-
-function renderVideoRow(type,n,cnt,color){
-    const done=cnt>=1;
-    const bg=color==='blue'?'bg-blue-100 text-blue-700':'bg-orange-100 text-orange-700';
-    const label=type==='jijie'?'计价':'计量';
-    return '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleVideo(\''+type+'\','+n+')">'+
-        '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-'+color+'-500 border-'+color+'-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
-        '<span class="text-xs px-2 py-0.5 rounded-lg font-medium '+bg+'">'+label+'</span>'+
-        '<span class="vt text-sm text-gray-700 flex-1">第'+n+'集</span>'+
-        (cnt>1?'<span class="review-badge text-white" style="background:#1e3a5f">×'+cnt+'</span>':'')+
-    '</div>';
+    checkReward();
 }
 
 function toggleVideo(type,n){
     const key=type==='jijie'?S.jijie:S.jiliang;
-    const list=get(key)||[];
-    list.push(n); // 每次点击追加一次打卡，不删除
-    set(key,list);
-    saveHistory();
-    renderToday();
-}
-
-// 复习阶段标记当天已复习
-function markReviewDay(){
-    const reviewDays=get(S.reviewDays)||[];
-    const dateStr=today.toISOString().split('T')[0];
-    if(!reviewDays.includes(dateStr)){
-        reviewDays.push(dateStr);
-        set(S.reviewDays,reviewDays);
-    }
+    const done=get(key)||[];
+    const idx=done.indexOf(n);
+    if(idx>=0) done.splice(idx,1);  // 取消
+    else done.push(n);               // 打卡
+    set(key,done);
+    renderCheckin();
+    renderCalendar();
 }
 
 // ====== 额外打卡 ======
 function renderExtra(){
     const extra=get(S.extra)||{};
-    const tasks=[
+    let tasks=[
         {id:'read',label:'看教材/讲义 30分钟',icon:'📖'},
         {id:'note',label:'整理笔记',icon:'✏️'},
         {id:'review',label:'复习昨天内容',icon:'🔄'}
     ];
+    // 刷题阶段额外项
+    if(getPhase()==='practice'){
+        tasks=[
+            {id:'practice1',label:'刷真题 1套',icon:'📝'},
+            {id:'practice2',label:'整理错题本（5题）',icon:'📕'},
+            {id:'practice3',label:'复习薄弱章节',icon:'🔍'}
+        ];
+    }
     const container=document.getElementById('extra-tasks');
-    if(!container) return;
     container.innerHTML=tasks.map(t=>{
         const done=extra[t.id];
-        return '<div class="video-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 '+(done?'done':'')+'" onclick="toggleExtra(\''+t.id+'\')">'+
+        return '<div class="video-card flex items-center gap-3 p-3 rounded-xl border '+(done?'border-green-300 bg-green-50':'border-gray-100')+'" onclick="toggleExtra(\''+t.id+'\')">'+
             '<div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-green-500 border-green-500':'border-gray-300')+'">'+(done?'<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
             '<span class="text-lg">'+t.icon+'</span>'+
-            '<span class="vt text-sm text-gray-700 flex-1">'+t.label+'</span></div>';
+            '<span class="text-sm '+(done?'text-green-700 line-through':'text-gray-700')+'">'+t.label+'</span>'+
+        '</div>';
     }).join('');
-    
-    if(getTodayPlan().isPractice){
-        const pTasks=['practice1','practice2','practice3'];
-        pTasks.forEach(id=>{
-            const el=document.getElementById('extra-'+id+'-check');
-            if(el){
-                const done=extra[id];
-                el.className='w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 '+(done?'bg-green-500 border-green-500':'border-gray-300');
-                if(done) el.innerHTML='<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
-                else el.innerHTML='';
-            }
-        });
-    }
 }
 
 function toggleExtra(id){
     const extra=get(S.extra)||{};
     extra[id]=!extra[id];
     set(S.extra,extra);
-    saveHistory();
-    renderToday();
+    renderExtra();
+    checkReward();
 }
 
-function checkPracticeComplete(){
+function checkReward(){
+    const jjDone=get(S.jijie)||[];
+    const jlDone=get(S.jiliang)||[];
     const extra=get(S.extra)||{};
-    const allDone=['practice1','practice2','practice3'].every(id=>extra[id]);
-    const rewardSection=document.getElementById('reward-section');
-    if(allDone){
-        rewardSection.classList.remove('hidden');
+    
+    // 首刷/复习阶段：当天至少打卡5集 + 额外任务全完成
+    const phase=getPhase();
+    let rewarded=false;
+    if(phase==='firstPass'||phase==='review'){
+        const totalDone=jjDone.length+jlDone.length;
+        if(totalDone>=5 && extra.read && extra.note && extra.review){
+            rewarded=true;
+        }
+    }
+    if(phase==='practice'){
+        if(extra.practice1&&extra.practice2&&extra.practice3) rewarded=true;
+    }
+    
+    const section=document.getElementById('reward-section');
+    if(rewarded){
+        section.classList.remove('hidden');
         document.getElementById('reward-text').textContent=rewards[Math.floor(Math.random()*rewards.length)];
-    } else {
-        rewardSection.classList.add('hidden');
+    }else{
+        section.classList.add('hidden');
     }
-}
-
-// ====== 进度 ======
-let currentPhase='jijie';
-function updateProgress(){
-    const jjList=get(S.jijie)||[], jlList=get(S.jiliang)||[];
-    // 去重计数：看过至少1次的集数
-    const jjUnique=new Set(jjList).size;
-    const jlUnique=new Set(jlList).size;
-    document.getElementById('jj-progress').textContent=jjUnique+'/'+TOTAL_JJ;
-    document.getElementById('jl-progress').textContent=jlUnique+'/'+TOTAL_JL;
-    document.getElementById('jj-bar').style.width=Math.round(jjUnique/TOTAL_JJ*100)+'%';
-    document.getElementById('jl-bar').style.width=Math.round(jlUnique/TOTAL_JL*100)+'%';
-}
-
-function switchPhase(phase){
-    currentPhase=phase;
-    document.getElementById('btn-jijie').className='flex-1 py-2 rounded-xl text-sm font-medium transition-all '+(phase==='jijie'?'text-white':'bg-gray-100 text-gray-500');
-    document.getElementById('btn-jijie').style.background=phase==='jijie'?'#3b82f6':'';
-    document.getElementById('btn-jiliang').className='flex-1 py-2 rounded-xl text-sm font-medium transition-all '+(phase==='jiliang'?'text-white':'bg-gray-100 text-gray-500');
-    document.getElementById('btn-jiliang').style.background=phase==='jiliang'?'#f59e0b':'';
-    renderVideoList();
-}
-
-function renderVideoList(){
-    const key=currentPhase==='jijie'?S.jijie:S.jiliang;
-    const total=currentPhase==='jijie'?TOTAL_JJ:TOTAL_JL;
-    const color=currentPhase==='jijie'?'blue':'orange';
-    const list=get(key)||[];
-    // 统计每集次数
-    const cntMap={};
-    list.forEach(n=>{cntMap[n]=(cntMap[n]||0)+1});
-    const uniqueDone=Object.keys(cntMap).length;
-    
-    document.getElementById('p-watched').textContent=uniqueDone;
-    document.getElementById('p-remaining').textContent=total-uniqueDone;
-    document.getElementById('p-percent').textContent=Math.round(uniqueDone/total*100)+'%';
-    
-    const container=document.getElementById('video-list');
-    let html='';
-    for(let i=1;i<=total;i++){
-        const cnt=cntMap[i]||0;
-        const isDone=cnt>=1;
-        html+='<div class="video-card flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 '+(isDone?'done':'')+'" onclick="toggleVideo(\''+currentPhase+'\','+i+')">'+
-            '<div class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 '+(isDone?'bg-'+color+'-500 border-'+color+'-500':'border-gray-300')+'">'+(isDone?'<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>':'')+'</div>'+
-            '<span class="text-xs text-gray-400 w-8">#'+i+'</span>'+
-            '<span class="vt text-sm text-gray-700">第'+i+'集</span>'+
-            (cnt>1?'<span class="review-badge text-white ml-auto" style="background:#1e3a5f">×'+cnt+'</span>':'')+
-        '</div>';
-    }
-    container.innerHTML=html;
 }
 
 // ====== 日历 ======
 function renderCalendar(){
-    const jjList=get(S.jijie)||[], jlList=get(S.jiliang)||[];
-    const jjMap={}, jlMap={};
-    jjList.forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
-    jlList.forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
+    const jjDone=get(S.jijie)||[];
+    const jlDone=get(S.jiliang)||[];
     const reviewDays=get(S.reviewDays)||[];
     const sepPractice=get(S.sepPractice)||{};
     const weekDays=['一','二','三','四','五','六','日'];
     
-    // === 7/30-8/20 首刷阶段 ===
+    // === 首刷阶段 7/30-8/20 ===
     let html='';
     weekDays.forEach(d=>{html+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
     const startOffset=(START_DATE.getDay()+6)%7;
     for(let i=0;i<startOffset;i++) html+='<div></div>';
     
-    for(let d=0;d<FIRST_PASS_DAYS;d++){
+    const firstPassDays=22;
+    for(let d=0;d<firstPassDays;d++){
         const dateObj=new Date(START_DATE);
         dateObj.setDate(dateObj.getDate()+d);
         const isFuture=dateObj>today;
+        const isToday=dateObj.toISOString().split('T')[0]===today.toISOString().split('T')[0];
         const dayNum=dateObj.getDate();
         const dateStr=dateObj.toISOString().split('T')[0];
         
-        // 该天预期视频
-        const jjStart=d*3, jlStart=d*3;
+        // 当天预期视频
+        const dayIndex=d;
         const jjExpected=[], jlExpected=[];
-        for(let i=0;i<3;i++) if(jjStart+i+1<=TOTAL_JJ) jjExpected.push(jjStart+i+1);
-        for(let i=0;i<3;i++) if(jlStart+i+1<=TOTAL_JL) jlExpected.push(jlStart+i+1);
+        for(let i=0;i<3;i++) if(dayIndex*3+i+1<=TOTAL_JJ) jjExpected.push(dayIndex*3+i+1);
+        for(let i=0;i<3;i++) if(dayIndex*3+i+1<=TOTAL_JL) jlExpected.push(dayIndex*3+i+1);
         
-        let style='', textColor='', status='none';
+        let bg,textColor;
         if(isFuture){
-            style='background:#f8fafc;border:1px solid #e2e8f0';
-            textColor='color:#64748b';
+            bg='#f8fafc'; textColor='#64748b';
         }else{
-            const jjDone=jjExpected.length>0&&jjExpected.every(n=>(jjMap[n]||0)>=1);
-            const jlDone=jlExpected.length>0&&jlExpected.every(n=>(jlMap[n]||0)>=1);
-            const jjPartial=jjExpected.some(n=>(jjMap[n]||0)>=1);
-            const jlPartial=jlExpected.some(n=>(jlMap[n]||0)>=1);
-            if(jjDone&&jlDone){style='background:#3b82f6';textColor='color:#fff;font-weight:700';status='done';}
-            else if(jjPartial||jlPartial){style='background:#bfdbfe';textColor='color:#1e40af;font-weight:600';status='partial';}
-            else{style='background:#f1f5f9';textColor='color:#64748b';}
+            const jjComplete=jjExpected.length>0&&jjExpected.every(n=>jjDone.includes(n));
+            const jlComplete=jlExpected.length>0&&jlExpected.every(n=>jlDone.includes(n));
+            const jjPartial=jjExpected.some(n=>jjDone.includes(n));
+            const jlPartial=jlExpected.some(n=>jlDone.includes(n));
+            if(jjComplete&&jlComplete){bg='#3b82f6';textColor='#fff';}
+            else if(jjPartial||jlPartial){bg='#bfdbfe';textColor='#1e40af';}
+            else{bg='#f1f5f9';textColor='#64748b';}
         }
-        html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer hover:opacity-80" style="'+style+';'+textColor+'" onclick="showDayDetail(\'firstPass\','+d+',\''+dateStr+'\')">'+dayNum+'</div>';
+        const todayRing=isToday?'box-shadow:0 0 0 2px #dc2626;':'';
+        html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer" style="background:'+bg+';color:'+textColor+';font-weight:'+(isToday?'700':'400')+';'+todayRing+'" onclick="showDayDetail(\'firstPass\','+d+',\''+dateStr+'\')">'+dayNum+'</div>';
     }
     document.getElementById('cal-phase1').innerHTML=html;
     
-    // === 8/21-8/31 复习阶段 ===
+    // === 复习阶段 8/21-8/31 ===
     html='';
     weekDays.forEach(d=>{html+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
     const reviewOffset=(REVIEW_START.getDay()+6)%7;
     for(let i=0;i<reviewOffset;i++) html+='<div></div>';
-    const reviewTotalDays=11;
-    for(let d=0;d<reviewTotalDays;d++){
+    const reviewDays_total=11;
+    for(let d=0;d<reviewDays_total;d++){
         const dateObj=new Date(REVIEW_START);
         dateObj.setDate(dateObj.getDate()+d);
         const isFuture=dateObj>today;
+        const isToday=dateObj.toISOString().split('T')[0]===today.toISOString().split('T')[0];
         const dateStr=dateObj.toISOString().split('T')[0];
         const done=reviewDays.includes(dateStr);
-        let style='', textColor='';
-        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#64748b';}
-        else if(done){style='background:#fbbf24';textColor='color:#fff;font-weight:700';}
-        else{style='background:#fef3c7';textColor='color:#92400e';}
-        html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer hover:opacity-80" style="'+style+';'+textColor+'" onclick="showDayDetail(\'review\','+d+',\''+dateStr+'\')">'+dateObj.getDate()+'</div>';
+        let bg,textColor;
+        if(isFuture){bg='#f8fafc';textColor='#64748b';}
+        else if(done){bg='#fbbf24';textColor='#fff';}
+        else{bg='#fef3c7';textColor='#92400e';}
+        const todayRing=isToday?'box-shadow:0 0 0 2px #dc2626;':'';
+        html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer" style="background:'+bg+';color:'+textColor+';font-weight:'+(isToday?'700':'400')+';'+todayRing+'" onclick="showDayDetail(\'review\','+d+',\''+dateStr+'\')">'+dateObj.getDate()+'</div>';
     }
     document.getElementById('cal-phase2').innerHTML=html;
     
-    // === 9月 刷题阶段 ===
+    // === 9月刷题 ===
     html='';
     weekDays.forEach(d=>{html+='<div class="text-center text-xs text-gray-300 pb-2">'+d+'</div>'});
     const practiceOffset=(PRACTICE_START.getDay()+6)%7;
@@ -548,135 +377,76 @@ function renderCalendar(){
     for(let d=1;d<=30;d++){
         const dateObj=new Date(2026,8,d);
         const isFuture=dateObj>today;
+        const isToday=dateObj.toISOString().split('T')[0]===today.toISOString().split('T')[0];
         const dateKey='2026-9-'+d;
         const done=sepPractice[dateKey];
-        let style='', textColor='';
-        if(isFuture){style='background:#f8fafc;border:1px solid #e2e8f0';textColor='color:#64748b';}
-        else if(done){style='background:#8b5cf6';textColor='color:#fff;font-weight:700';}
-        else{style='background:#f3e8ff';textColor='color:#7c3aed';}
-        html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer hover:opacity-80" style="'+style+';'+textColor+'" onclick="showDayDetail(\'practice\','+d+',\''+dateKey+'\')">'+d+'</div>';
+        let bg,textColor;
+        if(isFuture){bg='#f8fafc';textColor='#64748b';}
+        else if(done){bg='#8b5cf6';textColor='#fff';}
+        else{bg='#f3e8ff';textColor='#7c3aed';}
+        const todayRing=isToday?'box-shadow:0 0 0 2px #dc2626;':'';
+        html+='<div class="text-center rounded-lg py-2 text-xs cursor-pointer" style="background:'+bg+';color:'+textColor+';font-weight:'+(isToday?'700':'400')+';'+todayRing+'" onclick="showDayDetail(\'practice\','+d+',\''+dateKey+'\')">'+d+'</div>';
     }
     document.getElementById('cal-phase3').innerHTML=html;
 }
 
-// 点击日历格子弹出详情
 function showDayDetail(type,dayIndex,dateStr){
     const dateObj=new Date(dateStr+'T00:00:00');
     const dateLabel=dateObj.toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'});
-    
     let content='';
     
     if(type==='firstPass'){
-        // 该天预期的视频
-        const jjStart=dayIndex*3, jlStart=dayIndex*3;
+        const jjDone=get(S.jijie)||[];
+        const jlDone=get(S.jiliang)||[];
+        const dayIdx=dayIndex;
         const jjExpected=[], jlExpected=[];
-        for(let i=0;i<3;i++) if(jjStart+i+1<=TOTAL_JJ) jjExpected.push(jjStart+i+1);
-        for(let i=0;i<3;i++) if(jlStart+i+1<=TOTAL_JL) jlExpected.push(jlStart+i+1);
-        
-        const jjMap={}, jlMap={};
-        (get(S.jijie)||[]).forEach(n=>{jjMap[n]=(jjMap[n]||0)+1});
-        (get(S.jiliang)||[]).forEach(n=>{jlMap[n]=(jlMap[n]||0)+1});
-        
-        const jjDone=jjExpected.filter(n=>(jjMap[n]||0)>=1);
-        const jjUndone=jjExpected.filter(n=>(jjMap[n]||0)<1);
-        const jlDone=jlExpected.filter(n=>(jlMap[n]||0)>=1);
-        const jlUndone=jlExpected.filter(n=>(jlMap[n]||0)<1);
-        
-        content+='<p class="text-xs text-gray-500 mb-2">📺 首刷阶段 · 计划'+jjExpected.length+'集计价 + '+jlExpected.length+'集计量</p>';
-        if(jjDone.length>0) content+='<p class="text-sm mb-1">🔵 计价已完成：第'+jjDone.join('、')+'集</p>';
-        if(jjUndone.length>0) content+='<p class="text-sm mb-1 text-gray-400">⚪ 计价未完成：第'+jjUndone.join('、')+'集</p>';
-        if(jlDone.length>0) content+='<p class="text-sm mb-1">🟠 计量已完成：第'+jlDone.join('、')+'集</p>';
-        if(jlUndone.length>0) content+='<p class="text-sm mb-1 text-gray-400">⚪ 计量未完成：第'+jlUndone.join('、')+'集</p>';
-        if(jjUndone.length===0&&jlUndone.length===0) content+='<p class="text-sm text-green-600 font-medium">✅ 当天任务全部完成！</p>';
-        else if(jjDone.length+JlDone.length===0) content+='<p class="text-sm text-gray-400">❌ 当天未打卡</p>';
+        for(let i=0;i<3;i++) if(dayIdx*3+i+1<=TOTAL_JJ) jjExpected.push(dayIdx*3+i+1);
+        for(let i=0;i<3;i++) if(dayIdx*3+i+1<=TOTAL_JL) jlExpected.push(dayIdx*3+i+1);
+        const jjD=jjExpected.filter(n=>jjDone.includes(n));
+        const jjU=jjExpected.filter(n=>!jjDone.includes(n));
+        const jlD=jlExpected.filter(n=>jlDone.includes(n));
+        const jlU=jlExpected.filter(n=>!jlDone.includes(n));
+        content+='<p class="text-xs text-gray-500 mb-2">📺 计划：计价'+jjExpected.length+'集 + 计量'+jlExpected.length+'集</p>';
+        if(jjD.length>0) content+='<p class="text-sm mb-1 text-blue-600">🔵 计价已完成：第'+jjD.join('、')+'集</p>';
+        if(jjU.length>0) content+='<p class="text-sm mb-1 text-gray-400">⚪ 计价未完成：第'+jjU.join('、')+'集</p>';
+        if(jlD.length>0) content+='<p class="text-sm mb-1 text-orange-600">🟠 计量已完成：第'+jlD.join('、')+'集</p>';
+        if(jlU.length>0) content+='<p class="text-sm mb-1 text-gray-400">⚪ 计量未完成：第'+jlU.join('、')+'集</p>';
+        if(jjU.length===0&&jlU.length===0&&jjExpected.length>0) content+='<p class="text-sm text-green-600 font-medium">✅ 当天任务全部完成！</p>';
     }
     
     if(type==='review'){
         const reviewDays=get(S.reviewDays)||[];
         const done=reviewDays.includes(dateStr);
         content+='<p class="text-xs text-gray-500 mb-2">🔁 复习阶段</p>';
-        if(done){
-            content+='<p class="text-sm text-yellow-600 font-medium">✅ 当天已复习打卡</p>';
-            content+='<p class="text-xs text-gray-400 mt-1">具体复习了哪些集，可在"今日"页面查看</p>';
-        }else{
-            content+='<p class="text-sm text-gray-400">❌ 当天未复习打卡</p>';
-        }
+        content+=done?'<p class="text-sm text-yellow-600 font-medium">✅ 当天已复习打卡</p>':'<p class="text-sm text-gray-400">❌ 当天未复习打卡</p>';
     }
     
     if(type==='practice'){
         const sepPractice=get(S.sepPractice)||{};
         const done=sepPractice[dateStr];
         content+='<p class="text-xs text-gray-500 mb-2">✏️ 刷题阶段</p>';
-        if(done){
-            content+='<p class="text-sm text-purple-600 font-medium">✅ 当天已完成刷题任务</p>';
-        }else{
-            content+='<p class="text-sm text-gray-400">❌ 当天未打卡</p>';
-        }
+        content+=done?'<p class="text-sm text-purple-600 font-medium">✅ 当天已完成刷题</p>':'<p class="text-sm text-gray-400">❌ 当天未打卡</p>';
     }
     
-    // 显示弹窗
     showModal(dateLabel,content);
 }
 
 function showModal(title,content){
-    // 移除旧弹窗
     const old=document.getElementById('day-detail-modal');
     if(old) old.remove();
-    
     const modal=document.createElement('div');
     modal.id='day-detail-modal';
-    modal.className='fixed inset-0 z-50 flex items-center justify-center p-4 fade-in';
+    modal.className='fixed inset-0 z-50 flex items-center justify-center p-4';
     modal.style.background='rgba(0,0,0,0.4)';
     modal.innerHTML='<div class="bg-white rounded-2xl p-5 w-full max-w-sm shadow-xl" onclick="event.stopPropagation()">'+
         '<div class="flex items-center justify-between mb-3">'+
             '<h3 class="font-bold text-gray-800">'+title+'</h3>'+
-            '<button onclick="document.getElementById(\'day-detail-modal\').remove()" class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-200">✕</button>'+
+            '<button onclick="document.getElementById(\'day-detail-modal\').remove()" class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">✕</button>'+
         '</div>'+
         '<div>'+content+'</div>'+
     '</div>';
     modal.addEventListener('click',()=>modal.remove());
     document.body.appendChild(modal);
-}
-
-// ====== 历史记录 ======
-function saveHistory(){
-    const dateStr=today.toISOString().split('T')[0];
-    const history=get(S.history)||{};
-    history[dateStr]={
-        jijie:get(S.jijie)||[],
-        jiliang:get(S.jiliang)||[],
-        extra:get(S.extra)||{},
-        sepPractice:get(S.sepPractice)||{},
-        reviewDays:get(S.reviewDays)||[]
-    };
-    set(S.history,history);
-    set(S.lastDate,dateStr);
-}
-
-// ====== 每日重置检查 ======
-function checkDailyReset(){
-    const lastDate=get(S.lastDate);
-    const dateStr=today.toISOString().split('T')[0];
-    if(lastDate!==dateStr){
-        if(lastDate){
-            const history=get(S.history)||{};
-            history[lastDate]={
-                jijie:get(S.jijie)||[],
-                jiliang:get(S.jiliang)||[],
-                extra:get(S.extra)||{},
-                sepPractice:get(S.sepPractice)||{},
-                reviewDays:get(S.reviewDays)||[]
-            };
-            set(S.history,history);
-        }
-        // 每日重置额外打卡，保留视频进度
-        set(S.extra,{});
-        set(S.lastDate,dateStr);
-    }
-    // 复习阶段自动标记今天
-    if(getPhase().type==='review'){
-        markReviewDay();
-    }
 }
 
 // ====== Tab 切换 ======
@@ -687,19 +457,15 @@ document.querySelectorAll('.tab-item').forEach(btn=>{
         btn.classList.add('active');
         document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
         document.getElementById('page-'+page).classList.add('active');
-        if(page==='progress') renderVideoList();
         if(page==='calendar') renderCalendar();
     });
 });
 
 // ====== 初始化 ======
 function init(){
-    checkDailyReset();
-    renderToday();
-    updateProgress();
+    renderCheckin();
     renderCalendar();
 }
-
 init();
 </script>
 
